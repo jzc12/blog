@@ -221,11 +221,7 @@
     marked.setOptions({
       breaks: true,
       gfm: true,
-<<<<<<< HEAD
       async: true  // 启用异步渲染
-=======
-      sanitize: false  // 关闭安全检查可提速20%
->>>>>>> 3b26df2f8581e101e19e4a75e035ffe14ee1bf27
     });
 
     // 带缓存的加载函数
@@ -234,30 +230,30 @@
     async function loadMarkdown(page) {
       const url = `./pages/${page}.md`;
       const mainEl = document.querySelector('.main');
-      
+
       // 显示加载状态
       mainEl.innerHTML = '<div class="loading">加载中...</div>';
-      
+
       try {
         // 优先使用缓存
-        if(mdCache[url]) {
+        if (mdCache[url]) {
           mainEl.innerHTML = mdCache[url];
           return;
         }
-        
+
         // 异步加载
         const response = await fetch(url);
-        if(!response.ok) throw new Error('加载失败');
-        
+        if (!response.ok) throw new Error('加载失败');
+
         // 流式解析
         const md = await response.text();
         const html = await marked.parse(md);
-        
+
         // 缓存结果
         mdCache[url] = html;
         mainEl.innerHTML = html;
-        
-      } catch(err) {
+
+      } catch (err) {
         mainEl.innerHTML = `<div class="error">${err.message}</div>`;
       }
     }
