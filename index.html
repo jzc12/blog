@@ -3,8 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
-  <title> zc 的博客</title>
+  <title>zc 的博客</title>
   <link rel="icon" href="source/avatar.png" type="image/png" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -30,7 +31,6 @@
       height: 100%;
       background: rgba(255, 255, 255, 0.5);
       z-index: -1;
-      padding: 20px;
     }
 
     .sidebar {
@@ -39,7 +39,6 @@
       border-right: 1px solid #ddd;
       padding: 20px;
       height: 100vh;
-      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
     }
@@ -54,7 +53,7 @@
       border: none;
       padding: 5px 10px;
       cursor: pointer;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       font-size: 14px;
     }
 
@@ -86,7 +85,6 @@
     }
 
     .profile {
-      flex-shrink: 0;
       margin-top: 40px;
       text-align: center;
     }
@@ -98,31 +96,8 @@
     }
 
     .profile p {
-      margin: 40px 10px 40px;
+      margin: 8px 0;
       font-size: 14px;
-    }
-
-    .main {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-    }
-
-    .main h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    .category-list {
-      background-color: rgba(255, 255, 255, 0.3);
-      padding: 20px;
-      border-radius: 10px;
-      max-height: calc(100vh - 100px);
-      overflow-y: auto;
-    }
-
-    .category-item {
-      margin-bottom: 50px;
     }
 
     .contact-links {
@@ -136,11 +111,6 @@
       text-decoration: none;
       color: #333;
       font-size: 14px;
-      transition: color 0.2s ease;
-    }
-
-    .contact-links a:hover {
-      color: #007acc;
     }
 
     .footer {
@@ -154,6 +124,34 @@
       color: inherit;
       text-decoration: none;
     }
+
+    /* =================== MAIN 区域样式 =================== */
+    .main {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    .main section {
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
   </style>
 </head>
 
@@ -164,17 +162,15 @@
     <button class="toggle-btn" onclick="toggleSidebar()">≡</button>
     <h2 id="title">zc 的博客</h2>
     <ul class="nav">
-      <li><a href="#">🏠 首页</a></li>
-      <li><a href="#">👤 关于</a></li>
-      <li><a href="#">📂 分类 <span>12</span></a></li>
-      <li><a href="#">🏷️ 标签 <span>12</span></a></li>
-      <li><a href="#">📈 索引</a></li>
+      <li><a href="#" data-page="home">🏠 首页</a></li>
+      <li><a href="#" data-page="about">👤 关于</a></li>
+      <li><a href="#" data-page="category">📂 分类 <span>12</span></a></li>
+      <li><a href="#" data-page="tags">🏷️ 标签 <span>12</span></a></li>
     </ul>
 
     <div class="profile">
       <img src="source/avatar.png" alt="头像">
       <p>0 文章 | 0 分类 | 0 标签</p>
-
       <div class="contact-links">
         <a href="https://github.com/jzc12" target="_blank" title="GitHub">🐙 GitHub</a>
         <a href="mailto:your_email@example.com" title="Email">📧 Email</a>
@@ -186,17 +182,23 @@
     </div>
   </div>
 
-
   <div class="main">
-    <div class="category-item">• 测试分类 1</div>
-    <div class="category-item">• 测试分类 2</div>
-    <div class="category-item">• 测试分类 3</div>
-    <div class="category-item">• 测试分类 3</div>
-    <div class="category-item">• 测试分类 3</div>
+
+    <div class="card">
+      <h3>📌 开发中</h3>
+      <p>已经建好文件夹了 ⚠️</p>
+    </div>
 
   </div>
 
   <script>
+    const pages = {
+      home: "pages/home.md",
+      about: "pages/about.md",
+      category: "pages/category.md",
+      tags: "pages/tags.md"
+    };
+
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const title = document.getElementById('title');
@@ -214,7 +216,51 @@
         p.style.display = displayStyle;
       }
     }
+
+    marked.setOptions({
+      breaks: true,
+      gfm: true
+    });
+
+    function loadMarkdown(url) {
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text();
+        })
+        .then(md => {
+          document.querySelector('.main').innerHTML = marked.parse(md);
+        })
+        .catch(err => {
+          console.error('加载Markdown失败:', err);
+          document.querySelector('.main').innerHTML = `
+            <div class="card">
+              <h3>加载内容失败</h3>
+              <p>${err.message}</p>
+            </div>
+          `;
+        });
+    }
+
+    // 菜单点击事件
+    document.querySelectorAll('.nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const page = e.target.getAttribute('data-page');
+        if (page && pages[page]) {
+          loadMarkdown(pages[page]);
+        }
+      });
+    });
+
+    // 默认加载首页
+    window.addEventListener('DOMContentLoaded', () => {
+      loadMarkdown(pages.home);
+    });
+
   </script>
+
+
 </body>
 
 </html>
