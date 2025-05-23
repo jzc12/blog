@@ -221,7 +221,11 @@
     marked.setOptions({
       breaks: true,
       gfm: true,
+<<<<<<< HEAD
       async: true  // 启用异步渲染
+=======
+      sanitize: false  // 关闭安全检查可提速20%
+>>>>>>> 3b26df2f8581e101e19e4a75e035ffe14ee1bf27
     });
 
     // 带缓存的加载函数
@@ -262,6 +266,7 @@
       link.addEventListener('click', e => {
         e.preventDefault();
         const page = e.target.getAttribute('data-page');
+        console.error('加载中');
         if (page && pages[page]) {
           loadMarkdown(pages[page]);
         }
