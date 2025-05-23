@@ -217,31 +217,46 @@
       }
     }
 
+    // 配置marked
     marked.setOptions({
       breaks: true,
-      gfm: true
+      gfm: true,
+      async: true  // 启用异步渲染
     });
 
-    function loadMarkdown(url) {
-      fetch(url)
-        .then(response => {
-          if (!response.ok) throw new Error('Network response was not ok');
-          return response.text();
-        })
-        .then(md => {
-          document.querySelector('.main').innerHTML = marked.parse(md);
-        })
-        .catch(err => {
-          console.error('加载Markdown失败:', err);
-          document.querySelector('.main').innerHTML = `
-            <div class="card">
-              <h3>加载内容失败</h3>
-              <p>${err.message}</p>
-            </div>
-          `;
-        });
-    }
+    // 带缓存的加载函数
+    const mdCache = {};
 
+    async function loadMarkdown(page) {
+      const url = `./pages/${page}.md`;
+      const mainEl = document.querySelector('.main');
+      
+      // 显示加载状态
+      mainEl.innerHTML = '<div class="loading">加载中...</div>';
+      
+      try {
+        // 优先使用缓存
+        if(mdCache[url]) {
+          mainEl.innerHTML = mdCache[url];
+          return;
+        }
+        
+        // 异步加载
+        const response = await fetch(url);
+        if(!response.ok) throw new Error('加载失败');
+        
+        // 流式解析
+        const md = await response.text();
+        const html = await marked.parse(md);
+        
+        // 缓存结果
+        mdCache[url] = html;
+        mainEl.innerHTML = html;
+        
+      } catch(err) {
+        mainEl.innerHTML = `<div class="error">${err.message}</div>`;
+      }
+    }
     // 菜单点击事件
     document.querySelectorAll('.nav a').forEach(link => {
       link.addEventListener('click', e => {
