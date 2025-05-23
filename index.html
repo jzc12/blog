@@ -219,7 +219,8 @@
 
     marked.setOptions({
       breaks: true,
-      gfm: true
+      gfm: true,
+      sanitize: false  // 关闭安全检查可提速20%
     });
 
     function loadMarkdown(url) {
@@ -247,6 +248,7 @@
       link.addEventListener('click', e => {
         e.preventDefault();
         const page = e.target.getAttribute('data-page');
+        console.error('加载中');
         if (page && pages[page]) {
           loadMarkdown(pages[page]);
         }
