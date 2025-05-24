@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>zc 的博客</title>
   <link rel="icon" href="source/avatar.png" type="image/png" />
+  <link rel="stylesheet" href="theme/lapis.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     * {
@@ -264,7 +265,7 @@
       link.addEventListener('click', e => {
         e.preventDefault();
         const page = e.target.getAttribute('data-page');
-        console.error('加载中');
+        console.log(`加载页面: ${page}`);
         if (page && pages[page]) {
           loadMarkdown(pages[page]);
         }
