@@ -1,161 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh">
 
+
+
 <head>
   <meta charset="UTF-8">
   <title>zc 的博客</title>
-  <link rel="icon" href="source/avatar.png" type="image/png" />
+  <link rel="icon" href="src/assets/avatar.png" type="image/png" />
+  <link rel="stylesheet" href="src/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Microsoft YaHei', sans-serif;
-      background-image: url('source/background.png');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.5);
-      z-index: -1;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #ffffff49;
-      border-right: 1px solid #ddd;
-      padding: 20px;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-
-    .sidebar.collapsed {
-      width: 120px;
-      overflow: hidden;
-      overflow-y: auto;
-    }
-
-    .toggle-btn {
-      background-color: #eeeeee7c;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
-
-    .sidebar h2 {
-      font-size: 20px;
-      margin-bottom: 20px;
-      white-space: nowrap;
-    }
-
-    .nav {
-      list-style: none;
-    }
-
-    .nav li {
-      margin: 10px 0;
-      padding: 8px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    .nav li:hover {
-      background-color: #a8ed8d;
-    }
-
-    .nav span {
-      float: right;
-      color: #888;
-    }
-
-    .profile {
-      margin-top: 40px;
-      text-align: center;
-    }
-
-    .profile img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-    }
-
-    .profile p {
-      margin: 8px 0;
-      font-size: 14px;
-    }
-
-    .contact-links {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .contact-links a {
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-    }
-
-    .footer {
-      margin-top: auto;
-      text-align: center;
-      font-size: 12px;
-      color: #777;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* =================== MAIN 区域样式 =================== */
-    .main {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-    }
-
-    .main section {
-      margin-bottom: 40px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.6);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-  </style>
 </head>
+
+<style>
+
+
+</style>
 
 <body>
   <div class="overlay"></div>
@@ -171,11 +30,11 @@
     </ul>
 
     <div class="profile">
-      <img src="source/avatar.png" alt="头像">
+      <img src="src/assets/avatar.png" alt="头像">
       <p>0 文章 | 0 分类 | 0 标签</p>
       <div class="contact-links">
         <a href="https://github.com/jzc12" target="_blank" title="GitHub">🐙 GitHub</a>
-        <a href="mailto:your_email@example.com" title="Email">📧 Email</a>
+        <a href="mailto:1765714473@qq.com" title="Email">📧 Email</a>
       </div>
     </div>
 
@@ -185,102 +44,10 @@
   </div>
 
   <div class="main">
-
     <div class="markdown-body" id="rendered-content"></div>
-
   </div>
 
-  <script>
-    const pages = {
-      home: "home.md",
-      about: "about.md",
-      category: "category.md",
-      tags: "tags.md"
-    };
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const title = document.getElementById('title');
-      const spans = sidebar.getElementsByTagName('span');
-      const paragraphs = sidebar.getElementsByTagName('p');
-
-      sidebar.classList.toggle('collapsed');
-      title.style.display = sidebar.classList.contains('collapsed') ? 'none' : 'block';
-
-      const displayStyle = sidebar.classList.contains('collapsed') ? 'none' : 'block';
-      for (let span of spans) {
-        span.style.display = displayStyle;
-      }
-      for (let p of paragraphs) {
-        p.style.display = displayStyle;
-      }
-    }
-
-    // 配置 marked
-    marked.setOptions({
-      breaks: true,
-      gfm: true,
-      async: true
-    });
-
-    const mdCache = {};
-    let loading = false;
-    let currentPage = null; // 记录当前正在加载的页面
-
-    async function loadMarkdown(page) {
-      if (loading || currentPage === page) {
-        console.log(`loading 正在加载: ${page}`);
-        return;
-      }// 忽略重复请求
-      loading = true;
-      currentPage = page;
-
-      const url = `./pages/${page}`;
-      const mainEl = document.querySelector('.main');
-      mainEl.innerHTML = '<div class="markdown-body">加载中...</div>';
-
-      try {
-        if (mdCache[url]) {
-          mainEl.innerHTML = `<div class="markdown-body">${mdCache[url]}</div>`;
-        } else {
-          const response = await fetch(url);
-          if (!response.ok) throw new Error(`加载失败: ${response.status}`);
-
-          const md = await response.text();
-          const html = await marked.parse(md);
-          mdCache[url] = html;
-          mainEl.innerHTML = `<div class="markdown-body">${html}</div>`;
-        }
-      } catch (err) {
-        mainEl.innerHTML = `<div class="error">${err.message}</div>`;
-      } finally {
-        loading = false;
-        currentPage = null;
-      }
-    }
-
-
-    // 统一绑定点击事件（事件委托）
-    document.addEventListener('DOMContentLoaded', () => {
-      const nav = document.querySelector('.nav');
-      nav.addEventListener('click', e => {
-        const link = e.target.closest('li[data-page]');
-        if (!link) return;
-        console.log('loading');
-        e.preventDefault();
-        const pageKey = link.getAttribute('data-page');
-        if (pageKey && pages[pageKey]) {
-          loadMarkdown(pages[pageKey]);
-        }
-      });
-    });
-
-    // 默认加载首页
-    loadMarkdown(pages.home);
-
-  </script>
-
-
+  <script src="src/main.js"></script>
 </body>
 
 </html>
