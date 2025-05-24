@@ -5,9 +5,7 @@
   <meta charset="UTF-8">
   <title>zc 的博客</title>
   <link rel="icon" href="source/avatar.png" type="image/png" />
-  <link rel="stylesheet" href="theme/lapis.css">
-  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -166,10 +164,10 @@
     <button class="toggle-btn" onclick="toggleSidebar()">≡</button>
     <h2 id="title">zc 的博客</h2>
     <ul class="nav">
-      <li><a href="#" data-page="home">🏠 首页</a></li>
-      <li><a href="#" data-page="about">👤 关于</a></li>
-      <li><a href="#" data-page="category">📂 分类 <span>12</span></a></li>
-      <li><a href="#" data-page="tags">🏷️ 标签 <span>12</span></a></li>
+      <li data-page="home"><a href="#">🏠 首页</a></li>
+      <li data-page="about"><a href="#">👤 关于</a></li>
+      <li data-page="category"><a href="#">📂 分类 <span>12</span></a></li>
+      <li data-page="tags"><a href="#">🏷️ 标签 <span>12</span></a></li>
     </ul>
 
     <div class="profile">
@@ -218,64 +216,67 @@
       }
     }
 
-    // 配置marked
+    // 配置 marked
     marked.setOptions({
       breaks: true,
       gfm: true,
-      async: true  // 启用异步渲染
+      async: true
     });
 
-    // 带缓存的加载函数
     const mdCache = {};
+    let loading = false;
+    let currentPage = null; // 记录当前正在加载的页面
 
     async function loadMarkdown(page) {
+      if (loading || currentPage === page) {
+        console.log(`loading 正在加载: ${page}`);
+        return;
+      }// 忽略重复请求
+      loading = true;
+      currentPage = page;
+
       const url = `./pages/${page}`;
       const mainEl = document.querySelector('.main');
-
-      // 显示加载状态
-      mainEl.innerHTML = '<div class="loading">加载中...</div>';
+      mainEl.innerHTML = '<div class="markdown-body">加载中...</div>';
 
       try {
-        // 优先使用缓存
         if (mdCache[url]) {
-          mainEl.innerHTML = mdCache[url];
-          return;
+          mainEl.innerHTML = `<div class="markdown-body">${mdCache[url]}</div>`;
+        } else {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(`加载失败: ${response.status}`);
+
+          const md = await response.text();
+          const html = await marked.parse(md);
+          mdCache[url] = html;
+          mainEl.innerHTML = `<div class="markdown-body">${html}</div>`;
         }
-
-        // 异步加载
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('加载失败');
-
-        // 流式解析
-        const md = await response.text();
-        const html = await marked.parse(md);
-
-        // 缓存结果
-        mdCache[url] = html;
-        mainEl.innerHTML = `<div class="markdown-body">${html}</div>`;
-        document.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
-
-
       } catch (err) {
         mainEl.innerHTML = `<div class="error">${err.message}</div>`;
+      } finally {
+        loading = false;
+        currentPage = null;
       }
     }
-    // 菜单点击事件
-    document.querySelectorAll('.nav a').forEach(link => {
-      link.addEventListener('click', e => {
+
+
+    // 统一绑定点击事件（事件委托）
+    document.addEventListener('DOMContentLoaded', () => {
+      const nav = document.querySelector('.nav');
+      nav.addEventListener('click', e => {
+        const link = e.target.closest('li[data-page]');
+        if (!link) return;
+        console.log('loading');
         e.preventDefault();
-        const page = e.target.getAttribute('data-page');
-        console.log(`加载页面: ${page}`);
-        if (page && pages[page]) {
-          loadMarkdown(pages[page]);
+        const pageKey = link.getAttribute('data-page');
+        if (pageKey && pages[pageKey]) {
+          loadMarkdown(pages[pageKey]);
         }
       });
     });
 
     // 默认加载首页
-    window.addEventListener('DOMContentLoaded', () => {
-      loadMarkdown(pages.home);
-    });
+    loadMarkdown(pages.home);
 
   </script>
 
