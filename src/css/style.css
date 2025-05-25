@@ -21,128 +21,31 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.269);
     z-index: -1;
 }
 
-.sidebar {
-    width: 250px;
-    background-color: #ffffff49;
-    border-right: 1px solid #ddd;
-    padding: 20px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-}
-
-.sidebar.collapsed {
-    width: 120px;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
-.toggle-btn {
-    background-color: #eeeeee7c;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.sidebar h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-    white-space: nowrap;
-}
-
-.nav {
-    list-style: none;
-}
-
-.nav li {
-    margin: 10px 0;
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.nav li:hover {
-    background-color: #a8ed8d;
-}
-
-.nav span {
-    float: right;
-    color: #888;
-}
-
-.profile {
-    margin-top: 40px;
-    text-align: center;
-}
-
-.profile img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
-
-.profile p {
-    margin: 8px 0;
-    font-size: 14px;
-}
-
-.contact-links {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.contact-links a {
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-}
-
-.footer {
-    margin-top: auto;
-    text-align: center;
-    font-size: 12px;
-    color: #777;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
 
 /* =================== MAIN 区域样式 =================== */
-.main {
+.app-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
     flex: 1;
-    padding: 40px;
-    overflow-y: auto;
-}
-
-.main section {
-    margin-bottom: 40px;
-}
-
-.card {
-    background: rgba(255, 255, 255, 0.6);
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    width: 100%;
+    margin: 0 auto;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
 }
 
-.card h3 {
-    margin-bottom: 10px;
-}
-
-.card p {
-    font-size: 14px;
-    line-height: 1.6;
+.content::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari and Opera */
 }

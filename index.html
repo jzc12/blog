@@ -1,53 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 
-
-
 <head>
   <meta charset="UTF-8">
   <title>zc 的博客</title>
-  <link rel="icon" href="src/assets/avatar.png" type="image/png" />
-  <link rel="stylesheet" href="src/css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="icon" href="./src/assets/avatar.png" type="image/png" />
 </head>
 
-<style>
-
-
-</style>
-
 <body>
-  <div class="overlay"></div>
-
-  <div class="sidebar" id="sidebar">
-    <button class="toggle-btn" onclick="toggleSidebar()">≡</button>
-    <h2 id="title">zc 的博客</h2>
-    <ul class="nav">
-      <li data-page="home"><a href="#">🏠 首页</a></li>
-      <li data-page="about"><a href="#">👤 关于</a></li>
-      <li data-page="category"><a href="#">📂 分类 <span>12</span></a></li>
-      <li data-page="tags"><a href="#">🏷️ 标签 <span>12</span></a></li>
-    </ul>
-
-    <div class="profile">
-      <img src="src/assets/avatar.png" alt="头像">
-      <p>0 文章 | 0 分类 | 0 标签</p>
-      <div class="contact-links">
-        <a href="https://github.com/jzc12" target="_blank" title="GitHub">🐙 GitHub</a>
-        <a href="mailto:1765714473@qq.com" title="Email">📧 Email</a>
-      </div>
-    </div>
-
-    <div class="footer">
-      <p>© 2025 去感受、去发现</p>
-    </div>
-  </div>
-
-  <div class="main">
-    <div class="markdown-body" id="rendered-content"></div>
-  </div>
-
-  <script src="src/main.js"></script>
+  <div id="app"></div>
+  <script type="module" src="./src/main.js"></script>
 </body>
 
 </html>
