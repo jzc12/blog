@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import Markdown from 'vite-plugin-vue-markdown'
 
 export default defineConfig({
+  base: 'https://github.com/jzc12/blog',
   plugins: [
     vue({
       include: [/\.vue$/, /\.md$/]
