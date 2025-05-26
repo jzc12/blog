@@ -28,7 +28,10 @@ const routes = [
         meta: { title: '标签' }
     },
     // 捕获404页面
-    { path: '/:pathMatch(.*)*', redirect: '/' }
+    {
+        path: '/:catchAll(.*)',
+        component: () => import('@/components/404.html'),
+    }
 ]
 
 const router = createRouter({

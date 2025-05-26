@@ -1,4 +1,4 @@
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+
+location / {
+  try_files $uri $uri/ /index.html;
+}
