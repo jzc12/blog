@@ -6,27 +6,24 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import('../md/home.md'),
-        meta: { title: '首页' }
+        component: () => import('../md/home.md')
     },
     {
         path: '/about',
         name: 'about',
-        component: () => import('../md/about.md'),
-        meta: { title: '关于' }
+        component: () => import('../md/about.md')
     },
     {
         path: '/category',
         name: 'category',
-        component: () => import('../md/category.md'),
-        meta: { title: '分类' }
+        component: () => import('../md/category.md')
     },
     {
         path: '/tags',
         name: 'tags',
-        component: () => import('../md/tags.md'),
-        meta: { title: '标签' }
+        component: () => import('../md/tags.md')
     },
+    { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
 const router = createRouter({
