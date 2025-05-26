@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>zc 的博客</title>
   <link rel="icon" href="/blog/assets/avatar-59454510.png" type="image/png" />
-  <script type="module" crossorigin src="/blog/assets/index-47b10053.js"></script>
+  <script type="module" crossorigin src="/blog/assets/index-16a84715.js"></script>
   <link rel="stylesheet" href="/blog/assets/index-34894828.css">
 </head>
 
@@ -18,6 +18,11 @@
 <script>
   if (!location.pathname.endsWith('/')) {
     location.replace(location.pathname + '/' + location.search + location.hash);
+  }
+
+  if (/\/blog\/.+/.test(location.pathname)) {
+    const newPath = location.pathname.replace(/\/blog\/.+/, '/blog/');
+    location.replace(newPath + location.search + location.hash);
   }
 </script>
 
