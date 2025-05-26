@@ -1,1 +1,0 @@
-import{o as n,c as r,a as e}from"./index-1a81fb0b.js";const s={class:"markdown-body"},p={__name:"home",setup(a,{expose:o}){return o({frontmatter:{}}),(c,t)=>(n(),r("div",s,t[0]||(t[0]=[e("h1",null,"主页",-1),e("h2",null,"开发测试中",-1),e("p",null,"✅全力开发中， 已经建好文件夹了。🔥",-1)])))}};export{p as default};
