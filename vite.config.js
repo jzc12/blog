@@ -10,6 +10,12 @@ export default defineConfig({
     }),
     Markdown()
   ],
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
+  assetsDir: 'static',
   server: {
     port: 5000,
     open: true,
