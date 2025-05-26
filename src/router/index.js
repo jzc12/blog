@@ -26,7 +26,9 @@ const routes = [
         name: 'tags',
         component: () => import('../md/tags.md'),
         meta: { title: '标签' }
-    }
+    },
+    // 捕获404页面
+    { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
 const router = createRouter({
