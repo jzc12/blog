@@ -27,11 +27,6 @@ const routes = [
         component: () => import('../md/tags.md'),
         meta: { title: '标签' }
     },
-    // 捕获404页面
-    {
-        path: '/:catchAll(.*)',
-        redirect: '/'
-    }
 ]
 
 const router = createRouter({
