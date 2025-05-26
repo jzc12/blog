@@ -30,7 +30,7 @@ const routes = [
     // 捕获404页面
     {
         path: '/:catchAll(.*)',
-        component: () => import('@/components/404.html'),
+        redirect: '/'
     }
 ]
 
