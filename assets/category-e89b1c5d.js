@@ -1,1 +1,0 @@
-import{o as r,c as n,b as e}from"./index-85f21573.js";const s={class:"markdown-body"},p={__name:"category",setup(a,{expose:o}){return o({frontmatter:{}}),(l,t)=>(r(),n("div",s,t[0]||(t[0]=[e("h1",null,"分类",-1),e("p",null,"coding",-1)])))}};export{p as default};
