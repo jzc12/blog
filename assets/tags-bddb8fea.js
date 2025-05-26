@@ -1,1 +1,0 @@
-import{o as s,c as a,a as e}from"./index-a87e0639.js";const n={class:"markdown-body"},p={__name:"tags",setup(r,{expose:o}){return o({frontmatter:{}}),(l,t)=>(s(),a("div",n,t[0]||(t[0]=[e("h1",null,"标签",-1),e("p",null,"coding",-1)])))}};export{p as default};
