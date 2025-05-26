@@ -20,10 +20,6 @@
     location.replace(location.pathname + '/' + location.search + location.hash);
   }
 
-  if (/\/blog\/.+/.test(location.pathname)) {
-    const newPath = location.pathname.replace(/\/blog\/.+/, '/blog/');
-    location.replace(newPath + location.search + location.hash);
-  }
 </script>
 
 
