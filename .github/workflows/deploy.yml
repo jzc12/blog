@@ -19,7 +19,7 @@ jobs:
         node-version: 20
 
     - name: 安装依赖
-      run: npm ci
+      run: npm install
 
     - name: 构建项目
       run: npm run build
@@ -30,4 +30,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./
         allow_empty_commit: true
-        force_orphan: true
+        publish_branch: gh-pages
