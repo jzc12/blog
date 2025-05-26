@@ -1,3 +1,7 @@
+
+
+// vite.config.js
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Markdown from 'vite-plugin-vue-markdown'
@@ -8,7 +12,7 @@ export default defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/]
     }),
-    Markdown()
+    Markdown(),
   ],
   resolve: {
     alias: {
@@ -17,8 +21,6 @@ export default defineConfig({
   },
   assetsDir: 'static',
   server: {
-    port: 5000,
-    open: true,
     historyApiFallback: true,
   },
 })

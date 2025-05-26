@@ -23,7 +23,16 @@ const routes = [
         name: 'tags',
         component: () => import('../md/tags.md')
     },
-    { path: '/:pathMatch(.*)*', redirect: '/' }
+    {
+        path: '/404',
+        name: 'notfound',
+        component: () => import('@/md/404.md')
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/404'
+    }
+
 ]
 
 const router = createRouter({
