@@ -1,0 +1,26 @@
+// vite.config.js
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import Markdown from 'vite-plugin-vue-markdown'
+
+export default defineConfig({
+  base: 'https://github.com/jzc12/blog',
+  plugins: [
+    vue({
+      include: [/\.vue$/, /\.md$/]
+    }),
+    Markdown()
+  ],
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
+  assetsDir: 'static',
+  parallel: false,
+  publicPath: './',
+  devServer: {
+    port: 5000,
+    open: true,
+  },
+})
