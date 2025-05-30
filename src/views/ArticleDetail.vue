@@ -1,9 +1,9 @@
 <template>
+  <router-link to="/category" class="back-button">
+    <i class="back-icon"></i>
+    <span>返回目录</span>
+  </router-link>
   <div class="article-meta" v-if="article">
-    <router-link to="/category" class="back-button">
-      <i class="back-icon"></i>
-      <span>返回目录</span>
-    </router-link>
     <div class="article-header">
       <h1 class="article-title">{{ article.title }}</h1>
       <div class="meta-info">

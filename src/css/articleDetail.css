@@ -1,15 +1,16 @@
 .article-meta {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0px;
     position: relative;
 }
 
 .back-button {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    position: relative;
+    top: 0;
+    left: 0;
     display: flex;
+    width: fit-content;
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
@@ -94,11 +95,7 @@
 }
 
 @media (max-width: 768px) {
-    .back-button {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-    }
+
 
     .meta-info {
         flex-direction: column;
