@@ -48,7 +48,7 @@ export default {
         { name: 'home', icon: '🏠', text: '首页', count: '' },
         { name: 'about', icon: '👤', text: '关于', count: '' },
         { name: 'category', icon: '📂', text: '目录', count: '0' },
-        { name: 'tags', icon: '🏷️', text: '标签', count: '12' }
+        { name: 'message', icon: '🏷️', text: '留言', count: '12' }
       ]
     }
   },

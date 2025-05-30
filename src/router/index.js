@@ -24,9 +24,9 @@ const routes = [
         component: () => import('../views/ArticleDetail.vue')
     },
     {
-        path: '/tags',
-        name: 'tags',
-        component: () => import('../md/tags.md')
+        path: '/message',
+        name: 'message',
+        component: () => import('../views/Message.vue')
     },
     {
         path: '/404',
