@@ -51,6 +51,23 @@ export default {
   methods: {
     async addMessage(message) {
       try {
+        // 检查今天的消息数量
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        const { data: todayMessages, error: countError } = await supabase
+          .from('messages')
+          .select('id', { count: 'exact' })
+          .gte('created_at', today.toISOString())
+          .lt('created_at', new Date(today.getTime() + 24 * 60 * 60 * 1000).toISOString());
+
+        if (countError) throw countError;
+
+        if (todayMessages.length >= 20) {
+          alert('今日留言已达上限（20条），请明天再来留言');
+          return;
+        }
+
         const { error } = await supabase.from('messages').insert([{
           username: message.username || '匿名',
           content: message.content

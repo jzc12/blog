@@ -6,7 +6,7 @@
     <form v-else @submit.prevent="submitMessage" class="form-container">
       <input 
         type="text" 
-        v-model="message.name" 
+        v-model="message.username" 
         required 
         placeholder="昵称"
         class="name-input"
@@ -38,9 +38,8 @@ export default {
   data() {
     return {
       message: {
-        name: '',
-        content: '',
-        date: null
+        username: '',
+        content: ''
       },
       dailyLimit: 20
     }
@@ -50,7 +49,7 @@ export default {
       const today = new Date().toLocaleDateString();
       const messages = JSON.parse(localStorage.getItem('blog-messages') || '[]');
       return messages.filter(msg => {
-        const msgDate = new Date(msg.date).toLocaleDateString();
+        const msgDate = new Date(msg.created_at).toLocaleDateString();
         return msgDate === today;
       }).length;
     },
@@ -67,7 +66,6 @@ export default {
         return;
       }
       
-      this.message.date = new Date().toISOString();
       this.$emit('message-submitted', { ...this.message });
       
       this.message.content = '';

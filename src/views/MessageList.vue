@@ -7,8 +7,8 @@
       <div v-for="(message, index) in messages" :key="index" class="message-item">
         <div class="message-content">
           <div class="message-header">
-            <span class="user-name">{{ message.name }}</span>
-            <span class="message-date">{{ formatDate(message.date) }}</span>
+            <span class="user-name">{{ message.username }}</span>
+            <span class="message-date">{{ formatDate(message.created_at) }}</span>
           </div>
           <div class="message-text">
             {{ message.content }}
@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     formatDate(dateString) {
+      if (!dateString) return '';
       const date = new Date(dateString);
       return date.toLocaleString('zh-CN', {
         month: '2-digit',
