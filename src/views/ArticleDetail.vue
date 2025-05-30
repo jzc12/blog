@@ -1,7 +1,7 @@
 <template>
   <div class="article-meta" v-if="article">
     <router-link to="/category" class="back-button">
-      <i class="back-icon">←</i>
+      <i class="back-icon"></i>
       <span>返回目录</span>
     </router-link>
     <div class="article-header">

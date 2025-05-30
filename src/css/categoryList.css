@@ -5,9 +5,10 @@
 }
 
 .h1 {
+    font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
     font-size: 2em;
-    margin: 50px auto;
-    color: #1f4e79;
+    margin: 0 auto;
+    color: #347dc2;
     margin-bottom: 1em;
     font-weight: 600;
     letter-spacing: -0.5px;

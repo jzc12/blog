@@ -1,5 +1,3 @@
-
-
 <template>
 
   <div class="Sidebar" :class="{ collapsed }">
@@ -25,7 +23,7 @@
 
     <div class="profile">
       <img src="../assets/avatar.png" alt="头像">
-      <p v-show="!collapsed">0 文章 | 0 分类 | 0 标签</p>
+      <p v-show="!collapsed">{{ articleCount }} 文章 | 0 标签</p>
       <div class="contact-links">
         <a href="https://github.com/jzc12" target="_blank" title="GitHub">🐙 GitHub</a>
         <a href="mailto:1765714473@qq.com" title="Email">📧 Email</a>
@@ -40,24 +38,19 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       collapsed: false,
+      articleCount: 0,
       navItems: [
         { name: 'home', icon: '🏠', text: '首页', count: '' },
         { name: 'about', icon: '👤', text: '关于', count: '' },
-        { name: 'category', icon: '📂', text: '分类', count: '12' },
+        { name: 'category', icon: '📂', text: '目录', count: '0' },
         { name: 'tags', icon: '🏷️', text: '标签', count: '12' }
       ]
     }
-  },
-  mounted() {
-    this.checkScreenSize();
-    window.addEventListener('resize', this.checkScreenSize);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.checkScreenSize);
   },
   methods: {
     toggleSidebar() {
@@ -65,7 +58,21 @@ export default {
     },
     checkScreenSize() {
       this.collapsed = window.innerWidth <= 980;
+    },
+    async countArticles() {
+      const articles = import.meta.glob('../articles/*.md');
+      const count = Object.keys(articles).length;
+      this.articleCount = count;
+      this.navItems[2].count = count.toString();
     }
+  },
+  mounted() {
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize);
+    this.countArticles();
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.checkScreenSize);
   }
 }
 </script>

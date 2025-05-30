@@ -1,6 +1,6 @@
 <template>
   <div class="category-container">
-    <h1>目录</h1>
+    <div class="h1">目录</div>
     <div class="category-content">
       <div class="article-list">
         <router-link
