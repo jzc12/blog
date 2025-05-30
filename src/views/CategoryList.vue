@@ -1,6 +1,6 @@
 <template>
   <div class="category-container">
-    <h1>文章分类</h1>
+    <h1>目录</h1>
     <div class="category-content">
       <div class="article-list">
         <router-link
@@ -62,48 +62,5 @@ export default {
 </script>
 
 <style scoped>
-.category-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.category-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.article-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.article-item {
-  padding: 20px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-}
-
-.article-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.article-meta {
-  display: flex;
-  gap: 16px;
-  color: #666;
-  font-size: 0.9em;
-  margin: 8px 0;
-}
-
-.summary {
-  color: #666;
-  line-height: 1.6;
-}
+@import '../css/categoryList.css';
 </style> 

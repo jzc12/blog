@@ -2,61 +2,233 @@
 @import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 @import 'prismjs/plugins/toolbar/prism-toolbar.css';
 
-/* 自定义代码块样式 */
+/* 代码高亮主题 - Lapis Theme */
+@import 'prismjs/themes/prism.css';
+@import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+@import 'prismjs/plugins/toolbar/prism-toolbar.css';
+
+/* 代码块容器 */
 pre[class*="language-"] {
-    padding: 1em;
-    margin: .5em 0;
-    border-radius: 6px;
-    background: #f6f8fa !important;
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 8px;
+    background: #f8f9fa !important;
+    box-shadow: inset 0 0 0 1px #e0e0e0;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    overflow: auto;
+    position: relative;
 }
 
-:not(pre)>code[class*="language-"],
-pre[class*="language-"] {
-    background: #f6f8fa;
+/* 行内代码 */
+:not(pre)>code[class*="language-"] {
+    background: #f0f3f7;
+    color: #e74c3c;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: normal;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
 }
 
+/* 基础代码样式 */
 code[class*="language-"],
 pre[class*="language-"] {
     text-shadow: none;
-    color: #24292e;
+    color: #2c3e50;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    line-height: 1.8;
+    tab-size: 4;
+    hyphens: none;
 }
 
+/* 语言标记 */
+pre[class*="language-"]::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 0;
+    right: 1em;
+    padding: 2px 8px;
+    font-size: 13px;
+    color: #fff;
+    background: #447acc;
+    border-radius: 0 0 6px 6px;
+}
+
+/* 代码行号 */
+.line-numbers .line-numbers-rows {
+    border-right: 2px solid #d0e6ff;
+    padding: 16px 0;
+}
+
+.line-numbers-rows>span:before {
+    color: #8e9bab;
+    padding-right: 0.8em;
+}
+
+/* 语法高亮 */
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-    color: #6a737d;
+    color: #666;
     font-style: italic;
 }
 
-.token.function {
-    color: #6f42c1;
+.token.namespace {
+    opacity: 0.8;
 }
 
-.token.keyword {
-    color: #d73a49;
-}
-
-.token.string {
-    color: #032f62;
-}
-
-.token.number {
-    color: #005cc5;
-}
-
-.token.operator {
-    color: #d73a49;
-}
-
-.token.class-name {
-    color: #6f42c1;
-}
-
-.token.property {
-    color: #005cc5;
+.token.string,
+.token.attr-value {
+    color: #1f4e79;
 }
 
 .token.punctuation {
-    color: #24292e;
+    color: #2c3e50;
+}
+
+.token.operator {
+    color: #e74c3c;
+}
+
+.token.boolean,
+.token.number {
+    color: #3366cc;
+}
+
+.token.property {
+    color: #1f4e79;
+}
+
+.token.tag,
+.token.selector,
+.token.attr-name {
+    color: #447acc;
+}
+
+.token.function {
+    color: #1f4e79;
+}
+
+.token.keyword {
+    color: #447acc;
+    font-weight: 500;
+}
+
+.token.regex,
+.token.important {
+    color: #e74c3c;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+.token.deleted {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.token.inserted {
+    color: #447acc;
+    background: rgba(68, 122, 204, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* 代码块工具栏 */
+div.code-toolbar>.toolbar {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+div.code-toolbar:hover>.toolbar {
+    opacity: 1;
+}
+
+div.code-toolbar>.toolbar>.toolbar-item>button {
+    background: #f0f6ff;
+    color: #447acc;
+    padding: 2px 8px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+div.code-toolbar>.toolbar>.toolbar-item>button:hover {
+    background: #447acc;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 代码块滚动条 */
+pre[class*="language-"]::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-track {
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+    background: #d0e6ff;
+    border-radius: 4px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+    background: #447acc;
+}
+
+/* 行高亮 */
+.line-highlight {
+    background: #f7faff;
+    border-left: 4px solid #d0e6ff;
+}
+
+/* 代码块内的链接 */
+.token.url {
+    color: #3366cc;
+    text-decoration: none;
+}
+
+.token.url:hover {
+    text-decoration: underline;
+}
+
+/* 代码块内的字符串引号 */
+.token.string:before,
+.token.string:after {
+    color: #666;
+}
+
+/* 代码块内的变量 */
+.token.variable {
+    color: #1f4e79;
+}
+
+/* 代码块内的类名 */
+.token.class-name {
+    color: #447acc;
 }

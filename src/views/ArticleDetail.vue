@@ -1,10 +1,27 @@
 <template>
   <div class="article-meta" v-if="article">
-    <div class="meta-info">
-      <span class="date">发布于: {{ article.date }}</span>
-      <span v-if="article.updated" class="updated">更新于: {{ article.updated }}</span>
-      <span class="category">分类: {{ article.category }}</span>
+    <router-link to="/category" class="back-button">
+      <i class="back-icon">←</i>
+      <span>返回目录</span>
+    </router-link>
+    <div class="article-header">
+      <h1 class="article-title">{{ article.title }}</h1>
+      <div class="meta-info">
+        <div class="meta-item">
+          <i class="meta-icon">📅</i>
+          <span class="date">发布于 {{ article.date }}</span>
+        </div>
+        <div class="meta-item" v-if="article.updated">
+          <i class="meta-icon">🔄</i>
+          <span class="updated">更新于 {{ article.updated }}</span>
+        </div>
+        <div class="meta-item">
+          <i class="meta-icon">📁</i>
+          <span class="category">{{ article.category }}</span>
+        </div>
+      </div>
     </div>
+    <div class="article-divider"></div>
     <div ref="markdownContent" style="display: none">{{ article.content }}</div>
   </div>
 </template>
@@ -68,20 +85,5 @@ export default {
 </script>
 
 <style scoped>
-.article-meta {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.meta-info {
-  display: flex;
-  gap: 20px;
-  color: #666;
-  font-size: 0.9em;
-  margin-bottom: 20px;
-  padding: 10px;
-  background: #f8f9fa;
-  border-radius: 6px;
-}
+@import '../css/articleDetail.css';
 </style>

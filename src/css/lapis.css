@@ -82,7 +82,7 @@
 
 /* 代码块 */
 .markdown-body pre {
-    background-color: #f8f9fa;
+    background-color: #9ec8f35a;
     padding: 16px;
     border-radius: 8px;
     overflow: auto;
@@ -92,7 +92,7 @@
 .markdown-body code {
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 14px;
-    background: #f0f3f7;
+    background: #93b9ea62;
     padding: 2px 6px;
     border-radius: 4px;
     color: #e74c3c;
@@ -106,7 +106,7 @@
 
 /* 引用块 */
 .markdown-body blockquote {
-    border-left: 4px solid #d0e6ff;
+    border-left: 4px solid #94c4fb57;
     background: #f7faff;
     padding: 12px 16px;
     margin: 12px 0;
@@ -117,7 +117,7 @@
 /* 自定义标签，如语言标签 */
 .markdown-body .tag {
     display: inline-block;
-    background: #447acc;
+    background: #447acc4a;
     color: #fff;
     border-radius: 6px;
     padding: 2px 8px;

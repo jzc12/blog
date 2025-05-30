@@ -1,0 +1,54 @@
+.category-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.h1 {
+    font-size: 2em;
+    margin: 50px auto;
+    color: #1f4e79;
+    margin-bottom: 1em;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.category-content {
+    display: grid;
+    margin: 50px auto;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.article-item {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.article-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.article-meta {
+    display: flex;
+    gap: 16px;
+    color: #666;
+    font-size: 0.9em;
+    margin: 8px 0;
+}
+
+.summary {
+    color: #666;
+    line-height: 1.6;
+}
