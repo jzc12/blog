@@ -64,7 +64,7 @@ export default {
       this.collapsed = !this.collapsed;
     },
     checkScreenSize() {
-      this.collapsed = window.innerWidth <= 768;
+      this.collapsed = window.innerWidth <= 980;
     }
   }
 }
