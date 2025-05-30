@@ -29,6 +29,11 @@
 <script>
 import MessageForm from './MessageForm.vue'
 import MessageList from './MessageList.vue'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://mwqfbczqulrtcqjxmvud.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im13cWZiY3pxdWxydGNxanhtdnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MTgzODAsImV4cCI6MjA2NDE5NDM4MH0.e5TinPO93eKHmn2amIWynxKJ09UtBk8jL00BLPm_9kg'
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export default {
   name: 'Message',
@@ -46,74 +51,46 @@ export default {
   methods: {
     async addMessage(message) {
       try {
-        // 先获取最新的消息
-        await this.loadMessages();
-        
-        // 添加新消息
-        this.messages.unshift(message);
-        
-        // 保存到文件
-        await this.saveMessages();
-        
+        const { error } = await supabase.from('messages').insert([{
+          username: message.username || '匿名',
+          content: message.content
+        }])
+        if (error) throw error
+
+        // 重新加载最新留言
+        await this.loadMessages()
       } catch (error) {
-        console.error('Error adding message:', error);
-        alert('发送消息失败，请稍后重试');
-      }
-    },
-    async saveMessages() {
-      try {
-        const response = await fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/public/data/messages.json', {
-          method: 'PUT',
-          headers: {
-            'Authorization': `token YOUR_GITHUB_TOKEN`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: 'Update messages',
-            content: btoa(JSON.stringify(this.messages)),
-            sha: this.currentSha
-          })
-        });
-        
-        if (!response.ok) {
-          throw new Error('Failed to save messages');
-        }
-        
-        const data = await response.json();
-        this.currentSha = data.content.sha;
-      } catch (error) {
-        console.error('Error saving messages:', error);
-        throw error;
+        console.error('发送消息失败：', error)
+        alert('发送消息失败，请稍后重试')
       }
     },
     async loadMessages() {
-      if (this.isLoading) return;
-      
-      this.isLoading = true;
+      if (this.isLoading) return
+      this.isLoading = true
       try {
-        const response = await fetch('/data/messages.json');
-        if (!response.ok) {
-          throw new Error('Failed to load messages');
-        }
-        const messages = await response.json();
-        this.messages = messages;
+        const { data, error } = await supabase
+          .from('messages')
+          .select('*')
+          .order('created_at', { ascending: false })
+
+        if (error) throw error
+        this.messages = data
       } catch (error) {
-        console.error('Error loading messages:', error);
-        alert('加载消息失败，请稍后重试');
+        console.error('加载消息失败：', error)
+        alert('加载消息失败，请稍后重试')
       } finally {
-        this.isLoading = false;
+        this.isLoading = false
       }
     },
     toggleInput() {
-      this.isInputHidden = !this.isInputHidden;
+      this.isInputHidden = !this.isInputHidden
     }
   },
   created() {
-    this.loadMessages();
+    this.loadMessages()
   }
 }
 </script>
-
 <style scoped>
 .message-page {
   height: calc(100vh - 4rem);
@@ -191,4 +168,4 @@ export default {
 .toggle-input-btn:hover {
   background: #357abd;
 }
-</style> 
+</style>
