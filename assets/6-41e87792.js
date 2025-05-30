@@ -1,0 +1,3 @@
+import{d as l,o as t,c as i,a as n}from"./index-59a2f80f.js";const r={class:"markdown-body"},d={},p="",m=l({__name:"6",setup(s,{expose:e}){return e({frontmatter:{},excerpt:void 0}),(a,o)=>(t(),i("div",r,o[0]||(o[0]=[n(`<h1>Hi</h1><p>这是一篇示例文章，用来测试文章系统是否正常工作。</p><h2>Markdown 特性</h2><p>本文展示了一些基本的 Markdown 特性：</p><ul><li>标题</li><li>列表</li><li><strong>粗体</strong></li><li><em>斜体</em></li><li><code class="">代码</code></li></ul><pre><code class="language-js">// 代码块示例
+console.log(&#39;Hello World!&#39;);
+</code></pre><h2>下一步</h2><ol><li>添加更多文章</li><li>完善分类系统</li><li>添加标签功能</li><li>优化阅读体验</li></ol>`,8)])))}});export{m as default,p as excerpt,d as frontmatter};

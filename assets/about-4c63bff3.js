@@ -1,0 +1,2 @@
+import{d as n,o as l,c as r,b as e}from"./index-59a2f80f.js";const s={class:"markdown-body"},d={},u="",m=n({__name:"about",setup(a,{expose:t}){return t({frontmatter:{},excerpt:void 0}),(c,o)=>(l(),r("div",s,o[0]||(o[0]=[e("h1",null,"关于",-1),e("h2",null,"coding",-1),e("p",null,"@九曲乡河学院—软件开发",-1),e("p",null,"测试",-1),e("pre",null,[e("code",{class:"language-python"},`print("Hello, world!")
+`)],-1)])))}});export{m as default,u as excerpt,d as frontmatter};
