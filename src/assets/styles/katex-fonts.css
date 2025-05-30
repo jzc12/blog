@@ -1,0 +1,31 @@
+/* KaTeX fonts local loading */
+@font-face {
+    font-family: 'KaTeX_Math';
+    src: local('KaTeX_Math-Italic'),
+        url('/blog/fonts/KaTeX/KaTeX_Math-Italic.woff2') format('woff2'),
+        url('/blog/fonts/KaTeX/KaTeX_Math-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Add other KaTeX fonts as needed */
+@font-face {
+    font-family: 'KaTeX_Main';
+    src: local('KaTeX_Main-Regular'),
+        url('/blog/fonts/KaTeX/KaTeX_Main-Regular.woff2') format('woff2'),
+        url('/blog/fonts/KaTeX/KaTeX_Main-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'KaTeX_Main';
+    src: local('KaTeX_Main-Bold'),
+        url('/blog/fonts/KaTeX/KaTeX_Main-Bold.woff2') format('woff2'),
+        url('/blog/fonts/KaTeX/KaTeX_Main-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}

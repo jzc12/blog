@@ -72,7 +72,7 @@ body {
     overflow-y: auto;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 768px) {
     .app-container {
         flex-direction: column;
         height: 100vh;
