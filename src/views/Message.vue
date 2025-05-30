@@ -10,7 +10,7 @@
         @click="toggleInput"
         :title="isInputHidden ? '显示输入框' : '隐藏输入框'"
       >
-        {{ isInputHidden ? '↑' : '↓' }}
+        {{ isInputHidden ? 'v' : '^' }}
       </button>
     </div>
   </div>
@@ -34,11 +34,8 @@ export default {
   },
   methods: {
     addMessage(message) {
-      // In a real application, you would typically send this to a backend
-      // For now, we'll just add it to the local array
+
       this.messages.unshift(message);
-      
-      // Save to localStorage
       this.saveMessages();
     },
     saveMessages() {
