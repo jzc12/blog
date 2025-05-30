@@ -10,8 +10,16 @@
 </head>
 
 <body>
+  <div style="position: fixed; top: 10px; right: 10px;" id="windowSize"></div>
   <div id="app"></div>
   
+  <script>
+    function updateWindowSize() {
+      document.getElementById('windowSize').textContent = window.innerWidth + 'px';
+    }
+    window.addEventListener('resize', updateWindowSize);
+    updateWindowSize();
+  </script>
 </body>
 
 
