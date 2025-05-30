@@ -1,12 +1,5 @@
-const n=`---
-title: Hello World
-date: 2024-03-20
-updated: 2024-03-21
-category: 示例
-summary: 这是一篇示例文章，展示如何使用 Markdown 和 frontmatter。
----
-
-# Hello World
+const n=`
+# Hi
 
 这是一篇示例文章，用来测试文章系统是否正常工作。
 
