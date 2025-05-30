@@ -1,0 +1,1 @@
+import{d as n,o as r,c as s,b as e}from"./index-5223c63c.js";const a={class:"markdown-body"},d={},m="",u=n({__name:"about",setup(c,{expose:o}){return o({frontmatter:{},excerpt:void 0}),(l,t)=>(r(),s("div",a,t[0]||(t[0]=[e("h1",null,"关于",-1),e("h2",null,"coding",-1),e("p",null,"@九曲乡河学院—软件开发",-1)])))}});export{u as default,m as excerpt,d as frontmatter};
