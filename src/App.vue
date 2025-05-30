@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="overlay"></div>
     <Sidebar />
     <main class="content">
       <router-view v-slot="{ Component }">
@@ -16,23 +15,7 @@
 
 <script>
 import Sidebar from './views/Sidebar.vue'
-import MarkdownIt from 'markdown-it'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
-
-const md = new MarkdownIt({
-  html: true,
-  linkify: true,
-  typographer: true,
-  highlight: function (str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(str, { language: lang }).value
-      } catch (__) { }
-    }
-    return ''
-  }
-})
+import { renderMarkdown } from './utils/markdown'
 
 export default {
   components: { Sidebar },
@@ -49,7 +32,7 @@ export default {
   methods: {
     handleContentLoaded(content) {
       if (content) {
-        this.renderedContent = md.render(content)
+        this.renderedContent = renderMarkdown(content)
       }
     }
   }
