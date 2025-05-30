@@ -23,7 +23,7 @@
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-prism": "^3.0.0",
     "prismjs": "^1.30.0",
-    "vite-plugin-md": "^0.22.5",
+    "unplugin-vue-markdown": "^28.3.1",
     "vite-plugin-md-vue": "^1.0.1",
     "vite-plugin-pages": "^0.33.0",
     "vite-plugin-vue-markdown": "^0.23.8"

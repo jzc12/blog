@@ -3,7 +3,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import Markdown from 'vite-plugin-md'
+import Markdown from 'unplugin-vue-markdown/vite'
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
 import MarkdownItPrism from 'markdown-it-prism'
