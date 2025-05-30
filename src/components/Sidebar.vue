@@ -13,7 +13,7 @@
         :key="item.name"
         :to="{ name: item.name }"
       >
-        <div class="nav-li">
+        <div class="nav-li"  :data-icon="item.icon">
           {{ item.icon }} {{ item.text }}
           <div class="nav-span">
             <span v-if="!collapsed">{{ item.count }}</span>
@@ -52,11 +52,20 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.checkScreenSize);
+  },
   methods: {
     toggleSidebar() {
-      this.collapsed = !this.collapsed
+      this.collapsed = !this.collapsed;
     },
-
+    checkScreenSize() {
+      this.collapsed = window.innerWidth <= 768;
+    }
   }
 }
 </script>
