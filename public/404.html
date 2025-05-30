@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Blog</title>
+    <script>
+        // 单页应用的 GitHub Pages 重定向
+        (function () {
+            // 获取当前 URL 的路径部分
+            var path = window.location.pathname;
+            // 获取当前 URL 的查询字符串
+            var query = window.location.search;
+            // 获取当前 URL 的 hash
+            var hash = window.location.hash;
+
+            // 将完整路径存储到 sessionStorage
+            var fullPath = path + query + hash;
+            sessionStorage.setItem('redirect', fullPath);
+
+            // 重定向到首页
+            window.location.replace('/blog/');
+        })();
+    </script>
+</head>
+
+<body>
+    <p>Redirecting...</p>
+</body>
+
+</html>

@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>zc 的博客</title>
-  <link rel="icon" href="./src/assets/avatar.png" type="image/png" />
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <script>
+    // 处理 GitHub Pages 的重定向
+    (function () {
+      var redirect = sessionStorage.getItem('redirect');
+      if (redirect) {
+        sessionStorage.removeItem('redirect');
+        if (redirect !== window.location.pathname) {
+          window.history.replaceState(null, null, redirect);
+        }
+      }
+    })();
+  </script>
 </head>
 
 <body>
   <div style="position: fixed; top: 10px; right: 10px;" id="windowSize"></div>
   <div id="app"></div>
-  <script type="module" src="./src/main.js"></script>
+  <script type="module" src="/src/main.js"></script>
   <script>
     function updateWindowSize() {
       document.getElementById('windowSize').textContent = window.innerWidth + 'px';
@@ -19,14 +32,5 @@
     updateWindowSize();
   </script>
 </body>
-
-
-<script>
-  if (!location.pathname.endsWith('/')) {
-    location.replace(location.pathname + '/' + location.search + location.hash);
-  }
-
-</script>
-
 
 </html>

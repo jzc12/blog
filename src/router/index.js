@@ -16,7 +16,12 @@ const routes = [
     {
         path: '/category',
         name: 'category',
-        component: () => import('../md/category.md')
+        component: () => import('../views/CategoryList.vue')
+    },
+    {
+        path: '/:articleId',
+        name: 'article',
+        component: () => import('../views/ArticleDetail.vue')
     },
     {
         path: '/tags',
@@ -32,11 +37,10 @@ const routes = [
         path: '/:pathMatch(.*)*',
         redirect: '/404'
     }
-
 ]
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory('/blog/'),
     routes
 })
 
