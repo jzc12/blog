@@ -43,6 +43,7 @@
 
 <script>
 import '../css/message-form.css'
+
 import { getTodayMessageCount } from '../utils/supabase'
 
 export default {

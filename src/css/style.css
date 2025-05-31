@@ -72,12 +72,14 @@ body {
 }
 
 @media (max-width: 768px) {
+
     .app-container {
         flex-direction: column;
         height: 100vh;
     }
 
     .Sidebar {
+        font-size: 50%;
         width: 100%;
         height: auto;
         border-right: none;
@@ -109,6 +111,7 @@ body {
         overflow-y: auto;
         scrollbar-width: none;
         -ms-overflow-style: auto;
+        font-size: 50%;
     }
 
     body {
