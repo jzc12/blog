@@ -67,7 +67,6 @@ body {
 
 .alternative-layout .content {
     width: 80%;
-    /* 100% - 10%*2 */
     padding: 20px;
     overflow-y: auto;
 }
@@ -90,7 +89,7 @@ body {
 
     .Sidebar {
         width: 100% !important;
-        height: 120px !important;
+        height: 60px !important;
     }
 
     .Sidebar>.nav {

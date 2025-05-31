@@ -18,7 +18,6 @@
 
 .Sidebar::-webkit-scrollbar {
     display: none;
-
 }
 
 .Sidebar.collapsed {
@@ -110,5 +109,4 @@ a {
     .profile {
         display: none;
     }
-
 }

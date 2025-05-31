@@ -1,0 +1,97 @@
+.message-page {
+    height: calc(100vh - 4rem);
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa00 0%, #c3cfe205 100%);
+}
+
+.message-container {
+    position: relative;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.231);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+}
+
+.controls {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #eee;
+    background: rgba(255, 255, 255, 0);
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.message-count {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.refresh-btn {
+    padding: 0.5rem 1rem;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.refresh-btn:hover:not(:disabled) {
+    background-color: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.refresh-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.input-area {
+    position: sticky;
+    bottom: 0;
+    background: transparent;
+    transition: transform 0.3s ease;
+    z-index: 10;
+}
+
+.input-area.hidden {
+    transform: translateY(200%);
+}
+
+.toggle-input-btn {
+    position: absolute;
+    bottom: 100%;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    border-radius: 60%;
+    background: #4a90e2;
+    color: rgba(255, 255, 255, 0.817);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.toggle-input-btn:hover {
+    background: #357abd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
