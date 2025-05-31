@@ -46,6 +46,9 @@
 }
 
 .nav-li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin: 10px 0;
     padding: 8px 10px;
     border-radius: 6px;
@@ -53,14 +56,23 @@
     transition: background 0.2s ease;
 }
 
+.icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: #333;
+}
+
+
 .nav-li:hover {
     background-color: #a8ed8d;
 }
 
 .nav-span {
-    float: right;
+    margin-left: auto;
     color: #888;
 }
+
 
 .profile {
     margin-top: 40px;
@@ -89,7 +101,11 @@
     text-decoration: none;
     color: #333;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
 
 .footer {
     margin-top: auto;

@@ -64,4 +64,20 @@ export const getAllMessages = async () => {
     }
 }
 
+// 获取所有非私有消息的数量
+export const getAllPublicMessageCount = async () => {
+    try {
+        const { count, error } = await supabase
+            .from('messages')
+            .select('*', { count: 'exact', head: true })
+            .eq('private_message', false);
+
+        if (error) throw error;
+        return count || 0;
+    } catch (error) {
+        console.error('查询非私有消息数量失败:', error);
+        return 0;
+    }
+}
+
 export default supabase 
