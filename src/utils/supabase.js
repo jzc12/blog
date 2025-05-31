@@ -1,8 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://mwqfbczqulrtcqjxmvud.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im13cWZiY3pxdWxydGNxanhtdnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MTgzODAsImV4cCI6MjA2NDE5NDM4MH0.e5TinPO93eKHmn2amIWynxKJ09UtBk8jL00BLPm_9kg'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
 const supabase = createClient(supabaseUrl, supabaseKey)
+
 
 // 获取今日留言数
 export const getTodayMessageCount = async () => {
