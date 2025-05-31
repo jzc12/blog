@@ -1,4 +1,4 @@
-import{o as e,c as d,a}from"./index-f11b72b6.js";const r={class:"markdown-body"},c={__name:"README",setup(o,{expose:n}){return n({frontmatter:{}}),(s,t)=>(e(),d("div",r,t[0]||(t[0]=[a(`<h1>ner_kge</h1><h2>结构框架</h2><pre><code class="language-bash">
+import{o as e,c as d,a}from"./index-a0628c0d.js";const r={class:"markdown-body"},c={__name:"README",setup(o,{expose:n}){return n({frontmatter:{}}),(s,t)=>(e(),d("div",r,t[0]||(t[0]=[a(`<h1>ner_kge</h1><h2>结构框架</h2><pre><code class="language-bash">
 ner_kge/
 ├── data/
 │  		├── conll2003/       # 原始数据集
