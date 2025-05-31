@@ -82,3 +82,11 @@
 .messages-container::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
+
+@media (max-width: 768px) {
+
+    .message-list {
+        font-size: 50%;
+    }
+
+}

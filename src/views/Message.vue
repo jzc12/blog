@@ -36,7 +36,6 @@
 import MessageForm from './MessageForm.vue'
 import MessageList from './MessageList.vue'
 import { addMessage, getAllMessages } from '../utils/supabase'
-import '../css/message.css'
 
 export default {
   name: 'Message',
@@ -93,3 +92,8 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@import '../css/message.css';
+</style>
+

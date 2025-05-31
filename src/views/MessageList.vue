@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import '../css/message-list.css'
 
 export default {
   name: 'MessageList',
@@ -63,3 +62,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@import '../css/message-list.css'
+</style>
