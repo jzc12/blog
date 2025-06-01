@@ -5,7 +5,9 @@ import {
     User,
     Folder,
     MessageSquare,
-    Mail
+    Mail,
+    Loader,
+    RefreshCcw
 } from 'lucide-vue-next';
 
 import GitHub from '../assets/github.svg';
@@ -16,5 +18,7 @@ export const icons = {
     category: Folder,
     message: MessageSquare,
     mail: Mail,
-    github: GitHub
+    github: GitHub,
+    loading: Loader,
+    refresh: RefreshCcw
 };

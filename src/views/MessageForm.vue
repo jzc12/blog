@@ -17,7 +17,7 @@
             type="checkbox" 
             v-model="message.private_message"
           >
-          <span class="toggle-label">私信 : 不会在主页显示，我会收到✅ </span>
+          <span class="toggle-label">私信</span>
         </label>
       </div>
       <div class="input-group">
@@ -33,6 +33,7 @@
         <button type="submit" class="submit-btn" title="发送">
           发送
         </button>
+       
       </div>
       <div class="message-info">
         {{ isLoadingCount ? '加载中...' : `今日剩余留言次数：${remainingMessages}` }}

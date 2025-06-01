@@ -2,6 +2,9 @@
   <div class="message-page">
     <div class="message-container">
       <div class="controls">
+        <div class="text">
+          <p>欢迎留言！私信不会显示，但是我会收到</p>
+        </div>
         <div class="control-group">
           <button 
             class="refresh-btn"
@@ -9,7 +12,7 @@
             :disabled="isLoading"
             :title="'刷新留言'"
           >
-            {{ isLoading ? '加载中...' : '刷新留言' }}
+            <component :is="isLoading ? iconMap.loading : iconMap.refresh" class="icon" />
           </button>
         </div>
       </div>
@@ -21,13 +24,6 @@
           @message-submitted="addMessage" 
         />
       </div>
-      <button 
-        class="toggle-input-btn"
-        @click="toggleInput"
-        :title="isInputHidden ? '显示输入框' : '隐藏输入框'"
-      >
-        {{ isInputHidden ? 'v' : '^' }}
-      </button>
     </div>
   </div>
 </template>
@@ -36,6 +32,7 @@
 import MessageForm from './MessageForm.vue'
 import MessageList from './MessageList.vue'
 import { addMessage, getAllMessages } from '../utils/supabase'
+import { icons } from '../utils/icon.js';
 
 export default {
   name: 'Message',
@@ -89,7 +86,12 @@ export default {
   },
   created() {
     this.loadMessages()
-  }
+  },
+  computed: {
+    iconMap() {
+      return icons;
+    }
+  },
 }
 </script>
 
