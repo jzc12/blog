@@ -1,3 +1,10 @@
+---
+title: hw
+date: 2025-06-01
+updated: 2025-06-01
+category: 教程
+summary: 文章摘要
+---
 # EduPro校园数字平台敏捷交付流程问题诊断与改进策略分析报告
 
 ## 1. Scrum实施偏差诊断与改进策略

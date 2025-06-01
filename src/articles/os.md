@@ -1,3 +1,10 @@
+---
+title: os
+date: 2025-06-01
+updated: 2025-06-01
+category: 教程
+summary: 文章摘要
+---
 # 摸鱼中
 
 ## 1

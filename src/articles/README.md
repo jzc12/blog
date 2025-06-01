@@ -1,3 +1,10 @@
+---
+title: README
+date: 2025-06-01
+updated: 2025-06-01
+category: 教程
+summary: 文章摘要
+---
 # ner_kge
 
 ## 结构框架

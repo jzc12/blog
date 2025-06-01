@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <div class="overlay"></div>
     <Sidebar />
     <main class="content">
       <router-view v-slot="{ Component }">
@@ -7,7 +8,7 @@
           <component :is="Component" @content-loaded="handleContentLoaded" ref="currentView" />
           <div class="markdown-body" v-html="renderedContent"></div>
         </template>
-        <component v-else :is="Component"/>
+        <component v-else :is="Component" />
       </router-view>
     </main>
   </div>
