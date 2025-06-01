@@ -1,4 +1,6 @@
-const n=`------
+const n=`---
+
+---
 
 ## REINFORCE 算法实现报告
 

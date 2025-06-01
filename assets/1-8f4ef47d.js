@@ -1,4 +1,11 @@
-const l=`
+const n=`---
+title: 示例文章
+date: 2025-06-01
+updated: 2025-06-03
+category: 教程
+summary: 文章摘要
+---
+
 # Hi
 
 这是一篇示例文章，用来测试文章系统是否正常工作。
@@ -45,4 +52,4 @@ $\\mathcal{L} = -\\log \\pi_\\theta(a|s) \\cdot A(s,a) + 0.5 \\cdot (V_\\phi(s) 
 \`\`\`python
 print("Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!")
 \`\`\`
-`;export{l as default};
+`;export{n as default};

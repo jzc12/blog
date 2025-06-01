@@ -1,4 +1,12 @@
-const n=`## 一、答辩时间安排
+const n=`---
+title: dl答辩
+date: 2025-06-01
+updated: 2025-06-03
+category: 文章
+summary: 文章摘要
+---
+
+## 一、答辩时间安排
 
 - **时间**：**5月30日**
 
