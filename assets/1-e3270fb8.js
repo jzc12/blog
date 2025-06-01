@@ -1,4 +1,4 @@
-const n=`
+const l=`
 # Hi
 
 这是一篇示例文章，用来测试文章系统是否正常工作。
@@ -41,4 +41,8 @@ $\\mathcal{L} = -\\log \\pi_\\theta(a|s) \\cdot A(s,a) + 0.5 \\cdot (V_\\phi(s) 
 其中：  
     - $\\pi_\\theta$是Actor网络，$V_\\phi$是Critic网络  
     - $R_t$
-`;export{n as default};
+
+\`\`\`python
+print("Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!Hello, world!")
+\`\`\`
+`;export{l as default};
