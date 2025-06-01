@@ -14,7 +14,6 @@
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    background: #f7faff3a;
     border: 1px solid #d0e6ff;
     border-radius: 20px;
     color: #1f4e79;
@@ -36,6 +35,13 @@
     font-style: normal;
     font-size: 1.2em;
     line-height: 1;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: #333;
 }
 
 .article-header {
@@ -98,13 +104,10 @@
 
 
     .meta-info {
-        flex-direction: column;
-        gap: 1em;
-        align-items: center;
+        gap: 2em;
     }
 
     .meta-item {
-        width: 100%;
         justify-content: center;
     }
 

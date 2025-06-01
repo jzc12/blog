@@ -8,15 +8,15 @@
       <h1 class="article-title">{{ article.title }}</h1>
       <div class="meta-info">
         <div class="meta-item">
-          <i class="meta-icon">📅</i>
-          <span class="date">发布于 {{ article.date }}</span>
+          <component :is="iconMap.calendar" class="icon" />
+          <span class="date">{{ article.date }}</span>
         </div>
         <div class="meta-item" v-if="article.updated">
           <i class="meta-icon">🔄</i>
           <span class="updated">更新于 {{ article.updated }}</span>
         </div>
         <div class="meta-item">
-          <i class="meta-icon">📁</i>
+          <component :is="iconMap.kanban" class="icon" />
           <span class="category">{{ article.category }}</span>
         </div>
       </div>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { icons } from '../utils/icon.js';
 export default {
   name: 'ArticleDetail',
   data() {
@@ -41,6 +42,11 @@ export default {
     this.$nextTick(() => {
       this.$emit('content-loaded', this.article.content)
     })
+  },
+  computed: {
+    iconMap() {
+      return icons;
+    }
   },
   methods: {
     async getArticle(id) {
@@ -79,7 +85,7 @@ export default {
         console.error('加载文章失败:', error)
         this.$router.push('/404')
       }
-    }
+    },
   }
 }
 </script>

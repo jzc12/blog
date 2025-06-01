@@ -43,10 +43,14 @@ const md = new MarkdownIt({
 
                 const lines = highlighted.split('\n')
                 const withLineNumbers = lines.map((line, i) => {
-                    return `<span class="line-number">${i + 1}</span>${line}`
-                }).join('\n')
+                    return `<div class="code-line">
+                                <span class="line-number">${i + 1}</span>
+                                <span class="code-content">${line || '&nbsp;'}</span>
+                            </div>`
+                }).join('')
 
                 return `<pre class="hljs with-line-numbers"><code>${withLineNumbers}</code></pre>`
+
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`

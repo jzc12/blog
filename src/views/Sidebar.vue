@@ -82,7 +82,6 @@ export default {
       this.navItems[2].count = count.toString();
     },
     async countMessages() {
-      console.log('countMessages');
       this.messageCount = await getAllPublicMessageCount();
       this.navItems[3].count = this.messageCount.toString();
     }

@@ -7,7 +7,12 @@ import {
     MessageSquare,
     Mail,
     Loader,
-    RefreshCcw
+    RefreshCcw,
+    CalendarDays,
+    FolderKanban,
+    MoveLeft,
+    SquareChevronDown,
+    SquareChevronUp
 } from 'lucide-vue-next';
 
 import GitHub from '../assets/github.svg';
@@ -20,5 +25,10 @@ export const icons = {
     mail: Mail,
     github: GitHub,
     loading: Loader,
-    refresh: RefreshCcw
+    refresh: RefreshCcw,
+    calendar: CalendarDays,
+    kanban: FolderKanban,
+    moveLeft: MoveLeft,
+    squareChevronDown: SquareChevronDown,
+    squareChevronUp: SquareChevronUp
 };

@@ -117,7 +117,6 @@
     border-radius: 4px;
 }
 
-/* 自定义标签，如语言标签 */
 .markdown-body .tag {
     display: inline-block;
     background: #447acc4a;
@@ -130,24 +129,58 @@
 
 .hljs.with-line-numbers {
     counter-reset: linenumber;
-    padding-left: 3em;
+    padding-left: 2em;
     position: relative;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.hljs.with-line-numbers::-webkit-scrollbar {
+    display: none;
 }
 
 .hljs.with-line-numbers code {
-    white-space: pre;
+    white-space: nowrap;
+    display: block;
+    min-width: 100%;
+}
+
+.hljs.with-line-numbers code .code-line {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
 }
 
 .hljs.with-line-numbers code .line-number {
     counter-increment: linenumber;
     display: inline-block;
     width: 2em;
-    margin-left: -3em;
     text-align: right;
     padding-right: 0.5em;
-    color: #ea1d1da0;
+    color: #e74c3ca0;
+    flex-shrink: 0;
     user-select: none;
+    margin-left: -2em;
+    position: relative;
 }
+
+.hljs.with-line-numbers code .line-number::after {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.135);
+}
+
+.hljs.with-line-numbers code .code-content {
+    padding-left: 0.5em;
+    flex: 1;
+    color: #333;
+    white-space: nowrap;
+}
+
 
 
 @media (max-width: 768px) {

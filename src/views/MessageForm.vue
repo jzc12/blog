@@ -3,16 +3,25 @@
     <div v-if="isLimitReached" class="limit-warning">
       今日留言已达上限（20条），请明天再来留言
     </div>
+
     <form v-else @submit.prevent="submitMessage" class="form-container">
+
+      <!-- form-header 始终显示，但其中的 input-group 可控制显示 -->
       <div class="form-header">
+        <button type="button" class="toggle-input-btn" @click="showInputs = !showInputs">
+          <component :is="showInputs ? iconMap.squareChevronDown : iconMap.squareChevronUp" class="icon" />
+        </button>
+
         <input 
+          v-if="showInputs"
           type="text" 
           v-model="message.username" 
           required 
           placeholder="昵称"
           class="name-input"
         >
-        <label class="private-toggle">
+
+        <label class="private-toggle" v-if="showInputs">
           <input 
             type="checkbox" 
             v-model="message.private_message"
@@ -20,7 +29,8 @@
           <span class="toggle-label">私信</span>
         </label>
       </div>
-      <div class="input-group">
+
+      <div v-if="showInputs" class="input-group">
         <textarea 
           v-model="message.content" 
           required 
@@ -30,11 +40,12 @@
           @keydown.enter.prevent="handleEnter"
           ref="contentInput"
         ></textarea>
+
         <button type="submit" class="submit-btn" title="发送">
           发送
         </button>
-       
       </div>
+
       <div class="message-info">
         {{ isLoadingCount ? '加载中...' : `今日剩余留言次数：${remainingMessages}` }}
       </div>
@@ -43,13 +54,14 @@
 </template>
 
 <script>
-
 import { getTodayMessageCount } from '../utils/supabase'
+import { icons } from '../utils/icon.js'
 
 export default {
   name: 'MessageForm',
   data() {
     return {
+      showInputs: true,
       message: {
         username: '',
         content: '',
@@ -62,53 +74,59 @@ export default {
   },
   computed: {
     remainingMessages() {
-      return Math.max(0, this.dailyLimit - this.todayCount);
+      return Math.max(0, this.dailyLimit - this.todayCount)
     },
     isLimitReached() {
-      return this.remainingMessages <= 0;
+      return this.remainingMessages <= 0
+    },
+    iconMap() {
+      return icons
     }
   },
   methods: {
     async fetchTodayCount() {
-      this.isLoadingCount = true;
-      this.todayCount = await getTodayMessageCount();
-      this.isLoadingCount = false;
+      this.isLoadingCount = true
+      this.todayCount = await getTodayMessageCount()
+      this.isLoadingCount = false
     },
-
     async submitMessage() {
-      if (this.isLimitReached || !this.message.content.trim()) {
-        return;
-      }
+      if (this.isLimitReached || !this.message.content.trim()) return
 
-      this.$emit('message-submitted', { ...this.message });
+      this.$emit('message-submitted', { ...this.message })
 
-      this.message.content = '';
-      this.message.private_message = false;
+      this.message.content = ''
+      this.message.private_message = false
       this.$nextTick(() => {
-        this.$refs.contentInput.style.height = 'auto';
-      });
+        this.$refs.contentInput.style.height = 'auto'
+      })
 
-      await this.fetchTodayCount();
+      await this.fetchTodayCount()
     },
-
     handleEnter(e) {
-      if (e.shiftKey) return;
-      this.submitMessage();
+      if (e.shiftKey) return
+      this.submitMessage()
     },
-
     adjustTextareaHeight() {
-      const textarea = this.$refs.contentInput;
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
+      const textarea = this.$refs.contentInput
+      textarea.style.height = 'auto'
+      textarea.style.height = textarea.scrollHeight + 'px'
     }
   },
-
   mounted() {
-    this.$refs.contentInput.addEventListener('input', this.adjustTextareaHeight);
-    this.fetchTodayCount();
+    this.$refs.contentInput.addEventListener('input', this.adjustTextareaHeight)
+    this.fetchTodayCount()
   },
-  beforeUnmount() {
-    this.$refs.contentInput.removeEventListener('input', this.adjustTextareaHeight);
+  watch: {
+    showInputs(newVal) {
+      this.$nextTick(() => {
+        const el = this.$refs.contentInput;
+        if (newVal && el) {
+          el.addEventListener('input', this.adjustTextareaHeight);
+        } else if (el) {
+          el.removeEventListener('input', this.adjustTextareaHeight);
+        }
+      });
+    }
   }
 }
 </script>
@@ -117,4 +135,3 @@ export default {
 <style scoped>
 @import '../css/message-form.css';
 </style>
-
