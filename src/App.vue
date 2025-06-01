@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="overlay"></div>
+    <!--div class="overlay"></div>-->
     <Sidebar />
     <main class="content">
       <router-view v-slot="{ Component }">
