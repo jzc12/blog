@@ -8,9 +8,6 @@
 
 ```python
 print("Hello, world!")
-
-
-
 ```
 
 ---
