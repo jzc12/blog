@@ -5,19 +5,24 @@
     <button class="toggle-btn" @click="toggleSidebar">≡</button>
     <h2 v-show="!collapsed">zc 的博客</h2>
 
+    <div class="font-size-controls">
+      <template v-if="showFontSizeButtons">
+        <button @click="increaseFontSize">A+</button>
+        <button @click="decreaseFontSize">A-</button>
+      </template>
+      <button v-else @click="toggleFontSizeButtonsDisplay" class="single-a-button"
+        :class="{ 'idle-state': !showFontSizeButtons }">A</button>
+    </div>
+
     <div class="nav">
-      <router-link
-        v-for="item in navItems"
-        :key="item.name"
-        :to="{ name: item.name }"
-      >
-      <div class="nav-li">
-        <component :is="item.icon" class="icon" />
-        <span v-if="!collapsed">{{ item.text }}</span>
-        <div class="nav-span">
-          <span v-if="!collapsed">{{ item.count }}</span>
+      <router-link v-for="item in navItems" :key="item.name" :to="{ name: item.name }">
+        <div class="nav-li">
+          <component :is="item.icon" class="icon" />
+          <span v-if="!collapsed">{{ item.text }}</span>
+          <div class="nav-span">
+            <span v-if="!collapsed">{{ item.count }}</span>
+          </div>
         </div>
-      </div>
 
       </router-link>
     </div>
@@ -55,6 +60,8 @@ export default {
       collapsed: false,
       articleCount: 0,
       messageCount: 0,
+      showFontSizeButtons: true,
+      idleTimer: null,
       navItems: [
         { name: 'home', icon: icons.home, text: '首页', count: '' },
         { name: 'about', icon: icons.about, text: '关于', count: '' },
@@ -84,6 +91,36 @@ export default {
     async countMessages() {
       this.messageCount = await getAllPublicMessageCount();
       this.navItems[3].count = this.messageCount.toString();
+    },
+    increaseFontSize() {
+      this.resetIdleTimer();
+      let html = document.querySelector('html');
+      let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+      html.style.fontSize = (currentSize + 1) + 'px';
+    },
+    decreaseFontSize() {
+      this.resetIdleTimer();
+      let html = document.querySelector('html');
+      let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
+      html.style.fontSize = (currentSize - 1) + 'px';
+    },
+    startIdleTimer() {
+      this.idleTimer = setTimeout(() => {
+        this.showFontSizeButtons = false;
+      }, 10000);
+    },
+    resetIdleTimer() {
+      clearTimeout(this.idleTimer);
+      this.showFontSizeButtons = true;
+      this.startIdleTimer();
+    },
+    toggleFontSizeButtonsDisplay() {
+      this.showFontSizeButtons = !this.showFontSizeButtons;
+      if (this.showFontSizeButtons) {
+        this.resetIdleTimer();
+      } else {
+        clearTimeout(this.idleTimer);
+      }
     }
   },
   mounted() {
@@ -91,9 +128,11 @@ export default {
     window.addEventListener('resize', this.checkScreenSize);
     this.countArticles();
     this.countMessages();
+    this.startIdleTimer();
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.checkScreenSize);
+    clearTimeout(this.idleTimer);
   }
 };
 </script>

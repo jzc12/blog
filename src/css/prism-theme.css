@@ -15,7 +15,7 @@ pre[class*="language-"] {
     background: #f8f9fa !important;
     box-shadow: inset 0 0 0 1px #e0e0e0;
     font-family: 'Fira Code', 'Consolas', monospace;
-    font-size: 14px;
+    font-size: 0.875rem;
     line-height: 1.8;
     overflow: auto;
     position: relative;
@@ -29,7 +29,7 @@ pre[class*="language-"] {
     border-radius: 4px;
     white-space: normal;
     font-family: 'Fira Code', 'Consolas', monospace;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 /* 基础代码样式 */
@@ -52,9 +52,9 @@ pre[class*="language-"]::before {
     content: attr(data-language);
     position: absolute;
     top: 0;
-    right: 1em;
+    right: 1rem;
     padding: 2px 8px;
-    font-size: 13px;
+    font-size: 0.8125rem;
     color: #fff;
     background: #447acc;
     border-radius: 0 0 6px 6px;
@@ -170,7 +170,7 @@ div.code-toolbar>.toolbar>.toolbar-item>button {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 0.8125rem;
     transition: all 0.3s ease;
 }
 

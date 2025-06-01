@@ -18,7 +18,7 @@
     border-radius: 20px;
     color: #1f4e79;
     text-decoration: none;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     backdrop-filter: blur(8px);
     z-index: 100;
@@ -33,7 +33,7 @@
 
 .back-icon {
     font-style: normal;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     line-height: 1;
 }
 
@@ -46,13 +46,13 @@
 
 .article-header {
     text-align: center;
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
 }
 
 .article-title {
-    font-size: 2em;
+    font-size: 2rem;
     color: #1f4e79;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
     font-weight: 600;
     letter-spacing: -0.5px;
 }
@@ -61,28 +61,25 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 2em;
+    gap: 2rem;
     color: #000000c1;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .meta-item {
     display: flex;
     align-items: center;
-    gap: 0.5em;
-    padding: 0.5em 1em;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
     background: #f7faff3a;
     border: 1px solid #d0e6ff;
     border-radius: 20px;
     transition: all 0.3s ease;
-    font-size: 0.2em;
+    font-size: 0.2rem;
 }
 
-.icon {
-    width: 15px;
-    height: 15px;
-    flex-shrink: 0;
-    color: #333;
+.date {
+    font-size: 0.8rem;
 }
 
 .meta-item:hover {
@@ -93,11 +90,11 @@
 
 .meta-icon {
     font-style: normal;
-    font-size: 1.1em;
+    font-size: 1.1rem;
 }
 
 .article-divider {
-    margin: 2em auto;
+    margin: 2rem auto;
     height: 1px;
     background: linear-gradient(to right,
             transparent,
@@ -112,7 +109,7 @@
 
 
     .meta-info {
-        gap: 2em;
+        gap: 2rem;
     }
 
     .meta-item {
@@ -120,7 +117,7 @@
     }
 
     .article-title {
-        font-size: 1.5em;
-        margin-top: 3em;
+        font-size: 1.5rem;
+        margin-top: 3rem;
     }
 }

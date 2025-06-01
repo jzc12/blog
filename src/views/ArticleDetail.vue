@@ -5,7 +5,7 @@
   </router-link>
   <div class="article-meta" v-if="article">
     <div class="article-header">
-      <!--h3 class="article-title">{{ article.title }}</h3> -->
+      <h3 class="article-title">{{ article.title }}</h3>
       <div class="meta-info">
         <div class="meta-item">
           <component :is="iconMap.calendar" class="icon" />
@@ -84,4 +84,5 @@ export default {
 
 <style scoped>
 @import '../css/articleDetail.css';
+@import '../css/icons.css';
 </style>

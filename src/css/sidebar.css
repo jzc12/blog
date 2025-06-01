@@ -32,11 +32,11 @@
     padding: 5px 10px;
     cursor: pointer;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 .Sidebar h2 {
-    font-size: 20px;
+    font-size: 1.25rem;
     margin-bottom: 20px;
     white-space: nowrap;
 }
@@ -80,7 +80,7 @@
 
 .profile p {
     margin: 8px 0;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 .contact-links {
@@ -93,7 +93,7 @@
 .contact-links a {
     text-decoration: none;
     color: #333;
-    font-size: 14px;
+    font-size: 0.875rem;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -103,7 +103,7 @@
 .footer {
     margin-top: auto;
     text-align: center;
-    font-size: 12px;
+    font-size: 0.75rem;
     color: #000000;
 }
 
@@ -112,10 +112,111 @@ a {
     text-decoration: none;
 }
 
+.font-size-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.font-size-controls button {
+    /* Green */
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.font-size-controls button:hover {
+    background-color: #b7e3b99a;
+}
+
+.Sidebar.collapsed .font-size-controls {
+    display: none;
+    /* Hide when sidebar is collapsed on desktop */
+}
+
 @media (max-width: 768px) {
 
     .toggle-btn,
     .profile {
         display: none;
+    }
+
+    .font-size-controls {
+        display: flex;
+        flex-direction: row;
+        /* Buttons stacked vertically */
+        position: static;
+        /* Remove absolute positioning */
+        transform: none;
+        /* Remove transform */
+        margin-left: auto;
+        /* Push to the right */
+        gap: 5px;
+    }
+
+    .Sidebar {
+        font-size: 75%;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        flex-direction: row;
+        overflow: auto;
+        align-items: center;
+        /* Vertically align items in the flex container */
+    }
+
+    .Sidebar h2 {
+        display: none;
+    }
+
+    .Sidebar .nav {
+        flex-grow: 1;
+        /* Allow navigation to take up available space */
+    }
+
+    /* Existing styles for font-size-controls */
+    .font-size-controls button {
+        font-size: 0.9rem;
+        padding: 4px 4px;
+    }
+
+    .single-a-button {
+        opacity: 0.5;
+        transition: opacity 0.5s ease;
+    }
+
+    .single-a-button.idle-state {
+        opacity: 0.3;
+        /* Initial opacity for idle state */
+    }
+
+    /* Additional styles for mobile layout */
+    .Sidebar.collapsed .font-size-controls {
+        display: flex;
+        /* Show when sidebar is collapsed on mobile */
+    }
+
+    .Sidebar {
+        width: 100% !important;
+        height: 60px !important;
+    }
+
+    .Sidebar>.nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
     }
 }

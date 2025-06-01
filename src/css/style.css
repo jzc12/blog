@@ -80,30 +80,6 @@ body {
         height: 100vh;
     }
 
-    .Sidebar {
-        font-size: 75%;
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #ddd;
-        flex-direction: row;
-        overflow: auto;
-    }
-
-
-    .Sidebar {
-        width: 100% !important;
-        height: 60px !important;
-    }
-
-    .Sidebar>.nav {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
-    }
-
     .content {
         flex: 1;
         width: 100%;
