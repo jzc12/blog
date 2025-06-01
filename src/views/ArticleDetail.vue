@@ -5,43 +5,47 @@
   </router-link>
   <div class="article-meta" v-if="article">
     <div class="article-header">
-      <h1 class="article-title">{{ article.title }}</h1>
+      <h3 class="article-title">{{ article.title }}</h3>
       <div class="meta-info">
         <div class="meta-item">
           <component :is="iconMap.calendar" class="icon" />
           <span class="date">{{ article.date }}</span>
         </div>
-        <div class="meta-item" v-if="article.updated">
-          <i class="meta-icon">🔄</i>
-          <span class="updated">更新于 {{ article.updated }}</span>
+        <div class="meta-item">
+          <component :is="iconMap.calendarSync" class="icon" />
+          <span class="date">{{ article.updated }}</span>
         </div>
         <div class="meta-item">
           <component :is="iconMap.kanban" class="icon" />
-          <span class="category">{{ article.category }}</span>
+          <span class="date">{{ article.category }}</span>
         </div>
       </div>
     </div>
-    <div class="article-divider"></div>
-    <div ref="markdownContent" style="display: none">{{ article.content }}</div>
   </div>
 </template>
 
 <script>
 import { icons } from '../utils/icon.js';
+import fm from 'front-matter'
+import dayjs from 'dayjs'
+
 export default {
   name: 'ArticleDetail',
+  emits: ['content-loaded'],
   data() {
     return {
       article: null
     }
   },
   async created() {
-    const articleId = this.$route.params.articleId
-    this.article = await this.getArticle(articleId)
+    const articleId = this.$route.params.articleId;
+    this.article = await this.getArticle(articleId);
     // 通知父组件内容已更新
     this.$nextTick(() => {
-      this.$emit('content-loaded', this.article.content)
-    })
+      if (this.article && this.article.content) {
+        this.$emit('content-loaded', this.article.content);
+      }
+    });
   },
   computed: {
     iconMap() {
@@ -51,39 +55,27 @@ export default {
   methods: {
     async getArticle(id) {
       try {
-        const article = await import(`../articles/${id}.md?raw`)
-        // 解析 frontmatter
-        const frontmatterMatch = article.default.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)
-        if (frontmatterMatch) {
-          const [, frontmatterStr, content] = frontmatterMatch
-          const frontmatter = {}
-          frontmatterStr.split('\n').forEach(line => {
-            const [key, ...values] = line.split(':')
-            if (key && values.length) {
-              frontmatter[key.trim()] = values.join(':').trim()
-            }
-          })
+        const article = await import(`../articles/${id}.md?raw`);
+        const { attributes: frontmatter, body: content } = fm(article.default);
 
-          return {
-            id,
-            title: frontmatter.title || id,
-            date: frontmatter.date || '未知日期',
-            updated: frontmatter.updated,
-            category: frontmatter.category || '未分类',
-            content: content.trim()
-          }
-        }
-
+        return {
+          id,
+          title: frontmatter.title || id,
+          date: dayjs(frontmatter.date).format('YYYY-MM-DD') || '未知日期',
+          updated: dayjs(frontmatter.updated).format('YYYY-MM-DD') || '未知更新时间',
+          category: frontmatter.category || '未分类',
+          content: content.trim()
+        };
+      } catch (error) {
+        console.error('解析文章失败:', error.message, error.stack);
         return {
           id,
           title: id,
           date: '未知日期',
+          updated: '未知更新时间',
           category: '未分类',
-          content: article.default
-        }
-      } catch (error) {
-        console.error('加载文章失败:', error)
-        this.$router.push('/404')
+          content: ''
+        };
       }
     },
   }

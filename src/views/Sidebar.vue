@@ -101,4 +101,5 @@ export default {
 
 <style>
 @import "../css/sidebar.css";
+@import "../css/icons.css";
 </style>

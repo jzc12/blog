@@ -12,7 +12,9 @@ import {
     FolderKanban,
     MoveLeft,
     SquareChevronDown,
-    SquareChevronUp
+    SquareChevronUp,
+    Calendar,
+    CalendarSync
 } from 'lucide-vue-next';
 
 import GitHub from '../assets/github.svg';
@@ -26,9 +28,11 @@ export const icons = {
     github: GitHub,
     loading: Loader,
     refresh: RefreshCcw,
-    calendar: CalendarDays,
+    calendardays: CalendarDays,
     kanban: FolderKanban,
     moveLeft: MoveLeft,
     squareChevronDown: SquareChevronDown,
-    squareChevronUp: SquareChevronUp
+    squareChevronUp: SquareChevronUp,
+    calendarSync: CalendarSync,
+    calendar: Calendar
 };

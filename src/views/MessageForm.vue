@@ -134,4 +134,5 @@ export default {
 
 <style scoped>
 @import '../css/message-form.css';
+@import '../css/icons.css';
 </style>

@@ -97,5 +97,6 @@ export default {
 
 <style scoped>
 @import '../css/message.css';
+@import '../css/icons.css';
 </style>
 

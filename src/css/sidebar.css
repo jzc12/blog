@@ -56,14 +56,6 @@
     transition: background 0.2s ease;
 }
 
-.icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    color: #333;
-}
-
-
 .nav-li:hover {
     background-color: #a8ed8d;
 }

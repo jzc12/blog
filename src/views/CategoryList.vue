@@ -19,7 +19,7 @@
           :to="{ name: 'article', params: { articleId: article.id }}"
           class="article-item"
         >
-          <h2>{{ article.title }}</h2>
+          <h3>{{ article.title }}</h3>
           <div class="article-meta">
             <span class="date">{{ article.date }}</span>
             <span class="category">{{ article.category }}</span>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import fm from 'front-matter'
+import dayjs from 'dayjs'
 export default {
   name: 'CategoryList',
   data() {
@@ -48,7 +50,7 @@ export default {
   },
   methods: {
     async getArticles() {
-      const articleFiles = import.meta.glob('../articles/*.md')
+      const articleFiles = import.meta.glob('@/articles/*.md', { as: 'raw' }) 
       const paths = Object.keys(articleFiles)
       const total = paths.length
       let loaded = 0
@@ -56,15 +58,25 @@ export default {
       const articles = await Promise.all(
         paths.map(async (path) => {
           try {
-            const module = await articleFiles[path]()
+            const raw = await articleFiles[path]()
+            const { attributes: frontmatter } = fm(raw)
             const fileName = path.split('/').pop().replace('.md', '')
-
+            
+            if (!raw.trim().startsWith('---')) {
+              return {
+                id: fileName,
+                title: fileName,
+                date: '未知日期',
+                category: '未分类',
+                summary: '暂无摘要'
+              }
+            } 
             return {
               id: fileName,
-              title: module.frontmatter?.title || fileName,
-              date: module.frontmatter?.date || '未知日期',
-              category: module.frontmatter?.category || '未分类',
-              summary: module.frontmatter?.summary || '暂无摘要'
+              title: frontmatter.title || fileName,
+              date: dayjs(frontmatter.date).format('YYYY-MM-DD') || '未知日期',
+              category: frontmatter.category || '未分类',
+              summary: frontmatter.summary || '暂无摘要'
             }
           } catch (error) {
             console.error(`加载文章失败: ${path}`, error)
@@ -81,6 +93,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 @import '../css/categoryList.css';

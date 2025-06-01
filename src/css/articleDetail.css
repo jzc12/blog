@@ -72,9 +72,17 @@
     gap: 0.5em;
     padding: 0.5em 1em;
     background: #f7faff3a;
-    border-radius: 20px;
     border: 1px solid #d0e6ff;
+    border-radius: 20px;
     transition: all 0.3s ease;
+    font-size: 0.2em;
+}
+
+.icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    color: #333;
 }
 
 .meta-item:hover {
