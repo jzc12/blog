@@ -1,9 +1,9 @@
 ---
 title: TODO
 date: 2025-06-01
-updated: 2025-06-01
-category: 教程
-summary: 文章摘要
+updated: 2025-06-02
+category: list
+summary: 当前任务
 ---
 # list
 
@@ -11,8 +11,8 @@ summary: 文章摘要
 
 
 
-- **5.30             软件质量   案例分析题：                                   90%**
 - 5.30              软件质量-小组                                                         0%
+- NLP               final                5.30  ~                                            80%
 
 
 
@@ -21,12 +21,8 @@ summary: 文章摘要
 
 
 - RAG              backend        5.30  ~                                            90%
-
 - NLP               hw4                6.11                                                     0%
 - cv                   hw3                 6.11                                                     0%
-
-- **深度学习     ac                    5.30  ~                                            90%**
-- NLP               final                5.30  ~                                            80%
 
 
 

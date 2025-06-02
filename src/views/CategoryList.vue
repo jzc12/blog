@@ -19,7 +19,7 @@
           :to="{ name: 'article', params: { articleId: article.id }}"
           class="article-item"
         >
-          <h3>{{ article.title }}</h3>
+          <h3>{{ article.id }}</h3>
           <div class="article-meta">
             <span class="date">{{ article.date }}</span>
             <span class="category">{{ article.category }}</span>
@@ -65,7 +65,6 @@ export default {
             if (!raw.trim().startsWith('---')) {
               return {
                 id: fileName,
-                title: fileName,
                 date: '未知日期',
                 category: '未分类',
                 summary: '暂无摘要'
@@ -73,7 +72,6 @@ export default {
             } 
             return {
               id: fileName,
-              title: frontmatter.title || fileName,
               date: dayjs(frontmatter.date).format('YYYY-MM-DD') || '未知日期',
               category: frontmatter.category || '未分类',
               summary: frontmatter.summary || '暂无摘要'

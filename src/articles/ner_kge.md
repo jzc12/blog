@@ -1,7 +1,7 @@
 ---
 title: README
 date: 2025-06-01
-updated: 2025-06-01
+updated: 2025-06-02
 category: 教程
 summary: 文章摘要
 ---
@@ -121,3 +121,54 @@ output\model-last
 | `geometric_mean_rank`                  | 几何平均排名    | 替代 MR，排名越小越好  |
 | `harmonic_mean_rank`                   | 调和平均排名    | 更强调低 rank     |
 | `median_rank`                          | 中位排名      | 稳健性评估（抗极端值）   |
+
+
+
+## 架构图
+
+```mermaid
+graph TD
+    A[原始文本数据\n data/test/test.txt  ]
+    B[数据预处理\n data_preprocess  ]
+    C[NER模型训练\n SpaCy train  ]
+    D{实体识别  NER  \n ent_process  }
+    E[提取的实体数据\n data/entities.csv  ]
+    F{关系抽取  RE  \n ent_process & ragas/query.py  }
+    G[知识图谱三元组\n data/llm_relations.csv  ]
+    H{KGE模型训练\n train & model/keen.py  }
+    I[训练好的KGE模型\n output/keen/model_name/  ]
+    J[KGE评估结果与可视化\n summary.csv, loss_plot.png, etc.  ]
+
+    %% Data Flow
+    A --> B
+    B --> C
+    A --> D
+    C -- 使用 --> D
+    D -- 生成 --> E
+    E --> F
+    F -- 动态更新/追加 --> G
+
+    %% Incremental Learning Path
+    G --> H
+    H --> I
+    I --> H
+    H --> J
+
+    %% Highlight key aspects
+    subgraph Incremental/Dynamic Features
+        F -- "检查重复，只追加新三元组" --> G
+        H -- "加载现有模型，在此基础上继续训练" --> I
+    end
+
+    style F fill:#f9f,stroke:#333,stroke-width:2px
+    style H fill:#9cf,stroke:#333,stroke-width:2px
+
+```
+
+## 基础功能
+
+
+
+
+
+## 进阶功能

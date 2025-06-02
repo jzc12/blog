@@ -1,9 +1,9 @@
 ---
 title: os
 date: 2025-06-01
-updated: 2025-06-01
-category: 教程
-summary: 文章摘要
+updated: 2025-06-02
+category: os
+summary: 多线程、并发
 ---
 # 摸鱼中
 
