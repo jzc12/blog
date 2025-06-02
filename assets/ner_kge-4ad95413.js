@@ -1,4 +1,4 @@
-import{o as e,c as a,a as d}from"./index-0cc7de30.js";const r={class:"markdown-body"},c="README",l="2025-06-01T00:00:00.000Z",h="2025-06-02T00:00:00.000Z",g="教程",m="文章摘要",u={__name:"ner_kge",setup(o,{expose:n}){return n({frontmatter:{title:"README",date:"2025-06-01T00:00:00.000Z",updated:"2025-06-02T00:00:00.000Z",category:"教程",summary:"文章摘要"}}),(s,t)=>(e(),a("div",r,t[0]||(t[0]=[d(`<h1>ner_kge</h1><h2>结构框架</h2><pre><code class="language-bash">
+import{o as e,c as a,a as d}from"./index-d13b1541.js";const r={class:"markdown-body"},c="README",l="2025-06-01T00:00:00.000Z",h="2025-06-02T00:00:00.000Z",g="教程",m="文章摘要",u={__name:"ner_kge",setup(o,{expose:n}){return n({frontmatter:{title:"README",date:"2025-06-01T00:00:00.000Z",updated:"2025-06-02T00:00:00.000Z",category:"教程",summary:"文章摘要"}}),(s,t)=>(e(),a("div",r,t[0]||(t[0]=[d(`<h1>ner_kge</h1><h2>结构框架</h2><pre><code class="language-bash">
 ner_kge/
 ├── data/
 │  		├── conll2003/       # 原始数据集
