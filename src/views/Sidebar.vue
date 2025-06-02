@@ -60,7 +60,7 @@ export default {
       collapsed: false,
       articleCount: 0,
       messageCount: 0,
-      showFontSizeButtons: true,
+      showFontSizeButtons: false,
       idleTimer: null,
       navItems: [
         { name: 'home', icon: icons.home, text: '首页', count: '' },
@@ -96,18 +96,23 @@ export default {
       this.resetIdleTimer();
       let html = document.querySelector('html');
       let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
-      html.style.fontSize = (currentSize + 1) + 'px';
+      if (currentSize < 18) {
+        html.style.fontSize = (currentSize + 1) + 'px';
+      }
     },
     decreaseFontSize() {
       this.resetIdleTimer();
       let html = document.querySelector('html');
       let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
-      html.style.fontSize = (currentSize - 1) + 'px';
+      if (currentSize > 12) {
+        html.style.fontSize = (currentSize - 1) + 'px';
+      }
     },
+
     startIdleTimer() {
       this.idleTimer = setTimeout(() => {
         this.showFontSizeButtons = false;
-      }, 10000);
+      }, 4000);
     },
     resetIdleTimer() {
       clearTimeout(this.idleTimer);
