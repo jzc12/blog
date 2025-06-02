@@ -173,6 +173,7 @@
     white-space: pre !important;
     display: block;
     min-width: 100%;
+    font-size: 0.875rem;
 }
 
 .hljs.with-line-numbers code .code-line {
