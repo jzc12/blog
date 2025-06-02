@@ -5,15 +5,6 @@
     <button class="toggle-btn" @click="toggleSidebar">≡</button>
     <h2 v-show="!collapsed">zc 的博客</h2>
 
-    <div class="font-size-controls">
-      <template v-if="showFontSizeButtons">
-        <button @click="increaseFontSize">A+</button>
-        <button @click="decreaseFontSize">A-</button>
-      </template>
-      <button v-else @click="toggleFontSizeButtonsDisplay" class="single-a-button"
-        :class="{ 'idle-state': !showFontSizeButtons }">A</button>
-    </div>
-
     <div class="nav">
       <router-link v-for="item in navItems" :key="item.name" :to="{ name: item.name }">
         <div class="nav-li">
@@ -27,6 +18,14 @@
       </router-link>
     </div>
 
+    <div class="font-size-controls">
+      <template v-if="showFontSizeButtons">
+        <button @click="increaseFontSize">A+</button>
+        <button @click="decreaseFontSize">A-</button>
+      </template>
+      <button v-else @click="toggleFontSizeButtonsDisplay" class="single-a-button"
+        :class="{ 'idle-state': !showFontSizeButtons }">A</button>
+    </div>
 
     <div class="profile">
       <img src="../assets/avatar.png" alt="头像">
@@ -43,7 +42,6 @@
       </div>
 
     </div>
-
     <div class="footer" v-show="!collapsed">
       <p>© 2025 去感受、去发现</p>
     </div>
