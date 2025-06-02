@@ -2,8 +2,8 @@
 title: README
 date: 2025-06-01
 updated: 2025-06-02
-category: 教程
-summary: 文章摘要
+category: NLP
+summary: 小规模知识图谱构建
 ---
 # ner_kge
 
