@@ -58,13 +58,18 @@ export default {
         const article = await import(`../articles/${id}.md?raw`);
         const { attributes: frontmatter, body: content } = fm(article.default);
 
+        const convertedContent = content.replace(
+          /\.\.\/(md_pic\/[^)]+)/g,
+          './../src/$1'
+        );
+
         return {
           id,
           title: frontmatter.title || id,
           date: dayjs(frontmatter.date).format('YYYY-MM-DD') || '未知日期',
           updated: dayjs(frontmatter.updated).format('YYYY-MM-DD') || '未知更新时间',
           category: frontmatter.category || '未分类',
-          content: content.trim()
+          content: convertedContent.trim()
         };
       } catch (error) {
         console.error('解析文章失败:', error.message, error.stack);
@@ -78,6 +83,7 @@ export default {
         };
       }
     },
+
   }
 }
 </script>
