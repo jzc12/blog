@@ -7,7 +7,7 @@
     font-size: 1rem;
     color: #2c3e50;
     padding: 20px;
-    margin: 0 auto 2em;
+    margin: 0 auto 2rem;
 }
 
 .markdown-body h1,
@@ -97,7 +97,7 @@
     background: #b6cef2;
     padding: 16px;
     border-radius: 8px;
-    margin: 1em 0;
+    margin: 1rem 0;
     overflow-x: auto;
     overflow-y: hidden;
     box-shadow: inset 0 0 0 1px #e0e0e0a7;
@@ -154,11 +154,12 @@
 /* 带行号高亮（Highlight.js） */
 .hljs.with-line-numbers {
     counter-reset: linenumber;
-    padding-left: 2em;
+    padding-left: 2rem;
     position: relative;
     overflow-x: auto;
     scrollbar-width: thin;
     background: #b6cef2;
+    font-size: 0.875rem;
 }
 
 .hljs.with-line-numbers::-webkit-scrollbar {
@@ -186,13 +187,13 @@
 .hljs.with-line-numbers code .line-number {
     counter-increment: linenumber;
     display: inline-block;
-    width: 2em;
+    width: 2rem;
     text-align: right;
-    padding-right: 0.5em;
+    padding-right: 0.5rem;
     color: #e74c3ca0;
     flex-shrink: 0;
     user-select: none;
-    margin-left: -2em;
+    margin-left: -2.5rem;
     position: relative;
 }
 
@@ -207,10 +208,11 @@
 }
 
 .hljs.with-line-numbers code .code-content {
-    padding-left: 0.5em;
+    padding-left: 0.5rem;
     flex: 1;
     color: #333;
     white-space: pre !important;
+    font-size: 0.875rem;
 }
 
 /* 响应式优化 */
