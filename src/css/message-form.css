@@ -46,14 +46,12 @@
 }
 
 .toggle-label {
-    color: #666;
     font-size: 0.8rem;
 }
 
 .toggle-input-btn {
-    background-color: #d7e6fa;
-    color: #1f4e79;
-    border: 1px solid #a6c8ff;
+    background-color: #ffffff;
+    color: #ffffff;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -89,7 +87,7 @@
     padding: 0.6rem;
     border: 1px solid #dddddd9c;
     border-radius: 15px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     resize: none;
     max-height: 120px;
     overflow-y: auto;

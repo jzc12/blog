@@ -90,20 +90,23 @@ export default {
       this.messageCount = await getAllPublicMessageCount();
       this.navItems[3].count = this.messageCount.toString();
     },
-    increaseFontSize() {
+
+    increaseFontSize(e) {
+      e.preventDefault(); // 防止默认行为
       this.resetIdleTimer();
       let html = document.querySelector('html');
       let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
       if (currentSize < 18) {
-        html.style.fontSize = (currentSize + 1) + 'px';
+      html.style.fontSize = (currentSize + 1) + 'px';
       }
     },
-    decreaseFontSize() {
+    decreaseFontSize(e) {
+      e.preventDefault(); // 防止默认行为
       this.resetIdleTimer();
       let html = document.querySelector('html');
       let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
       if (currentSize > 12) {
-        html.style.fontSize = (currentSize - 1) + 'px';
+      html.style.fontSize = (currentSize - 1) + 'px';
       }
     },
 

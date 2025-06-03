@@ -1,4 +1,4 @@
-# zc’s  blog
+# zc's  blog
 
 ## version1
 
@@ -33,22 +33,13 @@ App
 └── 全局状态管理
 ```
 
-```python
+```text
 App
 ├── src/
 │    ├── assets/
-│    ├── components/
-│    │   ├── Layout.vue         # 主布局组件（包含sidebar和content）
-│    │   ├── Sidebar.vue        # 侧边栏导航
-│    │   ├── MarkdownView.vue   # MD渲染组件
-│    │   └── PostList.vue       # 文章列表组件
-│    ├── contents/              # 内容目录
-│    │   ├── posts/             # 所有文章
-│    │   └── categories/        # 分类目录（可嵌套）
+│    ├── css/                   # 样式文件
 │    ├── router/
 │    │   └── index.js           # 路由配置
-│    ├── stores/                # Pinia状态管理
-│    │   └── usePosts.js        # 文章相关状态
 │    ├── utils/
 │    │   └── markdown.js        # MD处理工具
 │    ├── views/

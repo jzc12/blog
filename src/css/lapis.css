@@ -36,7 +36,12 @@
     margin: 1em 0;
 }
 
+.markdown-body *:not(pre) code {
+    background: #b6cef2;
+}
+
 /* 列表 */
+.markdown-body td,
 .markdown-body ul,
 .markdown-body ol {
     padding-left: 20px;
@@ -85,7 +90,7 @@
 /* 代码块（行内） */
 .markdown-body code {
     font-family: 'Fira Code', 'Consolas', monospace;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     background: #93b9ea;
     padding: 2px 6px;
     border-radius: 4px;
@@ -107,7 +112,7 @@
 
 .markdown-body pre code {
     font-family: 'Fira Code', 'Consolas', monospace;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     background: none;
     padding: 0;
     color: inherit;
@@ -151,6 +156,24 @@
     margin-bottom: 10px;
 }
 
+.hljs {
+    counter-reset: linenumber;
+    padding-left: 2rem;
+    position: relative;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    background: #bfd3f0;
+    font-size: 0.8rem;
+}
+
+.hljs code {
+    white-space: pre !important;
+    display: block;
+    min-width: 100%;
+    font-size: 0.8rem;
+    background: #bfd3f0;
+}
+
 /* 带行号高亮（Highlight.js） */
 .hljs.with-line-numbers {
     counter-reset: linenumber;
@@ -158,8 +181,8 @@
     position: relative;
     overflow-x: auto;
     scrollbar-width: thin;
-    background: #b6cef2;
-    font-size: 0.875rem;
+    background: #bfd3f0;
+    font-size: 0.8rem;
 }
 
 .hljs.with-line-numbers::-webkit-scrollbar {
@@ -175,7 +198,7 @@
     white-space: pre !important;
     display: block;
     min-width: 100%;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
 }
 
 .hljs.with-line-numbers code .code-line {
@@ -190,10 +213,10 @@
     width: 2rem;
     text-align: right;
     padding-right: 0.5rem;
-    color: #e74c3ca0;
+    color: #fc5b4aa0;
     flex-shrink: 0;
     user-select: none;
-    margin-left: -2.5rem;
+    margin-left: -1.5rem;
     position: relative;
 }
 
@@ -212,7 +235,7 @@
     flex: 1;
     color: #333;
     white-space: pre !important;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
 }
 
 /* 响应式优化 */

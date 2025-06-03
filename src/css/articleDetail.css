@@ -3,6 +3,17 @@
     margin: 0 auto;
     padding: 0px;
     position: relative;
+    font-size: 1rem;
+}
+
+.article-meta span {
+    font-size: 0.9rem;
+}
+
+.article-meta p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 1em 0;
 }
 
 .back-button {
@@ -47,6 +58,20 @@
 .article-header {
     text-align: center;
     margin-bottom: 2rem;
+}
+
+.article-header::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: 20px auto;
+    background: linear-gradient(to right,
+            transparent,
+            #d0e6ff,
+            #447acc,
+            #d0e6ff,
+            transparent);
 }
 
 .article-title {
