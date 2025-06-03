@@ -1,4 +1,10 @@
-const n=`# 球球了
+const n=`---
+date: 2025-06-01
+updated: 2025-06-03
+category: 基础知识
+summary: 救命，球球了
+---
+# 球球了
 
 ## c++
 
