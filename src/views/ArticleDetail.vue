@@ -59,8 +59,8 @@ export default {
         const { attributes: frontmatter, body: content } = fm(article.default);
 
         const convertedContent = content.replace(
-          /\.\.\/(md_pic\/[^)]+)/g,
-          './../src/$1'
+          /\.\.\/assets\//g,
+          './../src/assets/'
         );
 
         return {
