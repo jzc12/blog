@@ -1087,7 +1087,7 @@ TIME_WAIT 状态的作用
 
 
 
-![tcp](./../md_pic/tcp.png)
+![tcp](./../assets/tcp.png)
 
 
 
@@ -1195,7 +1195,7 @@ HTTP/1.1重要改进：较HTTP/1.0
 
 ### 满二叉树、 完全二叉树
 
-![tree](./../md_pic/tree.png)
+![tree](./../assets/tree.png)
 
 ### AVL 树 和 红黑树
 
