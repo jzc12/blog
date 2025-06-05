@@ -1,16 +1,14 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import os
-import subprocess
-import sys
 from md_processor import update_file, check_file_status
 
 class MarkdownProcessorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Markdown 文章管理工具")
-        self.root.geometry("1000x700")
-        self.root.minsize(800, 600)
+        self.root.geometry("1000x650")
+        self.root.minsize(800, 500)
 
         self.folder_path = tk.StringVar()
         self.file_statuses = []
@@ -27,18 +25,26 @@ class MarkdownProcessorApp:
         style = ttk.Style()
         style.theme_use('clam')
 
+        # 设置整体背景
         style.configure('.', background="#fafafa", font=('Segoe UI', 10))
-        style.configure('Card.TLabelframe', background="#ffffff", borderwidth=1, relief="solid")
-        style.configure('Card.TLabelframe.Label', background="#ffffff", font=('Segoe UI', 10, 'bold'))
+
+        # 卡片样式
+        card_bg = "#ffffff"
+        card_border = "#a9a9fa"
+
+        style.configure('Card.TLabelframe', background=card_bg, borderwidth=1, relief="solid")
+        style.configure('Card.TLabelframe.Label', background=card_bg, font=('Segoe UI', 10, 'bold'))
         style.configure('TButton', padding=6, relief="flat", background="#f0f5f9")
         style.map('TButton', background=[('active', "#5bbff0")])
-        style.configure('Treeview', font=('Segoe UI', 10), rowheight=28, background="#ffffff", fieldbackground="#ffffff")
+        style.configure('Treeview', font=('Segoe UI', 10), rowheight=28, background="#ffffff", fieldbackground="#ffffff", bordercolor=card_border)
         style.configure('Treeview.Heading', font=('Segoe UI', 10, 'bold'), background="#f5f5f5")
 
     def create_widgets(self):
+        # 左面板
         left_panel = ttk.Frame(self.main_frame)
         left_panel.pack(side="left", fill="y", padx=(0, 10), expand=False)
 
+        # 文件夹选择
         folder_frame = ttk.LabelFrame(left_panel, text="文件夹选择", style='Card.TLabelframe')
         folder_frame.pack(fill="x", pady=(0, 10))
 
@@ -48,13 +54,14 @@ class MarkdownProcessorApp:
         browse_button = ttk.Button(folder_frame, text="浏览", command=self.browse_folder)
         browse_button.pack(side="right", padx=5, pady=5)
 
+        # 操作按钮
         button_frame = ttk.Frame(left_panel)
         button_frame.pack(fill="x", pady=(0, 10))
 
-        ttk.Button(button_frame, text="刷新列表", command=self.scan_files).pack(fill="x", expand=True, padx=2, pady=2)
-        ttk.Button(button_frame, text="处理所有", command=self.process_all_files).pack(fill="x", expand=True, padx=2, pady=2)
-        ttk.Button(button_frame, text="推送 Git", command=self.run_git_push).pack(fill="x", expand=True, padx=2, pady=2)
+        ttk.Button(button_frame, text="刷新列表", command=self.scan_files).pack(side="left", fill="x", expand=True, padx=2)
+        ttk.Button(button_frame, text="处理所有", command=self.process_all_files).pack(side="right", fill="x", expand=True, padx=2)
 
+        # 文件列表
         list_frame = ttk.LabelFrame(left_panel, text="文件列表", style='Card.TLabelframe')
         list_frame.pack(fill="both", expand=True)
 
@@ -62,9 +69,11 @@ class MarkdownProcessorApp:
         self.file_list.pack(fill="both", expand=True, padx=5, pady=5)
         self.file_list.bind('<<ListboxSelect>>', self.on_file_select)
 
+        # 右面板
         right_panel = ttk.Frame(self.main_frame)
         right_panel.pack(side="right", fill="both", expand=True)
 
+        # 文件状态
         status_frame = ttk.LabelFrame(right_panel, text="文件状态", style='Card.TLabelframe')
         status_frame.pack(fill="x", pady=(0, 10))
 
@@ -72,8 +81,10 @@ class MarkdownProcessorApp:
         for col, width in zip(("属性", "状态", "值"), (120, 100, 300)):
             self.tree.heading(col, text=col)
             self.tree.column(col, width=width, anchor="w")
+
         self.tree.pack(fill="x", padx=5, pady=5)
 
+        # 编辑区域
         edit_frame = ttk.LabelFrame(right_panel, text="编辑元数据", style='Card.TLabelframe')
         edit_frame.pack(fill="both", expand=True)
 
@@ -99,14 +110,9 @@ class MarkdownProcessorApp:
 
         ttk.Button(edit_frame, text="保存更改", command=self.save_changes).grid(row=4, column=1, padx=5, pady=10, sticky="e")
 
-        terminal_frame = ttk.LabelFrame(right_panel, text="终端输出", style='Card.TLabelframe')
-        terminal_frame.pack(fill="x", pady=(0, 8))
-
-        self.terminal_output = tk.Text(terminal_frame, height=6, wrap="word", font=('Consolas', 10), bg="#111111", fg="#00ff00")
-        self.terminal_output.pack(fill="both", padx=5, pady=5)
-
+        # 底部状态栏
         self.status_var = tk.StringVar(value="就绪")
-        ttk.Label(right_panel, textvariable=self.status_var, anchor="w", relief="sunken").pack(fill="x", pady=(4, 0))
+        ttk.Label(right_panel, textvariable=self.status_var, anchor="w", relief="sunken").pack(fill="x", pady=(8, 0))
 
     def browse_folder(self):
         folder_selected = filedialog.askdirectory()
@@ -212,44 +218,6 @@ class MarkdownProcessorApp:
         self.scan_files()
         messagebox.showinfo("处理完成", f"已处理 {len(md_files)} 个文件，其中 {updated_count} 个文件被更新。")
         self.status_var.set(f"处理完成: {updated_count}/{len(md_files)} 文件已更新")
-
-    def run_git_push(self):
-        folder = self.folder_path.get()
-        if not folder or not os.path.isdir(folder):
-            messagebox.showwarning("警告", "请选择一个有效的文件夹！")
-            return
-
-        # Get the directory of the current script and then go up two levels to reach the workspace root
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        workspace_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
-
-        script_path = os.path.join(workspace_root, "gitpush.sh")
-        if not os.path.exists(script_path):
-            messagebox.showerror("错误", f"未找到 gitpush.sh 脚本: {script_path}")
-            return
-
-        self.terminal_output.delete("1.0", tk.END)
-        self.terminal_output.insert(tk.END, f"$ bash {script_path}\n\n")
-
-        try:
-            env = os.environ.copy()
-            env['LANG'] = 'C.UTF-8' # Or 'en_US.UTF-8'
-            env['LC_ALL'] = 'C.UTF-8' # Also set LC_ALL for consistent locale
-
-            result = subprocess.run(["bash", script_path], cwd=workspace_root, capture_output=True, text=False, env=env, timeout=30)
-            output = result.stdout.decode('utf-8', errors='replace').strip()
-            error = result.stderr.decode('utf-8', errors='replace').strip()
-            if output:
-                self.terminal_output.insert(tk.END, output + "\n")
-            if error:
-                self.terminal_output.insert(tk.END, "\n[错误信息]:\n" + error)
-            if result.returncode == 0:
-                self.status_var.set("Git 推送成功")
-            else:
-                self.status_var.set(f"Git 推送失败，返回码：{result.returncode}")
-        except Exception as e:
-            self.terminal_output.insert(tk.END, f"\n[异常] {str(e)}\n")
-            self.status_var.set("Git 推送异常")
 
 if __name__ == '__main__':
     root = tk.Tk()
