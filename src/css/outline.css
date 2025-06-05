@@ -1,0 +1,85 @@
+.outline-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f900;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.outline-container h3 {
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.outline-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.outline-container li {
+    margin-bottom: 5px;
+}
+
+.outline-container a {
+    color: #5c8dee;
+    text-decoration: none;
+    display: block;
+    padding: 3px 0;
+}
+
+.outline-container a:hover {
+    text-decoration: underline;
+}
+
+/* New styles for toggle icon and nested list */
+.outline-item-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.toggle-icon {
+    margin-right: 5px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.8em;
+    width: 1em;
+    text-align: center;
+}
+
+.outline-list.nested {
+    margin-left: 15px;
+    /* Indent nested lists */
+    list-style: none;
+    padding: 0;
+}
+
+/* Indentation for different heading levels */
+.outline-container .level-1 .outline-item-wrapper {
+    padding-left: 0;
+    font-weight: bold;
+}
+
+.outline-container .level-2 .outline-item-wrapper {
+    padding-left: 15px;
+}
+
+.outline-container .level-3 .outline-item-wrapper {
+    padding-left: 30px;
+}
+
+.outline-container .level-4 .outline-item-wrapper {
+    padding-left: 45px;
+}
+
+.outline-container .level-5 .outline-item-wrapper {
+    padding-left: 60px;
+}
+
+.outline-container .level-6 .outline-item-wrapper {
+    padding-left: 75px;
+}

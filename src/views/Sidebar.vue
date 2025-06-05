@@ -18,6 +18,12 @@
       </router-link>
     </div>
 
+    <div v-if="!collapsed && outline.length > 0" class="outline-container">
+      <ul class="outline-list">
+        <OutlineItem v-for="heading in outline" :key="heading.id" :heading="heading" @scroll-to="scrollToHeading" />
+      </ul>
+    </div>
+
     <div class="font-size-controls">
       <template v-if="showFontSizeButtons">
         <button @click="increaseFontSize">A+</button>
@@ -52,7 +58,16 @@
 <script>
 import { icons } from '../utils/icon.js';
 import { getAllPublicMessageCount } from '../utils/supabase';
+import OutlineItem from './OutlineItem.vue';
+
 export default {
+  components: { OutlineItem },
+  props: {
+    outline: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       collapsed: false,
@@ -127,6 +142,15 @@ export default {
       } else {
         clearTimeout(this.idleTimer);
       }
+    },
+    scrollToHeading(id) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     }
   },
   mounted() {
@@ -147,4 +171,5 @@ export default {
 <style>
 @import "../css/sidebar.css";
 @import "../css/icons.css";
+@import "../css/outline.css";
 </style>

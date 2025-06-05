@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!--div class="overlay"></div>-->
-    <Sidebar />
+    <Sidebar :outline="isMarkdownRoute ? articleOutline : []" />
     <main class="content">
       <router-view v-slot="{ Component }">
         <template v-if="isMarkdownRoute">
@@ -22,7 +22,8 @@ export default {
   components: { Sidebar },
   data() {
     return {
-      renderedContent: ''
+      renderedContent: '',
+      articleOutline: []
     }
   },
   computed: {
@@ -33,7 +34,9 @@ export default {
   methods: {
     handleContentLoaded(content) {
       if (content) {
-        this.renderedContent = renderMarkdown(content)
+        const { html, outline } = renderMarkdown(content)
+        this.renderedContent = html
+        this.articleOutline = outline
       }
     }
   }
