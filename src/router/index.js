@@ -29,6 +29,11 @@ const routes = [
         component: () => import('../views/Message.vue')
     },
     {
+        path: '/settings',
+        name: 'settings',
+        component: () => import('../views/SettingsPage.vue')
+    },
+    {
         path: '/404',
         name: 'notfound',
         component: () => import('@/md/404.md')

@@ -24,15 +24,6 @@
       </ul>
     </div>
 
-    <div class="font-size-controls">
-      <template v-if="showFontSizeButtons">
-        <button @click="increaseFontSize">A+</button>
-        <button @click="decreaseFontSize">A-</button>
-      </template>
-      <button v-else @click="toggleFontSizeButtonsDisplay" class="single-a-button"
-        :class="{ 'idle-state': !showFontSizeButtons }">A</button>
-    </div>
-
     <div class="profile">
       <img src="../assets/avatar.png" alt="头像">
       <p v-show="!collapsed">{{ articleCount }} 文章 | 0 标签</p>
@@ -73,13 +64,12 @@ export default {
       collapsed: false,
       articleCount: 0,
       messageCount: 0,
-      showFontSizeButtons: false,
-      idleTimer: null,
       navItems: [
         { name: 'home', icon: icons.home, text: '首页', count: '' },
         { name: 'about', icon: icons.about, text: '关于', count: '' },
         { name: 'category', icon: icons.category, text: '目录', count: '0' },
-        { name: 'message', icon: icons.message, text: '留言', count: '12' }
+        { name: 'message', icon: icons.message, text: '留言', count: '12' },
+        { name: 'settings', icon: icons.settings, text: '设置', count: '' }
       ]
     };
   },
@@ -105,44 +95,6 @@ export default {
       this.messageCount = await getAllPublicMessageCount();
       this.navItems[3].count = this.messageCount.toString();
     },
-
-    increaseFontSize(e) {
-      e.preventDefault(); // 防止默认行为
-      this.resetIdleTimer();
-      let html = document.querySelector('html');
-      let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
-      if (currentSize < 18) {
-      html.style.fontSize = (currentSize + 1) + 'px';
-      }
-    },
-    decreaseFontSize(e) {
-      e.preventDefault(); // 防止默认行为
-      this.resetIdleTimer();
-      let html = document.querySelector('html');
-      let currentSize = parseFloat(window.getComputedStyle(html).fontSize);
-      if (currentSize > 12) {
-      html.style.fontSize = (currentSize - 1) + 'px';
-      }
-    },
-
-    startIdleTimer() {
-      this.idleTimer = setTimeout(() => {
-        this.showFontSizeButtons = false;
-      }, 4000);
-    },
-    resetIdleTimer() {
-      clearTimeout(this.idleTimer);
-      this.showFontSizeButtons = true;
-      this.startIdleTimer();
-    },
-    toggleFontSizeButtonsDisplay() {
-      this.showFontSizeButtons = !this.showFontSizeButtons;
-      if (this.showFontSizeButtons) {
-        this.resetIdleTimer();
-      } else {
-        clearTimeout(this.idleTimer);
-      }
-    },
     scrollToHeading(id) {
       const element = document.getElementById(id);
       if (element) {
@@ -158,11 +110,9 @@ export default {
     window.addEventListener('resize', this.checkScreenSize);
     this.countArticles();
     this.countMessages();
-    this.startIdleTimer();
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.checkScreenSize);
-    clearTimeout(this.idleTimer);
   }
 };
 </script>
