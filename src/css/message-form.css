@@ -50,8 +50,8 @@
 }
 
 .toggle-input-btn {
-    background-color: #ffffff;
-    color: #ffffff;
+
+    border: none;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -62,10 +62,11 @@
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    flex-shrink: 0;
 }
 
 .toggle-input-btn:hover {
-    background-color: #c0dcfd;
+    background-color: #92c0ef;
 }
 
 .input-group {

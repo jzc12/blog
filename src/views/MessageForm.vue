@@ -9,7 +9,7 @@
       <!-- form-header 始终显示，但其中的 input-group 可控制显示 -->
       <div class="form-header">
         <button type="button" class="toggle-input-btn" @click="showInputs = !showInputs">
-          <component :is="showInputs ? iconMap.squareChevronDown : iconMap.squareChevronUp" class="icon" />
+          <component :is="showInputs ? iconMap.squareChevronDown : iconMap.squareChevronUp"/>
         </button>
 
         <input 
@@ -21,6 +21,10 @@
           class="name-input"
         >
 
+        <button type="button" class="toggle-input-btn"  v-if="showInputs" :title="'随机'">
+          <component :is="iconMap.shuffle" />
+        </button>
+
         <label class="private-toggle" v-if="showInputs">
           <input 
             type="checkbox" 
@@ -28,6 +32,11 @@
           >
           <span class="toggle-label">私信</span>
         </label>
+
+        <div class="message-info">
+          {{ isLoadingCount ? '加载中...' : `今日剩余留言次数：${remainingMessages}` }}
+        </div>
+
       </div>
 
       <div v-if="showInputs" class="input-group">
@@ -46,9 +55,6 @@
         </button>
       </div>
 
-      <div class="message-info">
-        {{ isLoadingCount ? '加载中...' : `今日剩余留言次数：${remainingMessages}` }}
-      </div>
     </form>
   </div>
 </template>

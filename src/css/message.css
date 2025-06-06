@@ -20,6 +20,7 @@
 .text p {
     padding: 1rem;
     flex: 1;
+    font-size: 0.9rem;
     justify-content: center;
     overflow-y: auto;
     backdrop-filter: blur(10px);
@@ -27,10 +28,8 @@
 }
 
 .controls {
-    padding: 1rem;
     display: inline-flex;
     justify-content: flex-end;
-    border-bottom: 1px solid #eee;
     background: rgba(255, 255, 255, 0);
 }
 
@@ -45,7 +44,7 @@
 }
 
 .refresh-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     background-color: #ffffff00;
     border: none;
     border-radius: 20px;
@@ -53,10 +52,11 @@
     transition: all 0.3s ease;
     color: white;
     font-size: 0.9rem;
+    margin: auto 0.5rem;
 }
 
 .refresh-btn:hover:not(:disabled) {
-    background-color: #6fb3f73a;
+    background-color: #9ec8f33a;
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

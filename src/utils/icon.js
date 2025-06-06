@@ -20,7 +20,7 @@ import {
     ChevronUp,
     Minus,
     Eye,
-
+    Shuffle,
 } from 'lucide-vue-next';
 
 import GitHub from '../assets/github.svg';
@@ -46,4 +46,5 @@ export const icons = {
     chevronUp: ChevronUp,
     minus: Minus,
     eye: Eye,
+    shuffle: Shuffle,
 };
