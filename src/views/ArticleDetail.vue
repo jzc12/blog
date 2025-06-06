@@ -47,16 +47,16 @@ export default {
     const articleId = this.$route.params.articleId;
     this.article = await this.getArticle(articleId);
 
-    // Increment view count and then get the updated count
-    await incrementArticleViewCount(articleId);
-    this.viewCount = await getArticleViewCount(articleId);
-
+    
     // 通知父组件内容已更新
     this.$nextTick(() => {
       if (this.article && this.article.content) {
         this.$emit('content-loaded', this.article.content);
       }
     });
+    // Increment view count and then get the updated count
+    await incrementArticleViewCount(articleId);
+    this.viewCount = await getArticleViewCount(articleId);
   },
   computed: {
     iconMap() {

@@ -1,16 +1,17 @@
 <template>
   <li>
-    <div class="outline-item-wrapper" :class="`level-${heading.level}`" @dblclick.stop="toggleExpand(heading)">
+    <div class="outline-item-wrapper" 
+       :class="`level-${heading.level}`" 
+       @dblclick.stop="toggleExpand(heading)"
+       @click="emitScrollTo(heading.id)">
       <span
-        v-if="heading.children && heading.children.length > 0"
-        class="toggle-icon"
-        @click.stop="toggleExpand(heading)"
+      v-if="heading.children && heading.children.length > 0"
+      class="toggle-icon"
+      @click.stop="toggleExpand(heading)"
       >
-        <component :is="heading.expanded ? iconMap.minus : iconMap.chevronDown" class="icon-outline"  />
+      <component :is="heading.expanded ? iconMap.minus : iconMap.chevronDown" class="icon-outline"  />
       </span>
-      <a :href="`#${heading.id}`" @click.prevent="emitScrollTo(heading.id)">
-        {{ heading.text }}
-      </a>
+      <a>{{ heading.text }}</a>
     </div>
     <ul v-if="heading.expanded && heading.children && heading.children.length > 0" class="outline-list nested">
       <OutlineItem

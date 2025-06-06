@@ -2,34 +2,4 @@
 
 ## coding
 
-@九曲乡河学院—软件开发
-
-测试
-
-```python
-print("Hello, world!")
-```
-
----
-
-```c++
-cout<<"Hello, world!"<<endl;
-```
-
----
-
-```java
-System.println("Hello, world!")
-```
-
----
-
-```c
-printf("Hello, world!\n");
-```
-
----
-
-```c#
-Console.WriteLine("Hello, world!");
-```
+@九曲乡河学院—软件开发, 请相信，这一切都是命中注定，这一切都是最好的安排。
