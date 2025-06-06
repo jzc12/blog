@@ -19,6 +19,10 @@
           <component :is="iconMap.kanban" class="icon" />
           <span class="date">{{ article.category }}</span>
         </div>
+        <div class="meta-item">
+          <component :is="iconMap.eye" class="icon" />
+          <span class="date">{{ 0 }}</span>
+        </div>
       </div>
     </div>
   </div>

@@ -19,6 +19,7 @@ import {
     ChevronDown,
     ChevronUp,
     Minus,
+    Eye,
 
 } from 'lucide-vue-next';
 
@@ -44,4 +45,5 @@ export const icons = {
     chevronDown: ChevronDown,
     chevronUp: ChevronUp,
     minus: Minus,
+    eye: Eye,
 };
