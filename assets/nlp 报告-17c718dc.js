@@ -1,4 +1,5 @@
 const n=`---
+
 date: 2025-06-04
 updated: 2025-06-04
 category: NLP
@@ -184,4 +185,39 @@ summary_metrics.append({
 | Mean Rank | 所有测试三元组预测实体的平均排名值 | 衡量模型整体排序能力，但可能受异常值影响 |
 | Median Rank | 所有测试三元组中，正确实体预测排名的中位数                   | 更鲁棒，反映模型在大多数情况的预测排名   |
 | Harmonic Mean Rank | 所有预测排名的调和平均值，对低排名（高准确）更敏感  | 更关注模型是否能稳定地将正确答案排在前面 |
+
+
+
+
+| 目标          | 实现                                                 |
+| -------------- | ------------------------------------------------------- |
+| 模型参数复用     | 使用 \`torch.load()\` 加载旧模型完整对象                       |
+| 新模型初始化一致结构 | 使用 \`make_model()\` + 指定 模型和 embedding\\_dim     |
+| 旧参数迁移      | 手动复制 entity 和 relation 的旧嵌入到新模型中                        |
+| 增量训练执行     | 用 PyKEEN 的 \`SLCWATrainingLoop\` 训练合并后的图谱 |
+
+\`\`\`python
+merged_triples = torch.cat([
+    original_factory.mapped_triples,  # 原始三元组
+    new_factory.mapped_triples,       # 新增三元组
+], dim=0)
+\`\`\`
+
+
+
+
+
+\`\`\`text
+("爱因斯坦", "出生地", ？)
+ –> 预测                        排名   实体名称
+                                1	 美国
+                                2	 奥地利
+                                3	 德国 ✅
+                                ...	 ...			
+\`\`\`
+
+​			Hits@1 = 0
+
+​			Hits@3 = 1
+
 `;export{n as default};
