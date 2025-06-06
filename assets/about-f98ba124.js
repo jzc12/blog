@@ -1,0 +1,1 @@
+import{o as n,c as r,b as t}from"./index-f6418d26.js";const s={class:"markdown-body"},p={__name:"about",setup(a,{expose:e}){return e({frontmatter:{}}),(c,o)=>(n(),r("div",s,o[0]||(o[0]=[t("h1",null,"关于",-1),t("h2",null,"coding",-1),t("p",null,"@九曲乡河学院—软件开发, 请相信，这一切都是命中注定，这一切都是最好的安排。",-1)])))}};export{p as default};
