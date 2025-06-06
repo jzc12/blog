@@ -95,15 +95,17 @@ export default {
       this.messageCount = await getAllPublicMessageCount();
       this.navItems[3].count = this.messageCount.toString();
     },
+
     scrollToHeading(id) {
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({
           behavior: 'smooth',
-          block: 'start'
+          block: 'nearest'
         });
       }
     }
+    
   },
   mounted() {
     this.checkScreenSize();
@@ -118,7 +120,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 @import "../css/sidebar.css";
 @import "../css/icons.css";
 @import "../css/outline.css";

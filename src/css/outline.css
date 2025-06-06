@@ -1,7 +1,20 @@
+.outline-list {
+    list-style: none;
+    padding: 0;
+}
+
 .outline-item-wrapper {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    padding-left: 15px;
+}
+
+.outline-item-wrapper:hover {
+    background-color: #f0f0f0;
 }
 
 .toggle-icon {
@@ -14,23 +27,35 @@
     text-align: center;
 }
 
+.icon-outline {
+    font-size: 0.8em;
+    width: 1em;
+    text-align: center;
+    margin-right: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
 .outline-list.nested {
     margin-left: 15px;
-
     list-style: none;
     padding: 0;
 }
 
-a {
-    text-decoration: none;
+.outline-list li {
+    list-style: none;
+    position: relative;
+}
+
+.outline-list li::before {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     color: #5c8dee;
-
+    font-size: 0.8em;
 }
-
-a:hover {
-    text-decoration: underline;
-}
-
 
 .level-1 .outline-item-wrapper {
     padding-left: 0;
@@ -55,4 +80,14 @@ a:hover {
 
 .level-6 .outline-item-wrapper {
     padding-left: 75px;
+}
+
+.outline-item-wrapper a {
+    text-decoration: none;
+    color: #5c8dee;
+
+}
+
+.outline-item-wrapper a:hover {
+    text-decoration: underline;
 }

@@ -1,12 +1,12 @@
 <template>
   <li>
-    <div class="outline-item-wrapper" :class="`level-${heading.level}`">
+    <div class="outline-item-wrapper" :class="`level-${heading.level}`" @dblclick.stop="toggleExpand(heading)">
       <span
         v-if="heading.children && heading.children.length > 0"
         class="toggle-icon"
         @click.stop="toggleExpand(heading)"
       >
-        {{ heading.expanded ? '▼' : '▶' }}
+        <component :is="heading.expanded ? iconMap.minus : iconMap.chevronDown" class="icon-outline"  />
       </span>
       <a :href="`#${heading.id}`" @click.prevent="emitScrollTo(heading.id)">
         {{ heading.text }}
@@ -24,8 +24,10 @@
 </template>
 
 <script>
+import { icons } from '../utils/icon.js';
+
 export default {
-  name: 'OutlineItem', // Important for recursive components
+  name: 'OutlineItem', 
   props: { 
     heading: {
       type: Object,
@@ -36,10 +38,16 @@ export default {
     toggleExpand(heading) {
       heading.expanded = !heading.expanded;
     },
+    // 向父组件发送信息，触发滚动
     emitScrollTo(id) {
       this.$emit('scroll-to', id);
     }
-  }
+  },
+  computed: {
+    iconMap() {
+      return icons;
+    }
+  },
 }
 </script>
 

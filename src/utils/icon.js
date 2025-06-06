@@ -15,7 +15,11 @@ import {
     SquareChevronUp,
     Calendar,
     CalendarSync,
-    Settings
+    Settings,
+    ChevronDown,
+    ChevronUp,
+    Minus,
+
 } from 'lucide-vue-next';
 
 import GitHub from '../assets/github.svg';
@@ -36,5 +40,8 @@ export const icons = {
     squareChevronUp: SquareChevronUp,
     calendarSync: CalendarSync,
     calendar: Calendar,
-    settings: Settings
+    settings: Settings,
+    chevronDown: ChevronDown,
+    chevronUp: ChevronUp,
+    minus: Minus,
 };

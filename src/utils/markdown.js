@@ -16,6 +16,7 @@ hljs.registerLanguage('java', java)
 hljs.registerLanguage('c', c)
 hljs.registerLanguage('csharp', csharp)
 
+// 预处理数学定界符，确保KaTeX渲染时的正确间距。
 function preprocessMathDelimiters(content) {
     if (!content) return ''
 
@@ -32,16 +33,23 @@ function preprocessMathDelimiters(content) {
     return content
 }
 
-// Function to slugify text for IDs
+// 将给定文本转换为 URL 友好的slug。
 function slugify(text) {
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Replace spaces with -
-        .replace(/[^\w-]+/g, '')        // Remove all non-word chars
-        .replace(/--+/g, '-')           // Replace multiple - with single -
-        .replace(/^-+/, '')             // Trim - from start of text
-        .replace(/-+$/, '');            // Trim - from end of text
+    let slug = text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // 将空格替换为连字符
+        .replace(/[^\w-]+/gu, '')        // 移除所有非单词字符和非连字符
+        .replace(/--+/g, '-')           // 将多个连字符替换为单个连字符
+        .replace(/^-+/, '')             // 移除开头的连字符
+        .replace(/-+$/, '');            // 移除末尾的连字符
+
+    // 如果生成的slug为空，则提供一个基于时间戳的唯一ID作为后备
+    if (slug === '') {
+        return 'heading-' + Date.now().toString(36);
+    }
+    return slug;
 }
 
+// markdown-it配置， 行号
 const md = new MarkdownIt({
     html: true,
     linkify: true,
@@ -72,21 +80,28 @@ const md = new MarkdownIt({
     delimiters: 'dollars'
 })
 
-// Custom plugin to add IDs to headings and extract outline
+// markdown-it的自定义插件，用于为标题添加唯一ID并构建大纲。
 function markdownItOutlinePlugin(md) {
     md.core.ruler.after('inline', 'extract_headings', (state) => {
-        let headingIdMap = new Map(); // To ensure unique IDs
-        let currentHeadings = []; // This will hold the flattened outline data temporarily
+        let headingIdMap = new Map();       // To ensure unique IDs
+        let currentHeadings = [];           // This will hold the flattened outline data temporarily
+        const MAX_HEADING_LENGTH = 30; // 设定标题最大长度
 
         for (let i = 0; i < state.tokens.length; i++) {
             const token = state.tokens[i];
 
             if (token.type === 'heading_open') {
-                const level = parseInt(token.tag.substr(1)); // h1, h2, h3 -> 1, 2, 3
+                const level = parseInt(token.tag.substr(1));    // h1, h2, h3 -> 1, 2, 3
                 const nextToken = state.tokens[i + 1];
 
                 if (nextToken && nextToken.type === 'inline') {
-                    const headingText = nextToken.content;
+                    let headingText = nextToken.content;
+
+                    // 截断标题文本并添加省略号
+                    if (headingText.length > MAX_HEADING_LENGTH) {
+                        headingText = headingText.substring(0, MAX_HEADING_LENGTH) + '...';
+                    }
+
                     let id = slugify(headingText);
                     let counter = 1;
                     let originalId = id;
@@ -104,7 +119,7 @@ function markdownItOutlinePlugin(md) {
                         text: headingText,
                         id: id,
                         children: [],
-                        expanded: true // Default to expanded
+                        expanded: false // Default to collapsed
                     });
                 }
             }
@@ -115,6 +130,7 @@ function markdownItOutlinePlugin(md) {
     });
 }
 
+// 从平面列表中递归构建标题的层次结构。
 function buildHierarchy(flatHeadings) {
     const root = { level: 0, children: [] };
     const stack = [root];
@@ -131,6 +147,7 @@ function buildHierarchy(flatHeadings) {
 
 md.use(markdownItOutlinePlugin);
 
+// 将markdown内容渲染为HTML并提取标题大纲。
 export function renderMarkdown(content) {
     if (!content) return { html: '', outline: [] };
     const processedContent = preprocessMathDelimiters(content);
