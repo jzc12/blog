@@ -80,4 +80,57 @@ export const getAllPublicMessageCount = async () => {
     }
 }
 
-export default supabase 
+// 获取文章浏览量
+export const getArticleViewCount = async (articleName) => {
+    try {
+        const { data, error } = await supabase
+            .from('article_views')
+            .select('view_count')
+            .eq('article_name', articleName)
+            .single(); // 使用 single() 因为 article_name 是主键，应该只有一条记录
+
+        if (error && error.code !== 'PGRST116') { // PGRST116 表示没有找到记录
+            throw error;
+        }
+
+        return data ? data.view_count : 0;
+    } catch (error) {
+        console.error(`获取文章 "${articleName}" 浏览量失败:`, error);
+        return 0;
+    }
+};
+
+// 增加文章浏览量
+export const incrementArticleViewCount = async (articleName) => {
+    try {
+        // 先尝试获取当前浏览量
+        const { data: existingData, error: fetchError } = await supabase
+            .from('article_views')
+            .select('view_count')
+            .eq('article_name', articleName)
+            .single();
+
+        let newViewCount = 1; // 默认新文章的浏览量从1开始
+        if (existingData) {
+            newViewCount = existingData.view_count + 1;
+        }
+
+        const { error: upsertError } = await supabase
+            .from('article_views')
+            .upsert(
+                { article_name: articleName, view_count: newViewCount },
+                { onConflict: 'article_name' } // 如果冲突，则更新现有记录
+            );
+
+        if (upsertError) throw upsertError;
+        return newViewCount;
+    } catch (error) {
+        console.error(`增加文章 "${articleName}" 浏览量失败:`, error);
+        return null;
+    }
+};
+
+export default supabase
+
+// 新的表， 记录文章的浏览量， 主键是文章名， 字段是浏览量
+

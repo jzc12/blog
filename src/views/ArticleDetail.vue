@@ -21,7 +21,7 @@
         </div>
         <div class="meta-item">
           <component :is="iconMap.eye" class="icon" />
-          <span class="date">{{ 0 }}</span>
+          <span class="date">{{ viewCount }}</span>
         </div>
       </div>
     </div>
@@ -32,18 +32,25 @@
 import { icons } from '../utils/icon.js';
 import fm from 'front-matter'
 import dayjs from 'dayjs'
+import { getArticleViewCount, incrementArticleViewCount } from '../utils/supabase.js';
 
 export default {
   name: 'ArticleDetail',
   emits: ['content-loaded'],
   data() {
     return {
-      article: null
+      article: null,
+      viewCount: 0 // Initialize viewCount
     }
   },
   async created() {
     const articleId = this.$route.params.articleId;
     this.article = await this.getArticle(articleId);
+
+    // Increment view count and then get the updated count
+    await incrementArticleViewCount(articleId);
+    this.viewCount = await getArticleViewCount(articleId);
+
     // 通知父组件内容已更新
     this.$nextTick(() => {
       if (this.article && this.article.content) {
