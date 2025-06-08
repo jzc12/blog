@@ -24,6 +24,7 @@ import {
 } from 'lucide-vue-next';
 
 import GitHub from '../assets/github.svg';
+import Up from '../assets/Up.svg';
 
 export const icons = {
     home: Home,
@@ -47,4 +48,5 @@ export const icons = {
     minus: Minus,
     eye: Eye,
     shuffle: Shuffle,
+    up: Up,
 };

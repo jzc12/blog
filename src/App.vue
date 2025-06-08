@@ -10,6 +10,9 @@
         </template>
         <component v-else :is="Component" />
       </router-view>
+
+      <BackToTopButton v-if="isMarkdownRoute" :target-ref="mainContentRef" />
+
     </main>
   </div>
 </template>
@@ -18,14 +21,15 @@
 import Sidebar from './views/Sidebar.vue'
 import { renderMarkdown } from './utils/markdown'
 import { useSettingsStore } from './stores/settings'
-import { watch, nextTick } from 'vue'
+import { watch, nextTick, ref } from 'vue'
+import BackToTopButton from './views/BackToTopButton.vue'
 
 export default {
-  components: { Sidebar },
+  components: { Sidebar, BackToTopButton },
   data() {
     return {
       renderedContent: '',
-      articleOutline: []
+      articleOutline: [],
     }
   },
   computed: {
@@ -43,7 +47,7 @@ export default {
     },
     handleScrollToHeading(id) {
       const element = document.getElementById(id);
-      const mainContent = this.$refs.mainContentRef;
+      const mainContent = this.mainContentRef.value;
 
       if (element && mainContent) {
         const elementRect = element.getBoundingClientRect();
@@ -60,11 +64,15 @@ export default {
           behavior: 'smooth'
         });
       }
+    },
+    getTarget() {
+      return document.getElementById("back-top-target");
     }
   },
   setup() {
     const settingsStore = useSettingsStore()
-    return { settingsStore }
+    const mainContentRef = ref(null)
+    return { settingsStore, mainContentRef }
   },
   mounted() {
     const settingsStore = useSettingsStore()
@@ -76,7 +84,7 @@ export default {
     }
 
     const applyContentOpacity = (newOpacity) => {
-      const mainContent = this.$refs.mainContentRef
+      const mainContent = this.mainContentRef.value
       if (mainContent) {
         mainContent.style.setProperty('--content-bg-opacity', newOpacity)
       }
