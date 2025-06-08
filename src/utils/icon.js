@@ -24,7 +24,7 @@ import {
 } from 'lucide-vue-next';
 
 import GitHub from '../assets/github.svg';
-import Up from '../assets/Up.svg';
+import Up from '../assets/up.svg';
 
 export const icons = {
     home: Home,
