@@ -7,6 +7,9 @@
         <template v-if="isMarkdownRoute">
           <component :is="Component" @content-loaded="handleContentLoaded" ref="currentView" />
           <div class="markdown-body" v-html="renderedContent"></div>
+          <div class="tip-button-wrapper">
+            <button @click="goToTipPage" class="tip-button">打赏</button>
+          </div>
         </template>
         <component v-else :is="Component" />
       </router-view>
@@ -21,7 +24,7 @@
 import Sidebar from './views/Sidebar.vue'
 import { renderMarkdown } from './utils/markdown'
 import { useSettingsStore } from './stores/settings'
-import { watch, nextTick, ref } from 'vue'
+import { watch, nextTick, ref, onMounted } from 'vue'
 import BackToTopButton from './views/BackToTopButton.vue'
 
 export default {
@@ -67,15 +70,14 @@ export default {
     },
     getTarget() {
       return document.getElementById("back-top-target");
+    },
+    goToTipPage() {
+      this.$router.push('/tip');
     }
   },
   setup() {
     const settingsStore = useSettingsStore()
     const mainContentRef = ref(null)
-    return { settingsStore, mainContentRef }
-  },
-  mounted() {
-    const settingsStore = useSettingsStore()
 
     const applyFontSize = (newSize) => {
       if (document.documentElement) {
@@ -84,21 +86,21 @@ export default {
     }
 
     const applyContentOpacity = (newOpacity) => {
-      const mainContent = this.mainContentRef.value
-      if (mainContent) {
-        mainContent.style.setProperty('--content-bg-opacity', newOpacity)
+      if (mainContentRef.value) {
+        mainContentRef.value.style.setProperty('--content-bg-opacity', newOpacity)
       }
     }
 
     watch(() => settingsStore.currentFontSize, applyFontSize)
-
     watch(() => settingsStore.currentContentOpacity, applyContentOpacity)
 
-    nextTick(() => {
+    onMounted(() => {
       applyFontSize(settingsStore.currentFontSize)
       applyContentOpacity(settingsStore.currentContentOpacity)
     })
-  }
+
+    return { settingsStore, mainContentRef }
+  },
 }
 </script>
 

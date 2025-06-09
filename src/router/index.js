@@ -34,6 +34,11 @@ const routes = [
         component: () => import('../views/SettingsPage.vue')
     },
     {
+        path: '/tip',
+        name: 'tip',
+        component: () => import('../views/TipPage.vue')
+    },
+    {
         path: '/404',
         name: 'notfound',
         component: () => import('@/md/404.md')

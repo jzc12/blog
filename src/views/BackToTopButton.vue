@@ -52,7 +52,7 @@ export default {
     scrollToTop() {
       this.scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
   },
   computed: {
     iconMap() {
@@ -68,8 +68,8 @@ export default {
   position: fixed;
   bottom: 80px;
   right: 80px;
-  background-color: #93b9ea; 
-  color: #fff;
+  background-color: #93b9ea77;
+  color: #ffffff77;
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -89,11 +89,13 @@ export default {
   transform: translateY(-4px);
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.3s ease;
 }
-.fade-enter, .fade-leave-to {
+
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
-
-</style> 
+</style>

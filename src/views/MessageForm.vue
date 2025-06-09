@@ -20,11 +20,13 @@
           placeholder="昵称"
           class="name-input"
         >
-
+        
+        <!--
         <button type="button" class="toggle-input-btn"  v-if="showInputs" :title="'随机'">
           <component :is="iconMap.shuffle" />
         </button>
-
+        -->
+        
         <label class="private-toggle" v-if="showInputs">
           <input 
             type="checkbox" 

@@ -39,6 +39,7 @@ body {
 .content {
     flex: 1;
     margin: 0 10%;
+    margin-bottom: 1rem;
     overflow-y: auto;
     height: 100vh;
     scrollbar-width: none;
@@ -67,6 +68,35 @@ body {
     width: 90%;
     overflow-y: auto;
 }
+
+.tip-button {
+    display: inline-block;
+    margin: 2em auto;
+    padding: 10px 24px;
+    background-color: #93b9ea;
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.tip-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+
+.tip-button:hover {
+    background-color: #7faee4;
+    transform: translateY(-2px);
+}
+
 
 @media (max-width: 768px) {
 
