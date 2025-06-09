@@ -1,4 +1,5 @@
 /* src/css/style.css */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +8,16 @@
 
 :root {
     aspect-ratio: 16/9;
+    --primary-green: #a8e6cf;
+    /* 主绿色 - 如春日嫩叶 */
+    --secondary-green: #8ed1c6;
+    /* 辅助绿 - 如水色清透 */
+    --accent-green: #75bba7;
+    /* 强调绿 - 如青苔郁郁 */
+    --light-green-bg: rgba(168, 230, 207, 0.15);
+    /* 半透明背景 */
+    --text-green: #4a7b62;
+    /* 文本绿 - 如竹林幽影 */
 }
 
 body {
@@ -16,6 +27,8 @@ body {
     background-position: center fixed;
     height: 100vh;
     overflow: hidden;
+    background-blend-mode: soft-light;
+    /* 增加绿色滤镜效果 */
 }
 
 .overlay {
@@ -24,7 +37,8 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.231);
+    background: var(--light-green-bg);
+    /* 使用柔和的绿色半透明层 */
     z-index: -1;
 }
 
@@ -46,6 +60,7 @@ body {
     -ms-overflow-style: none;
     box-sizing: border-box;
 }
+
 
 .alternative-layout {
     display: flex;
@@ -73,14 +88,16 @@ body {
     display: inline-block;
     margin: 2em auto;
     padding: 10px 24px;
-    background-color: #93b9ea;
-    color: #fff;
+    background-color: var(--primary-green);
+    color: var(--text-green);
+    /* 深绿色文字增强可读性 */
+    box-shadow: 0 4px 8px rgba(126, 179, 163, 0.3);
+    /* 绿色阴影 */
     font-size: 0.9375rem;
     font-weight: 600;
     text-align: center;
     border: none;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -89,6 +106,9 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 2em;
+    background-color: var(--accent-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(117, 187, 167, 0.4);
 }
 
 
@@ -117,6 +137,6 @@ body {
         overflow-y: auto;
         scrollbar-width: none;
         -ms-overflow-style: auto;
-        font-size: 60%;
+        font-size: 70%;
     }
 }

@@ -67,7 +67,7 @@ export default {
 .back-to-top {
   position: fixed;
   bottom: 80px;
-  right: 80px;
+  right: 40px;
   background-color: #93b9ea77;
   color: #ffffff77;
   width: 40px;

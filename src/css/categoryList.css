@@ -35,6 +35,35 @@
     text-decoration: none;
     color: inherit;
     transition: all 0.3s ease;
+    /* 更绚丽的渐变方案 */
+    background: linear-gradient(135deg,
+            #ff9a9e 0%,
+            /* 暖粉色 */
+            #fad0c4 25%,
+            /* 浅橙 */
+            #a18cd1 50%,
+            /* 紫罗兰 */
+            #8ec5fc 75%,
+            /* 亮蓝色 */
+            #66a6ff 100%
+            /* 深天蓝 */
+        );
+    background-size: 200% 200%;
+    animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
 }
 
 .article-item p {
