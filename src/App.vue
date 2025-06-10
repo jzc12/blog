@@ -108,6 +108,8 @@ export default {
 @import "./css/style.css";
 @import "./css/lapis.css";
 @import "./css/prism-theme.css";
+@import "./css/animations.css";
+@import "./css/layout.css";
 
 
 .content {

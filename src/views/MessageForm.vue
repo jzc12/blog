@@ -21,11 +21,9 @@
           class="name-input"
         >
         
-        <!--
-        <button type="button" class="toggle-input-btn"  v-if="showInputs" :title="'随机'">
+        <button type="button" class="toggle-input-btn" @click="generateRandomName" v-if="showInputs" title="随机昵称">
           <component :is="iconMap.shuffle" />
         </button>
-        -->
         
         <label class="private-toggle" v-if="showInputs">
           <input 
@@ -65,6 +63,9 @@
 import { getTodayMessageCount } from '../utils/supabase'
 import { icons } from '../utils/icon.js'
 
+const adjectives = ['快乐的', '可爱的', '聪明的', '温柔的', '活泼的', '优雅的', '善良的', '开朗的', '文静的', '机智的', '幽默的', '热情的'];
+const nouns = ['小猫', '小狗', '小兔', '小鸟', '小熊', '小鹿', '小象', '小狐狸', '小松鼠', '小浣熊', '小海豚', '小企鹅'];
+
 export default {
   name: 'MessageForm',
   data() {
@@ -92,6 +93,11 @@ export default {
     }
   },
   methods: {
+    generateRandomName() {
+      const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+      const noun = nouns[Math.floor(Math.random() * nouns.length)];
+      this.message.username = adjective + noun;
+    },
     async fetchTodayCount() {
       this.isLoadingCount = true
       this.todayCount = await getTodayMessageCount()

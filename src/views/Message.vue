@@ -7,7 +7,14 @@
         </div>
         <div class="control-group">
           <button 
-            class="refresh-btn"
+            class="control-btn"
+            @click="toggleSort"
+            :title="isAscending ? '切换为最新消息在前' : '切换为最早消息在前'"
+          >
+            <component :is="isAscending ? iconMap.sortDesc : iconMap.sortAsc" class="icon" />
+          </button>
+          <button 
+            class="control-btn"
             @click="loadMessages"
             :disabled="isLoading"
             :title="'刷新留言'"
@@ -16,7 +23,7 @@
           </button>
         </div>
       </div>
-      <MessageList :messages="messages" />
+      <MessageList :messages="sortedMessages" />
       <div class="input-area" :class="{ 'hidden': isInputHidden }">
         <MessageForm 
           v-if="!isInputHidden" 
@@ -44,10 +51,26 @@ export default {
     return {
       messages: [],
       isInputHidden: false,
-      isLoading: false
+      isLoading: false,
+      isAscending: false
+    }
+  },
+  computed: {
+    sortedMessages() {
+      return [...this.messages].sort((a, b) => {
+        const timeA = new Date(a.created_at).getTime();
+        const timeB = new Date(b.created_at).getTime();
+        return this.isAscending ? timeA - timeB : timeB - timeA;
+      });
+    },
+    iconMap() {
+      return icons;
     }
   },
   methods: {
+    toggleSort() {
+      this.isAscending = !this.isAscending;
+    },
     async addMessage(message) {
       try {
         const success = await addMessage(message)
@@ -86,12 +109,7 @@ export default {
   },
   created() {
     this.loadMessages()
-  },
-  computed: {
-    iconMap() {
-      return icons;
-    }
-  },
+  }
 }
 </script>
 

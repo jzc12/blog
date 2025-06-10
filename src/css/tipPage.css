@@ -8,13 +8,13 @@
 
 .tip-page-container p {
     margin: 4rem 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .tip-page-footer {
     margin: 4rem 4rem;
-    font-size: 1.2rem;
-
+    font-size: 1rem;
+    justify-content: left;
 }
 
 .tip-options {

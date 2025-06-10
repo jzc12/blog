@@ -1,6 +1,7 @@
 .message-page {
     height: 100%;
-    background: linear-gradient(135deg, #f5f7fa00 0%, #c3cfe205 100%);
+    background: linear-gradient(135deg, #f5f7fa05 0%, #c3cfe208 100%);
+    padding: 0.5rem;
 }
 
 .message-container {
@@ -11,95 +12,162 @@
     display: flex;
     flex-direction: column;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 0.231);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
     overflow: hidden;
 }
 
-.text p {
-    padding: 1rem;
-    flex: 1;
-    font-size: 0.9rem;
-    justify-content: center;
-    overflow-y: auto;
-    backdrop-filter: blur(10px);
-    display: inline-flex;
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.controls {
-    display: inline-flex;
-    justify-content: flex-end;
-    background: rgba(255, 255, 255, 0);
+.text {
+    flex: 1;
+}
+
+.text p {
+    padding: 0.6rem;
+    margin: 0;
+    font-size: 0.85rem;
+    color: #555;
+    display: flex;
+    align-items: center;
 }
 
 .control-group {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem;
 }
 
 .message-count {
     color: #666;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
 }
 
-.refresh-btn {
-    padding: 0.6rem 1rem;
-    background-color: #ffffff00;
-    border: none;
-    border-radius: 20px;
+.control-btn {
+    padding: 0.4rem;
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease;
-    color: white;
+    transition: all 0.2s ease;
+    color: #4a90e2;
     font-size: 0.9rem;
-    margin: auto 0.5rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.refresh-btn:hover:not(:disabled) {
-    background-color: #9ec8f33a;
+.control-btn:hover:not(:disabled) {
+    background-color: #4a90e2;
+    color: white;
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.refresh-btn:disabled {
-    background-color: #ccc;
+.control-btn:disabled {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.2);
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.control-btn .icon {
+    width: 16px;
+    height: 16px;
 }
 
 .input-area {
     position: sticky;
     bottom: 0;
     background: transparent;
-    transition: transform 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
+    padding: 0 0.25rem;
 }
 
 .input-area.hidden {
-    transform: translateY(200%);
+    transform: translateY(150%);
+    opacity: 0;
 }
 
 .toggle-input-btn {
     position: absolute;
     bottom: 100%;
     right: 1rem;
-    width: 2rem;
-    height: 2rem;
-    border: none;
-    border-radius: 60%;
-    background: #4a90e2;
-    color: rgba(255, 255, 255, 0.817);
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #4a90e2;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
     z-index: 10;
+    backdrop-filter: blur(4px);
 }
 
 .toggle-input-btn:hover {
-    background: #357abd;
+    background: #4a90e2;
+    color: white;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2);
+}
+
+@media (max-width: 480px) {
+    .message-page {
+        padding: 0;
+    }
+
+    .message-container {
+        border-radius: 0;
+    }
+
+    .controls {
+        padding: 0 0.4rem;
+    }
+
+    .text p {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .control-btn {
+        width: 26px;
+        height: 26px;
+    }
+
+    .control-btn .icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .toggle-input-btn {
+        width: 28px;
+        height: 28px;
+        right: 0.75rem;
+    }
 }

@@ -1,218 +1,255 @@
 /* src/css/sidebar.css*/
 
+/* 侧边栏主容器 */
 .Sidebar {
     width: 250px;
-    background-color: #ffffff49;
-    border-right: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.29);
+    border-right: 1px solid rgba(221, 221, 221, 0.5);
     padding: 20px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     -ms-overflow-style: none;
-
     scrollbar-width: none;
     position: relative;
-
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
 }
 
+/* 隐藏滚动条 */
 .Sidebar::-webkit-scrollbar {
     display: none;
 }
 
+/* 收起状态的侧边栏 */
 .Sidebar.collapsed {
     width: 120px;
     overflow: hidden;
     overflow-y: auto;
 }
 
+/* 切换按钮样式 */
 .toggle-btn {
-    background-color: #eeeeee7c;
+    background-color: rgba(238, 238, 238, 0.49);
     border: none;
-    padding: 5px 10px;
+    padding: 8px 12px;
     cursor: pointer;
-    margin-bottom: 10px;
-    font-size: 0.875rem;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
 }
 
+.toggle-btn:hover {
+    background-color: rgba(238, 238, 238, 0.7);
+    transform: scale(1.05);
+}
+
+/* 标题样式 */
 .Sidebar h2 {
     font-size: 1.25rem;
     margin-bottom: 20px;
     white-space: nowrap;
+    color: #2c3e50;
+    font-weight: 600;
 }
 
+/* 导航菜单 */
 .nav {
     list-style: none;
+    margin: 10px 0;
 }
 
+/* 导航项样式 */
 .nav-li {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-    padding: 8px 10px;
-    border-radius: 6px;
+    gap: 12px;
+    margin: 12px 0;
+    padding: 10px 12px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.3s ease;
+    color: #34495e;
 }
 
 .nav-li:hover {
-    background-color: #a8ed8d;
+    background-color: rgba(168, 237, 141, 0.3);
+    transform: translateX(5px);
 }
 
+/* 导航项计数器 */
 .nav-span {
     margin-left: auto;
-    color: #888;
+    color: #666;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
-
+/* 个人资料区域 */
 .profile {
-    margin-top: 40px;
+    margin-top: auto;
     text-align: center;
-    margin-bottom: 10px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(221, 221, 221, 0.5);
 }
 
+/* 头像样式 */
 .profile img {
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
+.profile img:hover {
+    transform: scale(1.1);
+}
+
+/* 个人信息文本 */
 .profile p {
-    margin: 8px 0;
-    font-size: 0.875rem;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: #666;
 }
 
+/* 联系方式链接 */
 .contact-links {
-    margin-top: 10px;
+    margin-top: 15px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
 }
 
 .contact-links a {
     text-decoration: none;
-    color: #333;
-    font-size: 0.875rem;
+    color: #34495e;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: all 0.3s ease;
 }
 
+.contact-links a:hover {
+    color: #42b983;
+    transform: translateY(-2px);
+}
+
+/* 文章大纲容器 */
 .outline-container {
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     position: relative;
     z-index: 1;
     border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 0;
 }
 
-.outline-container::before {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin: 20px auto;
-    background: linear-gradient(to right,
-            transparent,
-            #447acc,
-            #d0e6ff,
-            #447acc,
-            transparent);
-}
-
-
-
+/* 页脚样式 */
 .footer {
     margin-top: auto;
     text-align: center;
-    font-size: 0.75rem;
-    color: #000000;
+    font-size: 0.8rem;
+    color: #666;
+    padding: 15px 0;
 }
 
+/* 通用链接样式 */
 a {
     color: inherit;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
+a:hover {
+    color: #42b983;
+}
+
+/* 字体大小控制 */
 .font-size-controls {
     display: flex;
     justify-content: center;
-    gap: 5px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin: 20px 0;
 }
 
 .font-size-controls button {
-    /* Green */
     border: none;
-    color: rgb(0, 0, 0);
-    padding: 4px 4px;
+    color: #2c3e50;
+    padding: 6px 8px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 1rem;
-    margin: 4px 2px;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    background: rgba(193, 242, 196, 0.2);
 }
 
 .font-size-controls button:hover {
-    background-color: #c1f2c46c;
+    background: rgba(193, 242, 196, 0.4);
+    transform: scale(1.05);
 }
 
-.Sidebar.collapsed .font-size-controls {
-    display: none;
-    /* Hide when sidebar is collapsed on desktop */
-}
-
+/* 响应式布局 */
 @media (max-width: 768px) {
 
+    /* 移动端隐藏部分元素 */
     .toggle-btn,
     .profile {
         display: none;
     }
 
+    /* 移动端字体控制按钮样式 */
     .font-size-controls {
         display: flex;
         flex-direction: row;
-        /* Buttons stacked vertically */
-        position: static;
-        /* Remove absolute positioning */
-        transform: none;
-        /* Remove transform */
         margin-left: auto;
-        /* Push to the right */
         gap: 5px;
     }
 
+    /* 移动端侧边栏样式 */
     .Sidebar {
         font-size: 75%;
-        width: 100%;
-        height: auto;
+        width: 100% !important;
+        height: 60px !important;
         border-right: none;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid rgba(221, 221, 221, 0.5);
         flex-direction: row;
         overflow: auto;
         align-items: center;
-        /* Vertically align items in the flex container */
+        padding: 10px;
     }
 
+    /* 移动端隐藏标题 */
     .Sidebar h2 {
         display: none;
     }
 
+    /* 移动端导航样式 */
     .Sidebar .nav {
         flex-grow: 1;
-        /* Allow navigation to take up available space */
+        margin: 0;
     }
 
-    /* Existing styles for font-size-controls */
+    /* 移动端导航布局 */
+    .Sidebar>.nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* 移动端字体控制按钮 */
     .font-size-controls button {
         font-size: 0.9rem;
-        padding: 4px 4px;
+        padding: 4px;
     }
 
+    /* 移动端透明度动画 */
     .single-a-button {
         opacity: 0.5;
         transition: opacity 0.5s ease;
@@ -220,25 +257,5 @@ a {
 
     .single-a-button.idle-state {
         opacity: 0.3;
-        /* Initial opacity for idle state */
-    }
-
-    /* Additional styles for mobile layout */
-    .Sidebar.collapsed .font-size-controls {
-        display: flex;
-        /* Show when sidebar is collapsed on mobile */
-    }
-
-    .Sidebar {
-        width: 100% !important;
-        height: 60px !important;
-    }
-
-    .Sidebar>.nav {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
     }
 }
