@@ -15,3 +15,7 @@
 代码仓库：[github.com/jzc12](https://github.com/jzc12)
 
 邮箱    ：[1765714473@qq.com](mailto:1765714473@qq.com)
+
+---
+
+<img src="./../assets/cat.gif" alt="cat" style="zoom:33%;" />
