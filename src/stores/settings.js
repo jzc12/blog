@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
         fontSizeIndex: 2,
-        fontSizeSteps: [12, 13, 14, 15, 16],
+        fontSizeSteps: [14, 15, 16, 17, 18],
         contentOpacity: 100
     }),
     getters: {

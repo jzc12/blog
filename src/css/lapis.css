@@ -75,17 +75,6 @@
     line-height: 1.8;
 }
 
-.markdown-body ul li::before {
-    content: '';
-    position: absolute;
-    left: -1.2em;
-    top: 0.7em;
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary-green);
-    border-radius: 50%;
-}
-
 /* 链接样式 */
 .markdown-body a {
     color: #3b82f6;
@@ -237,7 +226,7 @@
     background: rgba(255, 255, 255, 0.8) !important;
     border-radius: 12px !important;
     font-size: 0.875rem !important;
-    margin: 0 !important;
+    margin: 0 0 1rem 0 !important;
     position: relative;
 }
 

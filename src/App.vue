@@ -117,6 +117,6 @@ export default {
 }
 
 html {
-  font-size: var(--global-font-size, 16px); 
+  font-size: var(--global-font-size, 18px); 
 }
 </style>
