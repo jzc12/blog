@@ -18,13 +18,8 @@
     </div>
 
     <!-- 文章列表 -->
-    <TransitionGroup 
-      v-else-if="articles.length" 
-      name="list" 
-      tag="div" 
-      class="category-content"
-    >
-      <div class="article-list">
+    <div v-else-if="articles.length" class="category-content">
+      <TransitionGroup name="list" tag="div" class="article-list">
         <router-link
           v-for="article in sortedArticles"
           :key="article.id"
@@ -44,8 +39,8 @@
           </div>
           <p class="summary">{{ article.summary }}</p>
         </router-link>
-      </div>
-    </TransitionGroup>
+      </TransitionGroup>
+    </div>
 
     <!-- 无文章提示 -->
     <div v-else class="no-articles">

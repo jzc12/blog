@@ -24,7 +24,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 0.5rem;
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -37,7 +36,7 @@
 .text p {
     padding: 0.6rem;
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #555;
     display: flex;
     align-items: center;
@@ -91,8 +90,8 @@
 }
 
 .control-btn .icon {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
 }
 
 .input-area {

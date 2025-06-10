@@ -170,7 +170,7 @@ body {
     background-color: var(--primary-green);
     color: var(--text-green);
     /* 深绿色文字增强可读性 */
-    box-shadow: 0 4px 8px rgba(126, 179, 163, 0.3);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
     /* 绿色阴影 */
     font-size: 0.9375rem;
     font-weight: 600;
@@ -185,9 +185,8 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 2em;
-    background-color: var(--accent-green);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(117, 187, 167, 0.4);
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.4);
 }
 
 

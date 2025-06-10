@@ -52,7 +52,7 @@ export default {
       messages: [],
       isInputHidden: false,
       isLoading: false,
-      isAscending: false
+      isAscending: true
     }
   },
   computed: {

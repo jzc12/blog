@@ -100,10 +100,41 @@ export const getArticleViewCount = async (articleName) => {
     }
 };
 
+// 检查文章是否在冷却期内
+const isArticleInCooldown = (articleName) => {
+    const viewHistory = JSON.parse(localStorage.getItem('articleViewHistory') || '{}');
+    const lastViewTime = viewHistory[articleName];
+
+    if (!lastViewTime) return false;
+
+    // 检查是否在24小时冷却期内
+    const cooldownHours = 24;
+    const cooldownMs = cooldownHours * 60 * 60 * 1000;
+    return (Date.now() - lastViewTime) < cooldownMs;
+};
+
+// 记录文章访问时间
+const recordArticleView = (articleName) => {
+    const viewHistory = JSON.parse(localStorage.getItem('articleViewHistory') || '{}');
+    viewHistory[articleName] = Date.now();
+    localStorage.setItem('articleViewHistory', JSON.stringify(viewHistory));
+};
+
 // 增加文章浏览量
 export const incrementArticleViewCount = async (articleName) => {
     try {
-        // 先尝试获取当前浏览量
+        // 检查是否在冷却期内
+        if (isArticleInCooldown(articleName)) {
+            // 在冷却期内，只返回当前浏览量，不增加计数
+            const { data: currentData } = await supabase
+                .from('article_views')
+                .select('view_count')
+                .eq('article_name', articleName)
+                .single();
+            return currentData?.view_count || 0;
+        }
+
+        // 不在冷却期内，增加浏览量并记录访问时间
         const { data: existingData, error: fetchError } = await supabase
             .from('article_views')
             .select('view_count')
@@ -119,10 +150,14 @@ export const incrementArticleViewCount = async (articleName) => {
             .from('article_views')
             .upsert(
                 { article_name: articleName, view_count: newViewCount },
-                { onConflict: 'article_name' } // 如果冲突，则更新现有记录
+                { onConflict: 'article_name' }
             );
 
         if (upsertError) throw upsertError;
+
+        // 记录这次的访问时间
+        recordArticleView(articleName);
+
         return newViewCount;
     } catch (error) {
         console.error(`增加文章 "${articleName}" 浏览量失败:`, error);

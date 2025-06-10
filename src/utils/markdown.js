@@ -58,22 +58,22 @@ const md = new MarkdownIt({
         if (lang && hljs.getLanguage(lang)) {
             try {
                 const highlighted = hljs.highlight(str, { language: lang }).value
-
                 const lines = highlighted.split('\n')
                 const withLineNumbers = lines.map((line, i) => {
-                    return `<div class="code-line">
-                                <span class="line-number">${i + 1}</span>
-                                <span class="code-content">${line || '&nbsp;'}</span>
-                            </div>`
+                    return `<div class="code-line"><span class="line-number">${i + 1}</span><span class="code-content">${line || ' '}</span></div>`
                 }).join('')
-
                 return `<pre class="hljs with-line-numbers"><code>${withLineNumbers}</code></pre>`
-
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`
     }
-}).use(mk, {
+})
+
+// 禁用所有可能导致 TAP 转换的规则
+md.disable(['replacements', 'smartquotes']);
+
+// 使用 KaTeX 插件
+md.use(mk, {
     throwOnError: false,
     errorColor: '#cc0000',
     strict: false,
