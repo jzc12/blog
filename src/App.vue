@@ -46,6 +46,9 @@ export default {
         const { html, outline } = renderMarkdown(content)
         this.renderedContent = html
         this.articleOutline = outline
+      } else {
+        this.renderedContent = '还没有内容哟~'
+        this.articleOutline = []
       }
     },
     handleScrollToHeading(id) {
@@ -117,6 +120,6 @@ export default {
 }
 
 html {
-  font-size: var(--global-font-size, 18px); 
+  font-size: var(--global-font-size, 18px);
 }
 </style>

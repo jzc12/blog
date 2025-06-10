@@ -1,6 +1,6 @@
 <template>
   <div class="article-container">
-    
+
     <!-- 文章内容 -->
     <div class="article-meta" v-if="article">
       <div class="article-header">
@@ -51,7 +51,7 @@ import { getArticleViewCount, incrementArticleViewCount } from '../utils/supabas
 export default {
   name: 'ArticleDetail',
   emits: ['content-loaded'],
-  
+
   setup(props, { emit }) {
     const article = ref(null)
     const viewCount = ref(0)
@@ -90,7 +90,7 @@ export default {
 
     onMounted(async () => {
       const articleId = route.params.articleId
-      
+
       if (!articleId) {
         console.error('无效的文章ID')
         return
@@ -100,9 +100,7 @@ export default {
         article.value = await getArticle(articleId)
 
         // 通知父组件内容已更新
-        if (article.value?.content) {
-          emit('content-loaded', article.value.content)
-        }
+        emit('content-loaded', article.value?.content || '')
 
         // 更新阅读次数
         await incrementArticleViewCount(articleId)
