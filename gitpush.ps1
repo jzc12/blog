@@ -2,5 +2,5 @@
 param([string]$message = "modify img css")
 
 git add .
-git commit -S -m $message
+git commit -m $message
 git push
