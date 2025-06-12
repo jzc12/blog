@@ -1,5 +1,5 @@
-# 文件名: gitpush.ps1
-param([string]$message = "update")
+# 文件�?: gitpush.ps1
+param([string]$message = "test img path")
 
 git add .
 git commit -S -m $message
