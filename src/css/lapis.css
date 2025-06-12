@@ -40,7 +40,7 @@
     line-height: 1.9;
 }
 
-.markdown-body p img {
+.markdown-body img {
     max-width: 100%;
     height: auto;
     display: block;
@@ -54,7 +54,7 @@
     transition: all 0.3s ease;
 }
 
-.markdown-body p img:hover {
+.markdown-body img:hover {
     transform: translateY(-4px);
     box-shadow:
         0 4px 8px rgba(0, 0, 0, 0.1),
