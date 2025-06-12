@@ -1,4 +1,4 @@
-# ÎÄ¼şÃû: gitpush.ps1
+# æ–‡ä»¶å: gitpush.ps1
 param([string]$message = "update")
 
 git add .

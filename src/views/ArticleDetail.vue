@@ -64,7 +64,7 @@ export default {
 
         const convertedContent = content.replace(
           /\.\.\/assets\//g,
-          './../src/assets/'
+          process.env.NODE_ENV === 'production' ? '/assets/' : './../src/assets/'
         )
 
         return {
