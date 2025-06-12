@@ -62,12 +62,9 @@ export default {
         const articleModule = await import(`../articles/${id}.md?raw`)
         const { attributes: frontmatter, body: content } = fm(articleModule.default)
 
-        console.log('Current NODE_ENV:', process.env.NODE_ENV)
-        const convertedContent = content.replace(
-          /\.\.\/assets\//g,
-          process.env.NODE_ENV === 'production' ? '../assets/' : './../src/assets/'
-        )
-        console.log(convertedContent)
+        const convertedContent = process.env.NODE_ENV === 'production'
+          ? content
+          : content.replace(/\.\.\/assets\//g, './../src/assets/')
 
         return {
           id,
