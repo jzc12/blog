@@ -25,7 +25,7 @@ import {
     ArrowDownUp
 } from 'lucide-vue-next';
 
-import GitHub from '../assets/github.svg';
+import GitHub from './../assets/github.svg';
 import Up from '../assets/up.svg';
 
 export const icons = {

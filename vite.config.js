@@ -34,7 +34,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-  assetsDir: 'static',
+  build: {
+    assetsDir: 'assets', // 静态资源输出目录
+  },
   server: {
     historyApiFallback: true,
   },
