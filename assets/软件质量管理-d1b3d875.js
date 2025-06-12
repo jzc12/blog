@@ -1,7 +1,0 @@
-const n=`---
-date: 2025-06-10
-updated: 2025-06-10
-category: 2025spring
-summary: 软件质量管理复习
----
-`;export{n as default};
