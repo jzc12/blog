@@ -1,4 +1,4 @@
-# 文件�?: gitpush.ps1
+# 鏂囦欢鍚?: gitpush.ps1
 param([string]$message = "test img path")
 
 git add .
