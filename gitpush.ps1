@@ -1,5 +1,5 @@
 # 鏂囦欢鍚?: gitpush.ps1
-param([string]$message = "modify img css")
+param([string]$message = "modify md files")
 
 git add .
 git commit -m $message
