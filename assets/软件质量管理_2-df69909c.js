@@ -1,5 +1,5 @@
 const n=`---
-date: 2025-06-16
+date: 2025-06-10
 updated: 2025-06-17
 category: 2025spring
 summary: 软件质量管理复习
