@@ -27,17 +27,22 @@
 
 /* 展开/折叠图标 */
 .toggle-icon {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-    border-radius: 4px;
+    width: 18px;
+    /* 固定宽度 */
+    max-width: 18px;
+    max-height: 18px;
     cursor: pointer;
     user-select: none;
     transition: all 0.3s ease;
     color: #5c8dee;
+}
+
+.toggle-icon.placeholder {
+    /* 占位但不显示内容 */
+    visibility: hidden;
 }
 
 .toggle-icon:hover {

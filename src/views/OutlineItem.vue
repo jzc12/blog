@@ -1,35 +1,25 @@
 <template>
   <li>
     <!-- 大纲项容器 -->
-    <div class="outline-item-wrapper" 
-         :class="[
-           `level-${heading.level}`,
-           { active: isActive }
-         ]"
-         @click="handleClick"
-         @dblclick.stop="toggleExpand">
-      <!-- 展开/折叠图标 -->
-      <span v-if="hasChildren"
-            class="toggle-icon"
-            @click.stop="toggleExpand"
-            :title="heading.expanded ? '收起' : '展开'">
-        <component :is="heading.expanded ? iconMap.minus : iconMap.chevronDown" 
-                  class="icon-outline"
-                  :style="{ transform: heading.expanded ? 'rotate(0deg)' : 'rotate(-90deg)' }" />
+    <div class="outline-item-wrapper" :class="[
+      `level-${heading.level}`,
+      { active: isActive }
+    ]" @click="handleClick" @dblclick.stop="toggleExpand">
+      <!-- 展开/折叠图标或占位 -->
+      <span class="toggle-icon" v-if="hasChildren" @click.stop="toggleExpand" :title="heading.expanded ? '收起' : '展开'">
+        <component :is="heading.expanded ? iconMap.minus : iconMap.chevronDown" class="icon-outline"
+          :style="{ transform: heading.expanded ? 'rotate(0deg)' : 'rotate(-90deg)' }" />
       </span>
+      <span v-else class="toggle-icon placeholder" aria-hidden="true"></span>
       <!-- 标题文本 -->
       <a :title="heading.text">{{ heading.text }}</a>
     </div>
 
     <!-- 子项列表 -->
     <Transition name="outline-list">
-      <ul v-if="heading.expanded && hasChildren" 
-          class="outline-list nested">
-        <OutlineItem v-for="child in heading.children"
-                    :key="child.id"
-                    :heading="child"
-                    :active-id="activeId"
-                    @scroll-to="emitScrollTo" />
+      <ul v-if="heading.expanded && hasChildren" class="outline-list nested">
+        <OutlineItem v-for="child in heading.children" :key="child.id" :heading="child" :active-id="activeId"
+          @scroll-to="emitScrollTo" />
       </ul>
     </Transition>
   </li>
@@ -41,7 +31,7 @@ import { icons } from '../utils/icon.js';
 
 export default {
   name: 'OutlineItem',
-  
+
   props: {
     heading: {
       type: Object,
@@ -101,11 +91,8 @@ export default {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 确保图标垂直居中 */
-.toggle-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.toggle-icon.placeholder {
+  visibility: hidden;
 }
 
 /* 优化移动端点击区域 */
@@ -113,10 +100,10 @@ export default {
   .outline-item-wrapper {
     min-height: 36px;
   }
-  
+
   .toggle-icon {
     min-width: 24px;
     min-height: 24px;
   }
 }
-</style> 
+</style>
