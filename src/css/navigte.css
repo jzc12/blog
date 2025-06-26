@@ -1,0 +1,173 @@
+/* src/css/navigte.css*/
+
+/* 侧边栏主容器 */
+.Navigte {
+    width: 100%;
+    min-height: 60px;
+    background-color: rgba(255, 255, 255, 0.29);
+    border-right: none;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+    padding: 20px 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: relative;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+/* 隐藏滚动条 */
+.Navigte::-webkit-scrollbar {
+    display: none;
+}
+
+/* 标题样式 */
+.Navigte h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+
+    white-space: nowrap;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* 导航菜单 */
+.nav {
+    list-style: none;
+
+    display: flex;
+    gap: 20px;
+}
+
+/* 导航项样式 */
+.nav-li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #34495e;
+}
+
+.nav-li:hover {
+    background-color: rgba(168, 237, 141, 0.3);
+    transform: none;
+}
+
+/* 导航项计数器 */
+.nav-span {
+    margin-left: 0;
+    color: #666;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* 个人信息文本 */
+.profile p {
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 联系方式链接 */
+.contact-links {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.contact-links a {
+    text-decoration: none;
+    color: #34495e;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.contact-links a:hover {
+    color: #42b983;
+    transform: translateY(-2px);
+}
+
+
+/* 通用链接样式 */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #42b983;
+}
+
+/* 字体大小控制 */
+.font-size-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.font-size-controls button {
+    border: none;
+    color: #2c3e50;
+    padding: 6px 8px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(193, 242, 196, 0.2);
+}
+
+.font-size-controls button:hover {
+    background: rgba(193, 242, 196, 0.4);
+    transform: scale(1.05);
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+    .Navigte {
+        height: auto !important;
+        padding: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .Navigte h2 {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .Navigte .nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .nav-li {
+        justify-content: center;
+        padding: 5px 10px;
+    }
+
+    .font-size-controls {
+        display: flex;
+        flex-direction: row;
+        margin-left: auto;
+        gap: 5px;
+    }
+}

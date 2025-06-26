@@ -55,6 +55,9 @@ const md = new MarkdownIt({
     linkify: true,
     typographer: true,
     highlight: function (str, lang) {
+        if (lang === 'mermaid') {
+            return `<div class="mermaid">${str}</div>`;
+        }
         if (lang && hljs.getLanguage(lang)) {
             try {
                 const highlighted = hljs.highlight(str, { language: lang }).value

@@ -17,6 +17,10 @@
     cursor: pointer;
     color: #2c3e50;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* 悬停效果 */
@@ -122,6 +126,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .outline-item-wrapper:hover a {
@@ -146,21 +154,10 @@
     transform: translateX(-10px);
 }
 
-/* 响应式调整 */
-@media (max-width: 768px) {
+
+@media (max-width: 1024px) {
     .outline-item-wrapper {
-        padding: 8px 6px;
+        display: none;
     }
 
-    .outline-list.nested {
-        margin-left: 15px;
-    }
-
-    .level-1 .outline-item-wrapper {
-        font-size: 1em;
-    }
-
-    [class*="level-"] .outline-item-wrapper {
-        padding-left: 15px;
-    }
 }

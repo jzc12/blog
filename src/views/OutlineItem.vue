@@ -95,15 +95,14 @@ export default {
   visibility: hidden;
 }
 
-/* 优化移动端点击区域 */
-@media (max-width: 768px) {
-  .outline-item-wrapper {
-    min-height: 36px;
-  }
-
-  .toggle-icon {
-    min-width: 24px;
-    min-height: 24px;
-  }
+li {
+  list-style: none;
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 </style>
