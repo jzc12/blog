@@ -256,7 +256,7 @@
     height: 2px;
     background: linear-gradient(to right, var(--primary-green), transparent);
     margin: 2em 0;
-    opacity: 0.;
+    opacity: 0.4;
 }
 
 /* 响应式优化 */
