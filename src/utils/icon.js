@@ -22,7 +22,9 @@ import {
     Eye,
     Shuffle,
     ArrowUpDown,
-    ArrowDownUp
+    ArrowDownUp,
+    Copy,
+    CircleCheck,
 } from 'lucide-vue-next';
 
 import GitHub from './../assets/github.svg';
@@ -52,5 +54,7 @@ export const icons = {
     shuffle: Shuffle,
     up: Up,
     sortAsc: ArrowUpDown,
-    sortDesc: ArrowDownUp
+    sortDesc: ArrowDownUp,
+    copy: Copy,
+    circleCheck: CircleCheck,
 };

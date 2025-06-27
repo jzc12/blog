@@ -125,157 +125,102 @@ body {
     flex-direction: column;
     position: relative;
     height: 100vh;
+    overflow: hidden;
 }
 
 .main-content-wrapper {
     display: grid;
     grid-template-columns: 15% 70% 15%;
-    /* Left 10% for outline, 80% for content, 10% for right margin */
-
     width: 100%;
+    height: calc(100vh - var(--header-height));
     align-self: center;
-    justify-content: center;
     align-items: start;
+    padding: 0.5rem;
+    justify-content: center;
 }
 
 .outline-container {
     grid-column: 1 / 2;
-    padding: 1rem 1rem;
+    padding: 1rem;
     backdrop-filter: var(--blur-md);
     background-color: var(--bg-overlay);
     border-right: 1px solid rgba(200, 200, 200, 0.2);
     overflow-y: auto;
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--header-height) - 1rem);
     position: sticky;
     top: var(--header-height);
     scrollbar-width: thin;
     scrollbar-color: var(--primary-green) transparent;
 }
 
-.outline-container::-webkit-scrollbar {
-    width: 6px;
-}
-
-.outline-container::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.outline-container::-webkit-scrollbar-thumb {
-    background-color: var(--primary-green);
-    border-radius: 3px;
-}
-
 .content {
     grid-column: 2 / 3;
-    flex: 1;
-    margin: 0.5rem;
+    width: 100%;
+    height: calc(100vh - var(--header-height) - 1rem);
     overflow-y: auto;
-    height: calc(100vh - 1.5rem);
-    /* 减去上下margin */
-    -ms-overflow-style: none;
-    box-sizing: border-box;
-    max-width: none;
     background-color: rgba(255, 255, 255, var(--content-bg-opacity, 0.95));
     border-radius: var(--radius-lg);
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.05),
-        0 4px 8px rgba(0, 0, 0, 0.05),
-        0 8px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-lg);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-green) transparent;
 }
 
-/* Webkit滚动条样式 */
+/* 滚动条样式统一 */
+.outline-container::-webkit-scrollbar,
 .content::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
+.outline-container::-webkit-scrollbar-track,
 .content::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 4px;
 }
 
+.outline-container::-webkit-scrollbar-thumb,
 .content::-webkit-scrollbar-thumb {
     background-color: var(--primary-green);
-    border-radius: 4px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+    border-radius: 3px;
 }
 
 .content::-webkit-scrollbar-thumb:hover {
     background-color: var(--accent-green);
 }
 
-.alternative-layout {
-    display: flex;
-    height: 100vh;
-}
-
-
-.alternative-layout .content-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.alternative-layout .content {
-    width: 90%;
-    overflow-y: auto;
-}
-
 .tip-button {
     display: inline-block;
-    margin: 2em auto;
     padding: 10px 24px;
     background-color: var(--primary-green);
     color: var(--text-green);
-    /* 深绿色文字增强可读性 */
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
-    /* 绿色阴影 */
     font-size: 0.9375rem;
     font-weight: 600;
     text-align: center;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .tip-button-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.4);
+    padding: 2rem 0;
 }
-
 
 .tip-button:hover {
-    background-color: #7faee4;
+    background-color: var(--accent-green);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
-
 @media (max-width: 768px) {
-    body {
-        background-position: 25% 75%;
-    }
-
-    .app-container {
-        flex-direction: column;
-        height: 100vh;
-    }
-
     .main-content-wrapper {
         display: flex;
-        justify-content: center;
-        width: 100%;
-        margin: 0;
-        gap: 0;
+        padding: 0.5rem;
     }
 
     .outline-container {
@@ -284,13 +229,28 @@ body {
 
     .content {
         flex: 1;
-        width: 100%;
-        max-width: 100%;
         margin: 0;
-        height: calc(100vh - 60px);
-        overflow-y: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: auto;
-        font-size: 70%;
+        padding: 0.5rem;
+        height: calc(100vh - var(--header-height) - 1rem);
+        font-size: 0.9rem;
+    }
+
+    .tip-button-wrapper {
+        padding: 1.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content-wrapper {
+        padding: 0.25rem;
+    }
+
+    .content {
+        padding: 1rem;
+        border-radius: var(--radius-md);
+    }
+
+    .tip-button-wrapper {
+        padding: 1rem 0;
     }
 }

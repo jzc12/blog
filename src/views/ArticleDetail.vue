@@ -47,6 +47,17 @@ import { icons } from '../utils/icon.js'
 import fm from 'front-matter'
 import dayjs from 'dayjs'
 import { getArticleViewCount, incrementArticleViewCount } from '../utils/supabase.js'
+import { createApp, h } from 'vue'
+import { Copy, CircleCheck } from 'lucide-vue-next'
+
+function renderIcon(el, type = 'copy') {
+  const component = type === 'circleCheck' ? CircleCheck : Copy
+  const container = document.createElement('span')
+  const app = createApp({ render: () => h(component, { size: 16 }) })
+  app.mount(container)
+  el.innerHTML = ''
+  el.appendChild(container.firstElementChild)
+}
 
 export default {
   name: 'ArticleDetail',
@@ -88,35 +99,65 @@ export default {
       }
     }
 
+    // 处理代码复制功能
+    const setupCodeCopy = () => {
+      const copyButtons = document.querySelectorAll('.copy-button')
+      copyButtons.forEach(button => {
+        const iconSpan = button.querySelector('.icon')
+        if (iconSpan) renderIcon(iconSpan)
+
+        button.addEventListener('click', async () => {
+          // 修改选择器以适应新的结构
+          const codeBlock = button.closest('.code-block-wrapper')
+          const text = Array.from(codeBlock.querySelectorAll('.code-content'))
+            .map(el => el.textContent)
+            .join('\n')
+
+          try {
+            await navigator.clipboard.writeText(text)
+            button.setAttribute('data-copied', 'true')
+            if (iconSpan) renderIcon(iconSpan, 'circleCheck')
+
+            setTimeout(() => {
+              button.setAttribute('data-copied', 'false')
+              if (iconSpan) renderIcon(iconSpan)
+            }, 2000)
+          } catch (err) {
+            console.error('复制失败:', err)
+          }
+        })
+      })
+    }
+
     onMounted(async () => {
-      const articleId = route.params.articleId
+      const articleId = route.params.articleId;
 
       if (!articleId) {
-        console.error('无效的文章ID')
-        return
+        console.error('无效的文章ID');
+        return;
       }
 
       try {
-        article.value = await getArticle(articleId)
+        article.value = await getArticle(articleId);
+        emit('content-loaded', article.value?.content || '');
 
-        // 通知父组件内容已更新
-        emit('content-loaded', article.value?.content || '')
+        await incrementArticleViewCount(articleId);
+        viewCount.value = await getArticleViewCount(articleId);
 
-        // 更新阅读次数
-        await incrementArticleViewCount(articleId)
-        viewCount.value = await getArticleViewCount(articleId)
+        // 设置代码复制功能
+        setupCodeCopy();
       } catch (error) {
-        console.error('加载文章失败:', error)
+        console.error('加载文章失败:', error);
       }
-    })
+    });
 
     return {
       article,
       viewCount,
       iconMap: icons
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
