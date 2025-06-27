@@ -1,3 +1,4 @@
+// ========================== 大纲项组件 ==============================
 <template>
   <li>
     <!-- 大纲项容器 -->
@@ -26,17 +27,21 @@
 </template>
 
 <script>
+// ========================== 依赖导入 ==============================
 import { ref, computed } from 'vue';
 import { icons } from '../utils/icon.js';
 
 export default {
   name: 'OutlineItem',
 
+  // ========================== 组件属性定义 ==============================
   props: {
+    // 大纲标题项数据
     heading: {
       type: Object,
       required: true
     },
+    // 当前激活的标题ID
     activeId: {
       type: String,
       default: ''
@@ -44,33 +49,36 @@ export default {
   },
 
   setup(props, { emit }) {
-    // 计算是否有子项
+    // ========================== 计算属性 ==============================
+    // 判断是否有子项
     const hasChildren = computed(() => {
       return props.heading.children && props.heading.children.length > 0;
     });
 
-    // 计算当前项是否激活
+    // 判断当前项是否处于激活状态
     const isActive = computed(() => {
       return props.activeId === props.heading.id;
     });
 
-    // 处理点击事件
+    // ========================== 事件处理函数 ==============================
+    // 处理点击事件，触发滚动到对应位置
     const handleClick = () => {
       emitScrollTo(props.heading.id);
     };
 
-    // 切换展开/折叠状态
+    // 切换大纲项的展开/折叠状态
     const toggleExpand = () => {
       if (hasChildren.value) {
         props.heading.expanded = !props.heading.expanded;
       }
     };
 
-    // 触发滚动事件
+    // 触发滚动到指定标题的事件
     const emitScrollTo = (id) => {
       emit('scroll-to', id);
     };
 
+    // ========================== 返回数据 ==============================
     return {
       hasChildren,
       isActive,
@@ -86,23 +94,25 @@ export default {
 <style scoped>
 @import '../css/outline.css';
 
-/* 本地样式覆盖 */
+/* ========================== 本地样式覆盖 ============================== */
 .outline-item-wrapper {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 占位图标样式 */
 .toggle-icon.placeholder {
   visibility: hidden;
 }
 
+/* 列表项基础样式 */
 li {
   list-style: none;
 }
 
+/* 嵌套列表样式 */
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 </style>

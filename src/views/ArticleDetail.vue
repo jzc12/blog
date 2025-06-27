@@ -1,7 +1,7 @@
 <template>
   <div class="article-container">
 
-    <!-- 文章内容 -->
+    <!-- 文章元数据区域 -->
     <div class="article-meta" v-if="article">
       <div class="article-header">
         <div class="meta-info">
@@ -30,7 +30,7 @@
       <div class="article-divider"></div>
     </div>
 
-    <!-- 返回按钮 -->
+    <!-- 返回按钮区域 -->
     <div class="back-button-container">
       <router-link to="/category" class="back-button">
         <span>返回目录</span>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+// ========================== 依赖导入 ==============================
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { icons } from '../utils/icon.js'
@@ -50,6 +51,10 @@ import { getArticleViewCount, incrementArticleViewCount } from '../utils/supabas
 import { createApp, h } from 'vue'
 import { Copy, CircleCheck } from 'lucide-vue-next'
 
+// ========================== 图标渲染函数 ==============================
+// 使用 Vue 动态组件渲染 Lucide 图标
+// @param {HTMLElement} el - 图标容器元素
+// @param {string} type - 图标类型，'copy' 或 'circleCheck'
 function renderIcon(el, type = 'copy') {
   const component = type === 'circleCheck' ? CircleCheck : Copy
   const container = document.createElement('span')
@@ -64,10 +69,15 @@ export default {
   emits: ['content-loaded'],
 
   setup(props, { emit }) {
+    // ========================== 响应式状态 ==============================
     const article = ref(null)
     const viewCount = ref(0)
     const route = useRoute()
 
+    // ========================== 文章获取函数 ==============================
+    // 根据文章ID获取并解析文章内容
+    // @param {string} id - 文章ID
+    // @returns {Object} 解析后的文章对象
     const getArticle = async (id) => {
       try {
         const articleModule = await import(`../articles/${id}.md?raw`)
@@ -99,7 +109,8 @@ export default {
       }
     }
 
-    // 处理代码复制功能
+    // ========================== 代码复制功能 ==============================
+    // 为代码块添加复制功能
     const setupCodeCopy = () => {
       const copyButtons = document.querySelectorAll('.copy-button')
       copyButtons.forEach(button => {
@@ -129,6 +140,7 @@ export default {
       })
     }
 
+    // ========================== 生命周期钩子 ==============================
     onMounted(async () => {
       const articleId = route.params.articleId;
 
@@ -138,9 +150,11 @@ export default {
       }
 
       try {
+        // 加载文章内容
         article.value = await getArticle(articleId);
         emit('content-loaded', article.value?.content || '');
 
+        // 更新阅读计数
         await incrementArticleViewCount(articleId);
         viewCount.value = await getArticleViewCount(articleId);
 
@@ -151,6 +165,7 @@ export default {
       }
     });
 
+    // ========================== 返回数据 ==============================
     return {
       article,
       viewCount,

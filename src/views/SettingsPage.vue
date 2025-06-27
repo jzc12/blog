@@ -1,3 +1,4 @@
+// ========================== 设置页面组件 ==============================
 <template>
   <div class="settings-page">
     <!-- 页面标题 -->
@@ -16,7 +17,7 @@
         <span class="setting-description">调整文章内容的字体大小</span>
       </div>
       <div class="control-group">
-        
+        <!-- 字体大小滑块 -->
         <input
           type="range"
           min="0"
@@ -25,7 +26,7 @@
           v-model="settingsStore.fontSizeIndex"
           class="slider"
         />
-        
+        <!-- 当前字体大小显示 -->
         <span class="value-display">{{ settingsStore.currentFontSize }}</span>
       </div>
     </div>
@@ -40,7 +41,7 @@
         <span class="setting-description">调整内容区域的背景透明度</span>
       </div>
       <div class="control-group">
-
+        <!-- 透明度滑块 -->
         <input
           type="range"
           min="0"
@@ -49,7 +50,7 @@
           v-model="settingsStore.contentOpacity"
           class="slider"
         />
-
+        <!-- 当前透明度显示 -->
         <span class="value-display">{{ settingsStore.contentOpacity }}%</span>
       </div>
     </div>
@@ -65,40 +66,48 @@
 </template>
 
 <script>
+// ========================== 依赖导入 ==============================
 import { useSettingsStore } from '../stores/settings';
 
 export default {
   name: 'SettingsPage',
+
+  // ========================== 组件逻辑 ==============================
   setup() {
     const settingsStore = useSettingsStore();
 
+    // 增加背景透明度
     const increaseOpacity = () => {
       if (settingsStore.contentOpacity < 100) {
         settingsStore.contentOpacity++;
       }
     };
 
+    // 减少背景透明度
     const decreaseOpacity = () => {
       if (settingsStore.contentOpacity > 0) {
         settingsStore.contentOpacity--;
       }
     };
 
+    // 重置所有设置到默认值
     const resetSettings = () => {
       settingsStore.$reset();
     };
 
+    // ========================== 返回数据 ==============================
     return { 
-      settingsStore,
-      increaseOpacity,
-      decreaseOpacity,
-      resetSettings
+      settingsStore,         // 设置状态管理
+      increaseOpacity,       // 增加透明度方法
+      decreaseOpacity,       // 减少透明度方法
+      resetSettings          // 重置设置方法
     };
   }
 }
 </script>
 
 <style scoped>
+/* ========================== 页面基础样式 ============================== */
 .settings-page {
   margin: 0 auto;
   padding: 2rem;
@@ -107,7 +116,7 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* 页面标题样式 */
+/* ========================== 标题样式 ============================== */
 .settings-page h1 {
   font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
   font-size: 1.8rem;
@@ -119,7 +128,7 @@ export default {
   gap: 0.5rem;
 }
 
-/* 设置区块样式 */
+/* ========================== 设置区块样式 ============================== */
 .setting-section {
   margin: 1.5rem 0;
   padding: 1.5rem;
@@ -129,12 +138,13 @@ export default {
   transition: all 0.3s ease;
 }
 
+/* 设置区块悬停效果 */
 .setting-section:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
-/* 设置标题样式 */
+/* ========================== 设置标题样式 ============================== */
 .setting-header {
   margin-bottom: 1rem;
 }
@@ -153,7 +163,7 @@ export default {
   margin-left: 1.5rem;
 }
 
-/* 控制组样式 */
+/* ========================== 控制组样式 ============================== */
 .control-group {
   display: flex;
   align-items: center;
@@ -161,7 +171,7 @@ export default {
   margin-top: 1rem;
 }
 
-/* 滑块样式 */
+/* ========================== 滑块样式 ============================== */
 .slider {
   flex-grow: 1;
   height: 8px;
@@ -172,10 +182,12 @@ export default {
   transition: all 0.2s ease;
 }
 
+/* 滑块悬停效果 */
 .slider:hover {
   opacity: 1;
 }
 
+/* Webkit 滑块样式 */
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 20px;
@@ -190,6 +202,7 @@ export default {
   transform: scale(1.1);
 }
 
+/* Firefox 滑块样式 */
 .slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
@@ -199,7 +212,7 @@ export default {
   transition: all 0.2s ease;
 }
 
-/* 数值显示样式 */
+/* ========================== 数值显示样式 ============================== */
 .value-display {
   width: 2rem;
   padding: 0.5rem;
@@ -210,7 +223,7 @@ export default {
   text-align: center;
 }
 
-/* 重置按钮区域 */
+/* ========================== 重置按钮样式 ============================== */
 .reset-section {
   margin-top: 2rem;
   text-align: center;
@@ -230,12 +243,13 @@ export default {
   transition: all 0.2s ease;
 }
 
+/* 重置按钮悬停效果 */
 .reset-button:hover {
   background: #c0392b;
   transform: translateY(-2px);
 }
 
-/* 响应式布局 */
+/* ========================== 响应式布局 ============================== */
 @media (max-width: 768px) {
   .settings-page {
     padding: 1rem;

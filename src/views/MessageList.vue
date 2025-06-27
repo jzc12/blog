@@ -1,16 +1,22 @@
+// ========================== 留言列表组件 ==============================
 <template>
   <div class="message-list">
+    <!-- 空留言提示 -->
     <div v-if="messages.length === 0" class="no-messages">
       <i class="far fa-comments"></i>
       还没有留言，来做第一个留言的人吧！
     </div>
+    <!-- 留言列表容器 -->
     <div v-else class="messages-container" ref="messagesContainer">
+      <!-- 单条留言项 -->
       <div v-for="(message, index) in messages" :key="index" class="message-item">
         <div class="message-content">
+          <!-- 留言头部：用户名和时间 -->
           <div class="message-header">
             <span class="user-name">{{ message.username }}</span>
             <span class="message-date">{{ formatDate(message.created_at) }}</span>
           </div>
+          <!-- 留言内容 -->
           <div class="message-text">{{ message.content }}</div>
         </div>
       </div>
@@ -21,13 +27,19 @@
 <script>
 export default {
   name: 'MessageList',
+
+  // ========================== 组件属性定义 ==============================
   props: {
+    // 留言数据数组
     messages: {
       type: Array,
       default: () => []
     }
   },
+
+  // ========================== 方法定义 ==============================
   methods: {
+    // 格式化日期显示
     formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
@@ -62,6 +74,7 @@ export default {
       });
     },
     
+    // 滚动到列表底部
     scrollToBottom() {
       this.$nextTick(() => {
         const container = this.$refs.messagesContainer;
@@ -72,7 +85,9 @@ export default {
     }
   },
   
+  // ========================== 侦听器 ==============================
   watch: {
+    // 监听留言列表变化，自动滚动到底部
     messages: {
       handler() {
         this.scrollToBottom();
@@ -81,12 +96,15 @@ export default {
     }
   },
   
+  // ========================== 生命周期钩子 ==============================
   mounted() {
+    // 组件挂载后滚动到底部
     this.scrollToBottom();
   }
 }
 </script>
 
 <style scoped>
+/* ========================== 样式导入 ============================== */
 @import '../css/message-list.css';
 </style>

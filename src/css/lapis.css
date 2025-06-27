@@ -140,11 +140,13 @@
     color: #2563eb;
 }
 
+/* ========================== 代码块容器样式 ============================== */
 .code-block-wrapper {
     position: relative;
     margin: 1.5em 0;
 }
 
+/* ========================== Markdown 代码块样式 ============================== */
 .markdown-body pre {
     margin: 1.5em 0;
     overflow-x: auto;
@@ -157,6 +159,7 @@
         0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* ========================== 复制按钮样式 ============================== */
 .copy-button {
     position: absolute;
     top: 12px;
@@ -175,12 +178,14 @@
     height: 32px;
 }
 
+/* 复制按钮悬停效果 */
 .copy-button:hover {
     background: rgba(255, 255, 255, 1);
     border-color: rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* 复制按钮图标样式 */
 .copy-button .icon {
     display: flex;
     align-items: center;
@@ -190,6 +195,7 @@
     color: #666;
 }
 
+/* 复制成功状态图标样式 */
 .copy-button[data-copied="true"] .icon {
     color: #22c55e;
 }
