@@ -18,12 +18,20 @@
     --bg-secondary: rgba(255, 255, 255, 0.8);
     --bg-tertiary: rgba(255, 255, 255, 0.6);
     --bg-overlay: rgba(168, 230, 207, 0.15);
+    --content-bg: rgba(255, 255, 255, var(--content-opacity, 0.95));
 
     /* 文本色系 Text Colors */
     --text-primary: #2c3e50;
     --text-secondary: #486581;
     --text-tertiary: #666666;
     --text-light: #ffffff;
+
+    /* 代码块颜色 Code Colors */
+    --code-bg: rgba(255, 255, 255, 0.8);
+    --code-text: #1a365d;
+    --code-border: rgba(0, 0, 0, 0.1);
+    --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.3);
 
     /* 交互色系 Interactive Colors */
     --hover-bg: rgba(168, 237, 141, 0.3);
@@ -80,20 +88,38 @@
 
 /* 暗色主题变量 Dark Theme */
 [data-theme="dark"] {
+    /* 主题色系 */
+    --primary-green: #75bba7;
+    --secondary-green: #5a9b8a;
+    --accent-green: #4a7b62;
+    --text-green: #a8e6cf;
+
+    /* 背景色系 */
     --bg-primary: rgba(28, 32, 34, 1);
     --bg-secondary: rgba(28, 32, 34, 0.8);
     --bg-tertiary: rgba(28, 32, 34, 0.6);
     --bg-overlay: rgba(168, 230, 207, 0.05);
+    --content-bg: rgba(28, 32, 34, var(--content-opacity, 0.95));
 
+    /* 文本色系 */
     --text-primary: #e1e7ef;
     --text-secondary: #b8c4d0;
     --text-tertiary: #8b96a2;
-    --text-light: #2c3e50;
+    --text-light: #ffffff;
 
+    /* 代码块颜色 */
+    --code-bg: rgba(28, 32, 34, 0.95);
+    --code-text: #e1e7ef;
+    --code-border: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+
+    /* 交互色系 */
     --hover-bg: rgba(168, 237, 141, 0.1);
     --active-bg: rgba(92, 141, 238, 0.1);
     --focus-ring: rgba(74, 144, 226, 0.1);
 
+    /* 阴影系统 */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -106,6 +132,8 @@ body {
     background-position: center fixed;
     height: 100vh;
     overflow: hidden;
+    color: var(--text-primary);
+    transition: color var(--transition-normal);
 }
 
 .overlay {
@@ -114,10 +142,9 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: var(--light-green-bg);
+    background: var(--bg-overlay);
     z-index: -1;
 }
-
 
 /* =================== MAIN 区域样式 =================== */
 .app-container {
@@ -142,9 +169,11 @@ body {
 .outline-container {
     grid-column: 1 / 2;
     padding: 1rem;
+    margin-right: 1rem;
     backdrop-filter: var(--blur-md);
-    background-color: var(--bg-overlay);
-    border-right: 1px solid rgba(200, 200, 200, 0.2);
+    background-color: var(--content-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius-lg);
     overflow-y: auto;
     height: calc(100vh - var(--header-height) - 1rem);
     position: sticky;
@@ -158,15 +187,16 @@ body {
     width: 100%;
     height: calc(100vh - var(--header-height) - 1rem);
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, var(--content-bg-opacity, 0.95));
+    background-color: var(--content-bg);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur-md);
+    border: 1px solid var(--code-border);
     padding: 1rem;
     margin-bottom: 1rem;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-green) transparent;
+    transition: background-color var(--transition-normal);
 }
 
 /* 滚动条样式统一 */

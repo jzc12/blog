@@ -3,20 +3,20 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(10px);
+    background: var(--bg-overlay);
+    backdrop-filter: var(--blur-md);
 }
 
 .no-messages {
     text-align: center;
     padding: 3rem 2rem;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.95rem;
-    background: rgba(245, 245, 245, 0.5);
+    background: var(--bg-secondary);
     margin: 2rem;
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(5px);
+    border: 1px solid var(--code-border);
+    backdrop-filter: var(--blur-sm);
 }
 
 .messages-container {
@@ -32,16 +32,16 @@
     display: flex;
     justify-content: flex-start;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--bg-overlay);
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--code-border);
     transition: all 0.2s ease;
 }
 
 .message-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    background: rgba(255, 255, 255, 0.8);
+    box-shadow: var(--shadow-md);
+    background: var(--bg-hover);
 }
 
 .message-content {
@@ -55,17 +55,17 @@
     gap: 0.75rem;
     margin-bottom: 0.75rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--code-border);
 }
 
 .user-name {
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-primary);
     font-size: 0.95rem;
 }
 
 .message-date {
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     display: flex;
     align-items: center;
@@ -74,11 +74,11 @@
 .message-date::before {
     content: "•";
     margin-right: 0.75rem;
-    color: #ddd;
+    color: var(--text-tertiary);
 }
 
 .message-text {
-    color: #2c3e50;
+    color: var(--text-primary);
     line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
@@ -91,18 +91,18 @@
 }
 
 .messages-container::-webkit-scrollbar-track {
-    background: rgba(241, 241, 241, 0.1);
+    background: var(--scrollbar-track);
     border-radius: 3px;
 }
 
 .messages-container::-webkit-scrollbar-thumb {
-    background: rgba(193, 193, 193, 0.3);
+    background: var(--scrollbar-thumb);
     border-radius: 3px;
     transition: all 0.2s ease;
 }
 
 .messages-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(168, 168, 168, 0.5);
+    background: var(--scrollbar-thumb-hover);
 }
 
 /* 响应式布局 */

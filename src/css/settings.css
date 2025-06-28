@@ -1,0 +1,184 @@
+/* ========================== 页面基础样式 ============================== */
+.settings-page {
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--bg-opacity);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ========================== 标题样式 ============================== */
+.settings-page h1 {
+    font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ========================== 设置区块样式 ============================== */
+.setting-section {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: var(--section-bg);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* 设置区块悬停效果 */
+.setting-section:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* ========================== 设置标题样式 ============================== */
+.setting-header {
+    margin-bottom: 1rem;
+}
+
+.setting-header h2 {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.setting-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-left: 1.5rem;
+}
+
+/* ========================== 控制组样式 ============================== */
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* ========================== 滑块样式 ============================== */
+.slider {
+    flex-grow: 1;
+    height: 8px;
+    background: var(--slider-bg);
+    border-radius: 4px;
+    outline: none;
+    opacity: 0.9;
+    transition: all 0.2s ease;
+}
+
+/* 滑块悬停效果 */
+.slider:hover {
+    opacity: 1;
+}
+
+/* Webkit 滑块样式 */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--slider-thumb);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* Firefox 滑块样式 */
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--slider-thumb);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+/* ========================== 数值显示样式 ============================== */
+.value-display {
+    width: 2rem;
+    padding: 0.5rem;
+    background: var(--value-display-bg);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* ========================== 主题切换按钮样式 ============================== */
+.theme-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.theme-button {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--button-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.theme-button.active {
+    background: var(--button-active-bg);
+    border-color: var(--button-active-border);
+}
+
+.theme-button:hover {
+    transform: translateY(-2px);
+}
+
+/* ========================== 重置按钮样式 ============================== */
+.reset-section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.reset-button {
+    padding: 0.8rem 1.5rem;
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+/* 重置按钮悬停效果 */
+.reset-button:hover {
+    background: var(--danger-hover-color);
+    transform: translateY(-2px);
+}
+
+/* ========================== 响应式布局 ============================== */
+@media (max-width: 768px) {
+    .settings-page {
+        padding: 1rem;
+    }
+
+    .setting-section {
+        padding: 1rem;
+    }
+}

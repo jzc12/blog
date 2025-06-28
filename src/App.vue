@@ -193,21 +193,37 @@ export default {
       }
     }
 
-    const applyContentOpacity = (newOpacity) => {
-      if (mainContentRef.value) {
-        mainContentRef.value.style.setProperty('--content-bg-opacity', newOpacity)
-      }
+    const applyContentOpacity = (opacity) => {
+      const opacityValue = opacity / 100
+      document.documentElement.style.setProperty('--content-opacity', opacityValue.toString())
     }
 
-    watch(() => settingsStore.currentFontSize, applyFontSize)
-    watch(() => settingsStore.currentContentOpacity, applyContentOpacity)
-
-    onMounted(() => {
-      applyFontSize(settingsStore.currentFontSize)
-      applyContentOpacity(settingsStore.currentContentOpacity)
+    // 监听主题变化
+    watch(() => settingsStore.effectiveTheme, (newTheme) => {
+      document.documentElement.setAttribute('data-theme', newTheme)
     })
 
-    return { settingsStore, mainContentRef }
+    // 监听字体大小变化
+    watch(() => settingsStore.currentFontSize, applyFontSize)
+
+    // 监听透明度变化
+    watch(() => settingsStore.contentOpacity, applyContentOpacity)
+
+    onMounted(() => {
+      // 初始化主题
+      document.documentElement.setAttribute('data-theme', settingsStore.effectiveTheme)
+      
+      // 初始化字体大小
+      applyFontSize(settingsStore.currentFontSize)
+      
+      // 初始化透明度
+      applyContentOpacity(settingsStore.contentOpacity)
+    })
+
+    return { 
+      settingsStore, 
+      mainContentRef 
+    }
   },
 }
 </script>

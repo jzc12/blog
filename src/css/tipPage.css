@@ -2,7 +2,7 @@
     padding: 2em;
     text-align: center;
     font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-    color: #2c3e50;
+    color: var(--text-primary);
     position: relative;
 }
 
@@ -26,8 +26,8 @@
 
 .tip-option {
     padding: 10px 20px;
-    background-color: #7faee4;
-    color: white;
+    background-color: var(--primary-green);
+    color: var(--text-light);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -35,7 +35,7 @@
 }
 
 .tip-option:hover {
-    background-color: #5f99d5;
+    background-color: var(--primary-green-dark);
     transform: translateY(-2px);
 }
 
@@ -44,8 +44,8 @@
     top: 1rem;
     left: 1rem;
     padding: 0.625rem 1.5rem;
-    background-color: #93b9ea;
-    color: white;
+    background-color: var(--primary-green);
+    color: var(--text-light);
     font-size: 0.9375rem;
     font-weight: 600;
     border: none;
@@ -56,7 +56,7 @@
 }
 
 .back-button:hover {
-    background-color: #7faee4;
+    background-color: var(--primary-green-dark);
     transform: translateY(-2px);
 }
 
@@ -68,18 +68,18 @@
     z-index: 9999;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--modal-overlay);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .modal-box {
-    background: #fff;
+    background: var(--bg-primary);
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
     max-width: 300px;
 }
 
@@ -93,10 +93,17 @@
 .modal-close {
     margin-top: 1rem;
     padding: 6px 14px;
-    background: #ccc;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: var(--bg-hover);
+    color: var(--primary-green);
 }
 
 .qr-codes {
@@ -117,10 +124,12 @@
     height: 160px;
     padding: 10px;
     border-radius: 8px;
+    background: var(--bg-secondary);
 }
 
 .qr-code-item p {
     margin-top: 10px;
     font-size: 1.1em;
     font-weight: bold;
+    color: var(--text-primary);
 }

@@ -2,5 +2,27 @@
     width: 1.25rem;
     height: 1.25rem;
     flex-shrink: 0;
-    color: #333;
+    color: var(--text-primary);
+}
+
+/* 如果图标在不同上下文中需要不同的颜色 */
+.icon-secondary {
+    color: var(--text-secondary);
+}
+
+.icon-tertiary {
+    color: var(--text-tertiary);
+}
+
+.icon-accent {
+    color: var(--primary-green);
+}
+
+/* 交互状态 */
+.icon-interactive {
+    transition: color 0.2s ease;
+}
+
+.icon-interactive:hover {
+    color: var(--primary-green);
 }

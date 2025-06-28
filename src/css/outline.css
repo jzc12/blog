@@ -15,7 +15,7 @@
     border-radius: 6px;
     transition: all 0.3s ease;
     cursor: pointer;
-    color: #2c3e50;
+    color: var(--text-primary);
     position: relative;
     user-select: none;
     -webkit-user-select: none;
@@ -25,7 +25,7 @@
 
 /* 悬停效果 */
 .outline-item-wrapper:hover {
-    background-color: rgba(92, 141, 238, 0.1);
+    background: var(--bg-hover);
     transform: translateX(4px);
 }
 
@@ -41,7 +41,7 @@
     cursor: pointer;
     user-select: none;
     transition: all 0.3s ease;
-    color: #5c8dee;
+    color: var(--primary-green);
 }
 
 .toggle-icon.placeholder {
@@ -50,7 +50,7 @@
 }
 
 .toggle-icon:hover {
-    background-color: rgba(92, 141, 238, 0.2);
+    background: var(--primary-green-transparent);
     transform: scale(1.1);
 }
 
@@ -76,16 +76,16 @@
     bottom: 0;
     width: 1px;
     background: linear-gradient(to bottom,
-            rgba(92, 141, 238, 0.1),
-            rgba(92, 141, 238, 0.3),
-            rgba(92, 141, 238, 0.1));
+            var(--primary-green-transparent),
+            var(--primary-green),
+            var(--primary-green-transparent));
 }
 
 /* 不同层级的缩进和样式 */
 .level-1 .outline-item-wrapper {
     font-size: 1.1em;
     font-weight: 600;
-    color: #34495e;
+    color: var(--text-primary);
 }
 
 .level-2 .outline-item-wrapper {
@@ -102,19 +102,19 @@
 .level-4 .outline-item-wrapper {
     font-size: 0.9em;
     padding-left: 50px;
-    color: #486581;
+    color: var(--text-secondary);
 }
 
 .level-5 .outline-item-wrapper {
     font-size: 0.85em;
     padding-left: 65px;
-    color: #486581;
+    color: var(--text-secondary);
 }
 
 .level-6 .outline-item-wrapper {
     font-size: 0.8em;
     padding-left: 80px;
-    color: #486581;
+    color: var(--text-secondary);
 }
 
 /* 链接样式 */
@@ -133,13 +133,13 @@
 }
 
 .outline-item-wrapper:hover a {
-    color: #42b983;
+    color: var(--primary-green);
 }
 
 /* 活动状态 */
 .outline-item-wrapper.active {
-    background-color: rgba(92, 141, 238, 0.15);
-    border-right: 3px solid #5c8dee;
+    background: var(--primary-green-transparent);
+    border-right: 3px solid var(--primary-green);
 }
 
 /* 展开/折叠动画 */

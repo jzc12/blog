@@ -4,9 +4,9 @@
 .Navigte {
     width: 100%;
     min-height: 60px;
-    background-color: rgba(255, 255, 255, 0.29);
+    background: var(--bg-overlay);
     border-right: none;
-    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+    border-bottom: 1px solid var(--code-border);
     padding: 20px 15%;
     display: flex;
     flex-direction: row;
@@ -16,7 +16,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     position: relative;
-    backdrop-filter: blur(8px);
+    backdrop-filter: var(--blur-md);
     transition: all 0.3s ease;
 }
 
@@ -29,16 +29,14 @@
 .Navigte h2 {
     font-size: 1.25rem;
     margin-bottom: 0;
-
     white-space: nowrap;
-    color: #2c3e50;
+    color: var(--text-primary);
     font-weight: 600;
 }
 
 /* 导航菜单 */
 .nav {
     list-style: none;
-
     display: flex;
     gap: 20px;
 }
@@ -53,18 +51,19 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: #34495e;
+    color: var(--text-primary);
 }
 
 .nav-li:hover {
-    background-color: rgba(168, 237, 141, 0.3);
+    background: var(--bg-hover);
+    color: var(--primary-green);
     transform: none;
 }
 
 /* 导航项计数器 */
 .nav-span {
     margin-left: 0;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     opacity: 0.8;
 }
@@ -73,7 +72,7 @@
 .profile p {
     margin: 12px 0;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 /* 联系方式链接 */
@@ -86,7 +85,7 @@
 
 .contact-links a {
     text-decoration: none;
-    color: #34495e;
+    color: var(--text-primary);
     font-size: 0.9rem;
     display: flex;
     align-items: center;
@@ -95,10 +94,9 @@
 }
 
 .contact-links a:hover {
-    color: #42b983;
+    color: var(--primary-green);
     transform: translateY(-2px);
 }
-
 
 /* 通用链接样式 */
 a {
@@ -108,7 +106,7 @@ a {
 }
 
 a:hover {
-    color: #42b983;
+    color: var(--primary-green);
 }
 
 /* 字体大小控制 */
@@ -121,18 +119,19 @@ a:hover {
 
 .font-size-controls button {
     border: none;
-    color: #2c3e50;
+    color: var(--text-primary);
     padding: 6px 8px;
     text-align: center;
     font-size: 1rem;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: rgba(193, 242, 196, 0.2);
+    background: var(--bg-tag);
 }
 
 .font-size-controls button:hover {
-    background: rgba(193, 242, 196, 0.4);
+    background: var(--bg-hover);
+    color: var(--primary-green);
     transform: scale(1.05);
 }
 

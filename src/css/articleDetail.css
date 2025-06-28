@@ -15,12 +15,14 @@
 
 .article-meta span {
     font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
 .article-meta p {
     font-size: 1rem;
     line-height: 1.6;
     margin: 1em 0;
+    color: var(--text-primary);
 }
 
 /* 返回按钮容器 */
@@ -37,22 +39,21 @@
     gap: 0.5rem;
     text-decoration: none;
     width: fit-content;
-
     padding: 0.625rem 1.5rem;
-    background-color: #93b9ea;
-    color: white;
+    background-color: var(--primary-green);
+    color: var(--text-green);
     font-size: 0.9375rem;
     font-weight: 600;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .back-button:hover {
     transform: translateX(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-color: #ddd;
+    background-color: var(--accent-green);
+    box-shadow: var(--shadow-sm);
 }
 
 .back-icon::before {
@@ -63,7 +64,7 @@
 .icon {
     width: 14px;
     height: 14px;
-    color: #999;
+    color: var(--text-tertiary);
 }
 
 .article-header {
@@ -73,7 +74,7 @@
 
 .article-title {
     font-size: 2rem;
-    color: #333;
+    color: var(--text-primary);
     margin: 0 0 1rem;
     font-weight: 500;
 }
@@ -83,7 +84,7 @@
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     flex-wrap: nowrap;
     margin: 0.5rem 0;
@@ -94,21 +95,21 @@
     align-items: center;
     gap: 0.4rem;
     white-space: nowrap;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .date {
     font-size: 0.9rem;
+    color: var(--text-tertiary);
 }
 
 .article-divider {
     margin: 1rem 0;
     height: 1px;
-    background: #eee;
+    background: var(--code-border);
 }
 
 @media (max-width: 768px) {
-
     .article-title {
         font-size: 1.5rem;
     }
@@ -130,10 +131,14 @@
 }
 
 .meta-info::-webkit-scrollbar-track {
-    background: #f5f5f5;
+    background: var(--bg-secondary);
 }
 
 .meta-info::-webkit-scrollbar-thumb {
-    background: #ddd;
+    background: var(--scrollbar-thumb);
     border-radius: 3px;
+}
+
+.meta-info::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
 }

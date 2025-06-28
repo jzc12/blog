@@ -1,11 +1,11 @@
 .message-form {
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--bg-overlay);
     padding: 0.5rem;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--code-border);
     border-radius: 12px;
     margin: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: var(--blur-md);
     transition: all 0.3s ease;
 }
 
@@ -26,18 +26,19 @@
     width: 100%;
     max-width: 120px;
     padding: 0.25rem 0.5rem;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--code-border);
     border-radius: 12px;
     font-size: 0.85rem;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     transition: all 0.3s ease;
     height: 26px;
 }
 
 .name-input:focus {
     outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px var(--primary-green-transparent);
 }
 
 .private-toggle {
@@ -48,30 +49,30 @@
     user-select: none;
     padding: 0.2rem 0.5rem;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--bg-secondary);
     transition: all 0.2s ease;
     height: 26px;
 }
 
 .private-toggle:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--bg-hover);
 }
 
 .private-toggle input[type="checkbox"] {
     width: 14px;
     height: 14px;
     cursor: pointer;
-    accent-color: #4a90e2;
+    accent-color: var(--primary-green);
 }
 
 .toggle-label {
     font-size: 0.85rem;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .toggle-input-btn {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--bg-secondary);
+    border: 1px solid var(--code-border);
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -82,14 +83,14 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: #4a90e2;
+    color: var(--primary-green);
 }
 
 .toggle-input-btn:hover {
-    background: #4a90e2;
-    color: white;
+    background: var(--primary-green);
+    color: var(--text-light);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .input-group {
@@ -97,44 +98,45 @@
     flex-wrap: wrap;
     gap: 0.6rem;
     align-items: flex-end;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--bg-secondary);
     border-radius: 12px;
     padding: 0.4rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    box-shadow: var(--shadow-xs);
     transition: all 0.3s ease;
 }
 
 .input-group:focus-within {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    background: var(--bg-hover);
+    box-shadow: var(--shadow-sm);
 }
 
 .content-input {
     flex: 1;
     width: 100%;
     padding: 0.35rem 0.6rem;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--code-border);
     border-radius: 8px;
     font-size: 0.85rem;
     line-height: 1.4;
     resize: none;
     max-height: 120px;
     overflow-y: auto;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     transition: all 0.3s ease;
     min-height: 26px;
 }
 
 .content-input:focus {
     outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-    background: #fff;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px var(--primary-green-transparent);
+    background: var(--bg-hover);
 }
 
 .submit-btn {
-    background-color: #4a90e2;
-    color: white;
+    background-color: var(--primary-green);
+    color: var(--text-light);
     padding: 0.35rem 1rem;
     border: none;
     border-radius: 8px;
@@ -150,22 +152,22 @@
 }
 
 .submit-btn:hover {
-    background-color: #357abd;
+    background-color: var(--primary-green-dark);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2);
+    box-shadow: var(--shadow-md);
 }
 
 .submit-btn:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 .message-info {
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.8rem;
     margin-left: auto;
     padding: 0.25rem 0.6rem;
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--bg-secondary);
     border-radius: 12px;
     transition: all 0.3s ease;
     height: 26px;
@@ -176,14 +178,14 @@
 .limit-warning {
     text-align: center;
     padding: 0.6rem;
-    background-color: rgba(255, 243, 205, 0.9);
-    color: #856404;
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
     border-radius: 8px;
     font-size: 0.85rem;
     margin: 0.4rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(133, 100, 4, 0.1);
-    backdrop-filter: blur(5px);
+    box-shadow: var(--shadow-xs);
+    border: 1px solid var(--warning-border);
+    backdrop-filter: var(--blur-sm);
 }
 
 /* 滚动条美化 */
@@ -192,18 +194,18 @@
 }
 
 .content-input::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.02);
+    background: var(--scrollbar-track);
     border-radius: 2px;
 }
 
 .content-input::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--scrollbar-thumb);
     border-radius: 2px;
     transition: all 0.2s ease;
 }
 
 .content-input::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--scrollbar-thumb-hover);
 }
 
 /* 响应式调整 */
