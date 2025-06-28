@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <Navigte />
     <div class="main-content-wrapper">
       <div class="outline-container" v-if="isMarkdownRoute">
@@ -17,11 +16,10 @@
           </template>
           <component v-else :is="Component" />
         </router-view>
-
-        
+        <BackToTopButton v-if="isMarkdownRoute" :target-ref="mainContentRef" />
       </main>
+      <Sidebar v-if="isMarkdownRoute" :content="renderedContent" />
     </div>
-    <BackToTopButton v-if="isMarkdownRoute" :target-ref="mainContentRef" />
   </div>
 </template>
 
@@ -32,16 +30,25 @@ import { useSettingsStore } from './stores/settings'
 import { watch, nextTick, ref, onMounted } from 'vue'
 import BackToTopButton from './views/BackToTopButton.vue'
 import OutlineItem from './views/OutlineItem.vue';
+import Sidebar from './views/Sidebar.vue'
 import mermaid from 'mermaid'
 
 export default {
-  components: { Navigte, BackToTopButton, OutlineItem },
+  components: { Navigte, BackToTopButton, OutlineItem, Sidebar },
   data() {
     return {
       renderedContent: '',
       articleOutline: [],
       currentHeadingId: '',
-      scrollTimeout: null
+      scrollTimeout: null,
+      visitorIP: '获取中...',
+      visitorRegion: '获取中...',
+      currentTime: '',
+      articleDate: '',
+      readingTime: 0,
+      articleCategory: '',
+      recentArticles: [],
+      timeInterval: null
     }
   },
   computed: {
@@ -55,6 +62,9 @@ export default {
         const { html, outline } = renderMarkdown(content)
         this.renderedContent = html
         this.articleOutline = this.processOutline(outline)
+        this.calculateReadingTime();
+        this.articleDate = new Date().toLocaleDateString();
+        this.articleCategory = '技术博客';
         nextTick(() => {
           mermaid.init(undefined, this.$refs.mainContentRef.querySelectorAll('.mermaid'));
           this.setupScrollHandler();
@@ -65,7 +75,6 @@ export default {
       }
     },
 
-    // 处理大纲数据，添加展开状态
     processOutline(outline) {
       const processNode = (node) => {
         node.expanded = false;
@@ -77,7 +86,6 @@ export default {
       return outline.map(processNode);
     },
 
-    // 设置滚动监听
     setupScrollHandler() {
       const content = this.$refs.mainContentRef;
       if (content) {
@@ -85,7 +93,6 @@ export default {
       }
     },
 
-    // 处理滚动事件
     handleScroll() {
       if (this.scrollTimeout) {
         clearTimeout(this.scrollTimeout);
@@ -96,7 +103,6 @@ export default {
         const contentRect = this.$refs.mainContentRef.getBoundingClientRect();
         let currentHeading = null;
         
-        // 找到当前可见的标题
         for (const heading of headings) {
           const rect = heading.getBoundingClientRect();
           if (rect.top >= contentRect.top && rect.top <= contentRect.bottom) {
@@ -109,16 +115,14 @@ export default {
           this.currentHeadingId = currentHeading.id;
           this.updateOutlineExpansion(this.articleOutline, currentHeading.id);
         }
-      }, 150); // 增加了延迟时间，使滚动检测更稳定
+      }, 150);
     },
 
-    // 更新大纲展开状态
     updateOutlineExpansion(outline, targetId, isParentOfTarget = false) {
       let found = false;
       
       for (const item of outline) {
         if (item.id === targetId) {
-          // 找到目标项
           found = true;
         }
 
@@ -128,13 +132,11 @@ export default {
             item.expanded = true;
             found = true;
           } else if (!isParentOfTarget) {
-            // 如果不是目标项的父节点，则折叠
             item.expanded = false;
           }
         }
       }
 
-      // 如果不是父节点路径上的项，则折叠
       if (!isParentOfTarget && !found) {
         for (const item of outline) {
           item.expanded = false;
@@ -149,7 +151,6 @@ export default {
       const mainContent = this.$refs.mainContentRef;
 
       if (element && mainContent) {
-        // 立即更新大纲状态
         this.currentHeadingId = id;
         this.updateOutlineExpansion(this.articleOutline, id);
 
@@ -165,13 +166,15 @@ export default {
       }
     },
 
-    // 组件销毁时清理
     beforeDestroy() {
       if (this.$refs.mainContentRef) {
         this.$refs.mainContentRef.removeEventListener('scroll', this.handleScroll);
       }
       if (this.scrollTimeout) {
         clearTimeout(this.scrollTimeout);
+      }
+      if (this.timeInterval) {
+        clearInterval(this.timeInterval);
       }
     },
 
@@ -181,6 +184,45 @@ export default {
     
     goToTipPage() {
       this.$router.push('/tip');
+    },
+
+    async fetchVisitorInfo() {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        this.visitorIP = data.ip;
+      } catch (error) {
+        console.error('获取访客信息失败:', error);
+        this.visitorIP = '无法获取';
+        this.visitorRegion = '未知';
+      }
+    },
+
+    updateCurrentTime() {
+      const now = new Date();
+      this.currentTime = now.toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    },
+
+    calculateReadingTime() {
+      if (this.renderedContent) {
+        const wordCount = this.renderedContent.replace(/<[^>]*>/g, '').length;
+        this.readingTime = Math.ceil(wordCount / 500);
+      }
+    },
+
+    fetchRecentArticles() {
+      this.recentArticles = [
+        { id: 1, title: '示例文章1', path: '/articles/example1', date: '2024-03-20' },
+        { id: 2, title: '示例文章2', path: '/articles/example2', date: '2024-03-19' },
+        { id: 3, title: '示例文章3', path: '/articles/example3', date: '2024-03-18' },
+      ];
     }
   },
   setup() {
@@ -198,15 +240,12 @@ export default {
       document.documentElement.style.setProperty('--content-opacity', opacityValue.toString())
     }
 
-    // 监听主题变化
     watch(() => settingsStore.effectiveTheme, (newTheme) => {
       document.documentElement.setAttribute('data-theme', newTheme)
     })
 
-    // 监听字体大小变化
     watch(() => settingsStore.currentFontSize, applyFontSize)
 
-    // 监听透明度变化
     watch(() => settingsStore.contentOpacity, applyContentOpacity)
 
     onMounted(() => {
@@ -222,8 +261,16 @@ export default {
 
     return { 
       settingsStore, 
-      mainContentRef 
+      mainContentRef
     }
+  },
+
+  mounted() {
+    // 初始化右侧边栏数据
+    this.fetchVisitorInfo();
+    this.updateCurrentTime();
+    this.timeInterval = setInterval(() => this.updateCurrentTime(), 1000);
+    this.fetchRecentArticles();
   },
 }
 </script>
@@ -235,10 +282,11 @@ export default {
 @import "./css/animations.css";
 @import "./css/layout.css";
 @import "./css/outline.css";
-
+@import "./css/icons.css";
 
 .content {
   background-color: rgba(255, 255, 255, var(--content-bg-opacity, 1));
+  position: relative;
 }
 
 html {

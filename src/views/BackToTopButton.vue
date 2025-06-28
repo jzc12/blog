@@ -90,9 +90,11 @@ export default {
 <style scoped>
 /* ========================== 按钮基础样式 ============================== */
 .back-to-top {
-  position: fixed;
-  bottom: 80px;
-  right: 40px;
+  position: sticky;
+  bottom: 2rem;
+  right: 1rem;
+  float: right;
+  margin-right: 1rem;
   background-color: #93b9ea77;
   color: #ffffff77;
   width: 40px;
