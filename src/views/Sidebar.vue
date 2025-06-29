@@ -2,40 +2,40 @@
     <div class="sidebar-container">
   
       <div class="info-card visitor-card">
-        <h3>访问统计</h3>
-  
-        <!-- IP 地址 -->
-        <div class="info-item">
-          <div class="info-content">
-            <div class="info-label">当前访客 IP</div>
-            <div class="info-value">
-              <span v-if="loadingVisitorInfo">加载中...</span>
-              <span v-else>{{ visitorInfo.ip }}</span>
+          <h3>访客信息</h3>
+
+          <!-- IP 地址 -->
+          <div class="info-item">
+            <div class="info-content">
+              <div class="info-label">当前访客 IP</div>
+              <div class="info-value">
+                <span v-if="loadingVisitorInfo">加载中...</span>
+                <span v-else>{{ visitorInfo.ip }}</span>
+              </div>
             </div>
           </div>
-        </div>
   
-        <!-- 地区（国家） -->
-        <div class="info-item">
-          <div class="info-content">
-            <div class="info-label">国家/地区</div>
-            <div class="info-value">
-              <span v-if="loadingVisitorInfo">加载中...</span>
-              <span v-else>{{ visitorInfo.country }}（{{ isDomestic ? '国内' : '国外' }}）</span>
+          <!-- 运营商 -->
+          <div class="info-item">
+            <div class="info-content">
+              <div class="info-label">运营商</div>
+              <div class="info-value">
+                <span v-if="loadingVisitorInfo">加载中...</span>
+                <span v-else>{{ visitorInfo.owner }}</span>
+              </div>
             </div>
           </div>
-        </div>
   
-        <!-- 城市 / 省份 -->
-        <div class="info-item">
-          <div class="info-content">
-            <div class="info-label">省份 / 城市</div>
-            <div class="info-value">
-              <span v-if="loadingVisitorInfo">加载中...</span>
-              <span v-else>{{ visitorInfo.region }} / {{ visitorInfo.city }}</span>
+          <!-- 城市 / 省份 -->
+          <div class="info-item">
+            <div class="info-content">
+              <div class="info-label">省份 / 城市</div>
+              <div class="info-value">
+                <span v-if="loadingVisitorInfo">加载中...</span>
+                <span v-else>{{ visitorInfo.region }} / {{ visitorInfo.city }}</span>
+              </div>
             </div>
           </div>
-        </div>
       </div>
   
       <div class="info-card article-info">
@@ -71,11 +71,10 @@
         loadingVisitorInfo: true,
         visitorInfo: {
           ip: '获取中...',
-          country: '',
+          owner: '',
           region: '',
           city: ''
         },
-        isDomestic: false,  // 是否是国内访客
         currentTime: '',
         wordCount: 0,
         readingTime: 0,
@@ -91,21 +90,16 @@
       }
     },
     methods: {
-      async fetchVisitorInfo() {
+            async fetchVisitorInfo() {
         try {
-          const ipRes = await fetch('https://api.ipify.org?format=json');
+          const ipRes = await fetch('https://qifu-api.baidubce.com/ip/local/geo/v1/district');
           const ipData = await ipRes.json();
           this.visitorInfo.ip = ipData.ip;
-  
-          const locationRes = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
-          const loc = await locationRes.json();
-  
-          this.visitorInfo.country = loc.country_name || '未知';
-          this.visitorInfo.region = loc.region || '未知';
+          const loc = ipData.data;
+
+          this.visitorInfo.owner = loc.owner || '未知';
+          this.visitorInfo.region = loc.prov || '未知';
           this.visitorInfo.city = loc.city || '未知';
-  
-          // 判断是否为国内（例如中国）
-          this.isDomestic = loc.country === 'CN' || loc.country_name === 'China';
   
         } catch (err) {
           console.error('获取访客信息失败', err);
