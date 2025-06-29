@@ -51,7 +51,7 @@
           <i class="fas fa-text-height"></i>
           字体大小
         </h2>
-        <span class="setting-description">调整文章内容的字体大小</span>
+        <span class="setting-description">调整字体大小 x 已经异常我还找不到问题，之后再改吧</span>
       </div>
       <div class="control-group">
         <!-- 字体大小滑块 -->
@@ -60,7 +60,7 @@
           min="0"
           :max="settingsStore.fontSizeSteps.length - 1"
           step="1"
-          v-model="settingsStore.fontSizeIndex"
+          v-model="fontSizeIndex"
           class="slider"
         />
         <!-- 当前字体大小显示 -->
@@ -75,7 +75,7 @@
           <i class="fas fa-adjust"></i>
           背景透明度
         </h2>
-        <span class="setting-description">调整内容区域的背景透明度</span>
+        <span class="setting-description">调整背景透明度</span>
       </div>
       <div class="control-group">
         <!-- 透明度滑块 -->
@@ -105,7 +105,7 @@
 <script>
 // ========================== 依赖导入 ==============================
 import { useSettingsStore } from '../stores/settings';
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 
 export default {
   name: 'SettingsPage',
@@ -113,6 +113,13 @@ export default {
   // ========================== 组件逻辑 ==============================
   setup() {
     const settingsStore = useSettingsStore();
+    
+    const fontSizeIndex = computed({
+      get: () => settingsStore.fontSizeIndex,
+      set: (value) => {
+        settingsStore.setFontSize(parseInt(value));
+      }
+    });
 
     // 组件挂载时初始化主题
     onMounted(() => {
@@ -127,7 +134,8 @@ export default {
     // ========================== 返回数据 ==============================
     return { 
       settingsStore,    // 设置状态管理
-      resetSettings     // 重置设置方法
+      resetSettings,    // 重置设置方法
+      fontSizeIndex     // 字体大小索引
     };
   }
 }

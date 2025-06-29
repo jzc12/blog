@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
-        fontSizeIndex: 2,
+        fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '2'),
         fontSizeSteps: ['14px', '16px', '18px', '20px', '22px'],
         contentOpacity: 85,
         theme: 'system', // 'light', 'dark', or 'system'
@@ -29,6 +29,9 @@ export const useSettingsStore = defineStore('settings', {
 
             // 监听系统主题变化
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', this.detectSystemTheme);
+
+            // 应用字体大小
+            this.applyFontSize();
         },
 
         detectSystemTheme() {
@@ -59,11 +62,23 @@ export const useSettingsStore = defineStore('settings', {
             document.documentElement.style.setProperty('--danger-hover-color', '#c0392b');
         },
 
+        setFontSize(index) {
+            this.fontSizeIndex = index;
+            localStorage.setItem('fontSizeIndex', index.toString());
+            this.applyFontSize();
+        },
+
+        applyFontSize() {
+            document.documentElement.style.setProperty('--global-font-size', this.currentFontSize);
+        },
+
         $reset() {
             this.fontSizeIndex = 2;
             this.contentOpacity = 85;
             this.theme = 'system';
+            localStorage.setItem('fontSizeIndex', '2');
             this.detectSystemTheme();
+            this.applyFontSize();
         }
     },
 

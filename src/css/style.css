@@ -267,6 +267,22 @@ body {
 }
 
 
+html,
+body {
+    font-size: var(--global-font-size, 16px);
+}
+
+.content,
+.markdown-body,
+.settings-page,
+.article-container,
+.sidebar-container,
+.outline-container {
+    font-size: var(--global-font-size, 16px);
+    line-height: 1.75;
+}
+
+
 @media (max-width: 1280px) {
     .main-content-wrapper {
         grid-template-columns: 250px minmax(0, 1fr);

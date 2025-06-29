@@ -253,7 +253,7 @@ export default {
       document.documentElement.setAttribute('data-theme', settingsStore.effectiveTheme)
       
       // 初始化字体大小
-      applyFontSize(settingsStore.currentFontSize)
+      settingsStore.applyFontSize()
       
       // 初始化透明度
       applyContentOpacity(settingsStore.contentOpacity)
@@ -289,7 +289,54 @@ export default {
   position: relative;
 }
 
-html {
-  font-size: var(--global-font-size, 18px);
+:root {
+  font-size: var(--global-font-size, 18px) !important;
+}
+
+/* 设置基础字体大小 */
+body {
+  font-size: 1rem !important;
+  line-height: 1.5;
+}
+
+/* 定义通用的字体大小类 */
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-base {
+  font-size: 1rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+h5, h6 {
+  font-size: 1rem;
 }
 </style>
