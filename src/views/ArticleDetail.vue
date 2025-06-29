@@ -10,11 +10,6 @@
             <component :is="iconMap.calendar" class="icon" />
             <span class="date">{{ article.date }}</span>
           </div>
-          <!-- 更新日期 -->
-          <div class="meta-item" title="更新日期">
-            <component :is="iconMap.calendarSync" class="icon" />
-            <span class="date">{{ article.updated }}</span>
-          </div>
           <!-- 分类 -->
           <div class="meta-item" title="文章分类">
             <component :is="iconMap.kanban" class="icon" />
