@@ -456,7 +456,7 @@ Let $G=(L,R,E) $be a bipartite graph. Write down the linear program that finds t
 
 (a) 最大匹配的线性规划
 
-在二分图$ G=(L, R, E) $中，定义变量$ y_e \in \{0,1\}$ 表示边 e 是否被选入匹配。目标为最大化匹配边数：
+在二分图$ G=(L, R, E) $中，定义变量$ y_e \in \{0, 1\}$ 表示边 e 是否被选入匹配。目标为最大化匹配边数：
 
 $\max\displaystyle\sum_{e \in E} y_e$
 
@@ -475,7 +475,7 @@ $\text{s.t.} \quad \displaystyle\sum_{e \ni v} y_e \leq 1 \quad \forall v \in L 
 
 (b) 最小顶点覆盖的线性规划
 
-定义变量$ x_v \in \{0,1\}$ 表示顶点 $v$是否被选入覆盖集。目标为最小化覆盖集大小：
+定义变量$ x_v \in \{0, 1\}$ 表示顶点 $v$是否被选入覆盖集。目标为最小化覆盖集大小：
 
 $\min \quad \sum_{v \in L \cup R} x_v$
 
@@ -490,7 +490,7 @@ $\text{s.t.} \quad x_u + x_v \geq 1 \quad \forall (u,v) \in E \quad \text{(每�
 >
 > subject to $\displaystyle\sum_{v \in e} x_v \geq 1, \ \forall e \in E  $
 >
-> $x_v \in \{0,1\}, \ \forall v \in V$
+> $x_v \in \{0, 1\}  \ \forall v \in V$
 
 
 
@@ -654,10 +654,10 @@ $\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max\{V_A, v_k\} = 2 \cdot \text{A
 紧性示例：
 
 - 物品：$v_1 = 1, w_1 = 1; v_2 = 1, w_2 = 1$，容量 $C = 1$。
-- LP 解：$x_1^* = 0.5, x_2^* = 0.5，\text{OPT}_{\text{LP}} = 1$。
+- LP 解：$x_1^* = 0.5, x_2^* = 0.5,\text{OPT}_{\text{LP}} = 1$。
 - $V_A = 0$
 - $V_B = 1$
-- $\text{ALG} = 1，\text{OPT}_{\text{IP}} = 1$ 但通过调整价值可逼近比 2。
+- $\text{ALG} = 1,\text{OPT}_{\text{IP}} = 1$ 但通过调整价值可逼近比 2。
 
 
 
@@ -668,7 +668,7 @@ $\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max\{V_A, v_k\} = 2 \cdot \text{A
 | 组件          | 内容                                                         |
 | ------------- | ------------------------------------------------------------ |
 | 整数规划 (IP) | $\max \displaystyle\sum v_i x_i \quad \text{s.t.} \sum w_i x_i \leq C, \ x_i \in \{0,1\}$ |
-| LP 松弛       | 松弛$ x_i \in [0,1]$，最优值为上界                           |
+| LP 松弛       | 松弛$ x_i \in [0,1]$,最优值为上界                            |
 | 取整方案      | 候选解 A（全选整数项） + 候选解 B（最高价值分数项）          |
 | 近似比        | $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$         |
 
