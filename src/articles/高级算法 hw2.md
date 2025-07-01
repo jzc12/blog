@@ -458,7 +458,7 @@ Let $G=(L,R,E) $be a bipartite graph. Write down the linear program that finds t
 
 在二分图$ G=(L, R, E) $中，定义变量$ y_e \in \{0, 1\}$ 表示边 e 是否被选入匹配。目标为最大化匹配边数：
 
-$\max\displaystyle\sum_{e \in E} y_e$
+$\max \displaystyle\sum_{e \in E} y_e$
 
 
 
@@ -590,13 +590,13 @@ $（详细步骤见文档 "Flow Decomposition" 和 "Augmenting Path" 部分）�
 
 目标：
 
-求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in \{0,1\}, \quad \forall i=1,\dots,n.$ 前提下 $\max \displaystyle\sum_{i=1}^n v_i x_i$
+求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in \{0,1\}, \quad \forall i=1,\dots,n.$ 前提下 $\max   \displaystyle\sum_{i=1}^n v_i x_i$
 
 
 
 松弛整数约束为连续约束：
 
-求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in [0,1], \quad \forall i=1,\dots,n.$ 前提下 $\max \displaystyle\sum_{i=1}^n v_i x_i$
+求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in [0,1], \quad \forall i=1,\dots,n.$ 前提下 $\max  \displaystyle\sum_{i=1}^n v_i x_i$
 
 
 
@@ -605,13 +605,13 @@ LP 最优值 $\text{OPT}_{\text{LP}} \geq \text{OPT}_{\text{IP}}$。
 
 
 - 全选整数项：选择所有 $x_i^* = 1$ 的物品，价值$ V_A = \displaystyle\sum_{\{i: x_i^*=1\}} v_i$
-- 最高价值分数项：选择分数项中价值最高的物品 $k = \arg\max_{\{i: 0<x_i^*<1\}} v_i$，价值 $V_B = v_k$。
+- 最高价值分数项：选择分数项中价值最高的物品 $k = \arg \max_{\{i: 0<x_i^*<1\}} v_i$，价值 $V_B = v_k$。
 
 
 
 输出最优可行解：
 
-$\text{ALG} = \max\{V_A, V_B\}$
+$\text{ALG} = \max \{V_A, V_B\}$
 
 - 可行性保证：预处理丢弃 $w_i > C $ 的物品
 
@@ -647,7 +647,7 @@ $\text{OPT}_{\text{IP}} \leq \text{OPT}_{\text{LP}}$
 
 
 
-$\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max\{V_A, v_k\} = 2 \cdot \text{ALG}$
+$\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max \{V_A, v_k\} = 2 \cdot \text{ALG}$
 
 
 
