@@ -458,11 +458,13 @@ Let $G=(L,R,E) $be a bipartite graph. Write down the linear program that finds t
 
 在二分图$ G=(L, R, E) $中，定义变量$ y_e \in \{0,1\}$ 表示边 e 是否被选入匹配。目标为最大化匹配边数：
 
-$$\begin{align*}
-\max \quad & \sum_{e \in E} y_e \\
-\text{s.t.} \quad & \sum_{e \ni v} y_e \leq 1, \quad \forall v \in L \cup R \quad \text{(每个顶点至多关联一条边)} \\
-& y_e \geq 0, \quad \forall e \in E
-\end{align*}$$
+$\max\displaystyle\sum_{e \in E} y_e$
+
+
+
+$\text{s.t.} \quad \displaystyle\sum_{e \ni v} y_e \leq 1 \quad \forall v \in L \cup R \quad \text{(每个顶点至多关联一条边)}  y_e \geq 0 \quad \forall e \in E$
+
+
 
 文档依据： 
 "Maximum Bipartite Matching" 部分（标题及公式）：
@@ -475,20 +477,18 @@ $$\begin{align*}
 
 定义变量$ x_v \in \{0,1\}$ 表示顶点 $v$是否被选入覆盖集。目标为最小化覆盖集大小：
 
-$$\begin{align*}
-\min \quad & \sum_{v \in L \cup R} x_v \\
-\text{s.t.} \quad & x_u + x_v \geq 1, \quad \forall (u,v) \in E \quad \text{(每条边至少有一个端点被覆盖)} \\
-& x_v \geq 0, \quad \forall v \in L \cup R
-\end{align*}$$
+$\min \quad \sum_{v \in L \cup R} x_v$
+
+$\text{s.t.} \quad x_u + x_v \geq 1 \quad \forall (u,v) \in E \quad \text{(每条边至少有一个端点被覆盖)} x_v \geq 0 \quad \forall v \in L \cup R$
 
 文档依据： 
 "Vertex Cover" 部分（标题及公式）：
 
 > "Integer Linear Program (ILP) for vertex cover:  
 >
-> minimize$ \sum_{v \in V} x_v  $
+> minimize$ \displaystyle\sum_{v \in V} x_v  $
 >
-> subject to $\sum_{v \in e} x_v \geq 1, \ \forall e \in E  $
+> subject to $\displaystyle\sum_{v \in e} x_v \geq 1, \ \forall e \in E  $
 >
 > $x_v \in \{0,1\}, \ \forall v \in V$
 
@@ -515,9 +515,9 @@ $  \max \sum y_e \quad \text{s.t.} \quad \sum_{e \ni v} y_e \leq 1 \ \forall v \
 
 >  "Duality" 部分：
 >
-> "primal: $\min \sum x_v s.t. \sum_{v \in e} x_v \geq 1  $
+> "primal: $\min \displaystyle\sum x_v s.t. \displaystyle\sum_{v \in e} x_v \geq 1  $
 >
-> dual: $\max \sum y_e s.t. \sum_{e \ni v} y_e \leq 1$
+> dual: $\max \displaystyle\sum y_e s.t. \sum_{e \ni v} y_e \leq 1$
 
 (b) 强对偶性与互补松弛
 强对偶定理：若原始问题和对偶问题均有可行解，则最优值相等（即$ \min \sum x_v = \max \sum y_e$）。
