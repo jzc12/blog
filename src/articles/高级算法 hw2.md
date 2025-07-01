@@ -34,13 +34,13 @@ summary: 高级算法作业2
 
 针对问题 1.
 
-**扭曲制表哈希**
+扭曲制表哈希
 
 
 
 针对问题2.
 
-**双表制表哈希**
+双表制表哈希
 
 双表制表哈希想法就是再单个简单制表哈希的基础上再套一层，相同的三个步骤再走一遍，只是 c 和 d 的值在第二次的映射可以变化。
 
@@ -111,73 +111,7 @@ $\therefore $ $\mathbf{x} \in \mathbb{S}^{d-1}$ 且 $\|\mathbf{x}\|_\infty \leq 
 
 
 
-LSH 的核心目标是：
 
-- **让“相近”的点有较高概率哈希到同一个桶中**；
-- **让“较远”的点哈希到同一个桶中的概率较低**。
-
-我们需要根据给定的距离函数 d(x,y)d(x, y) 来构造符合上述性质的哈希函数族。
-
-**1**
-
-我们考虑的空间是：
-
-([0,n]d,  d(x,y)=∑i(min⁡{∣xi−yi∣,n−∣xi−yi∣})2)([0,n]^d, \; d(x,y) = \sqrt{\sum_i (\min\{|x_i - y_i|, n - |x_i - y_i|\})^2})
-
-#### ✅ 这是一个“环形”度量空间：
-
-- 可以理解为每一维是长度为 nn 的环（mod nn）。
-- 比如如果在第 ii 维上 ∣xi−yi∣>n/2|x_i - y_i| > n/2，那么“近”实际上意味着绕一圈反方向走。
-
-#### 🔧 LSH设计思路：
-
-- **启发**：该距离与欧几里得空间类似，但在每一维上有模 nn 的约束。
-
-- **方法**：我们可以使用类似 E2LSH（欧几里得空间下的 LSH）的方法，并在哈希时使用模运算。
-
-    对每个点 x∈[0,n]dx \in [0,n]^d，可以定义哈希函数为：
-
-    ha,b(x)=⌊(a⋅x+b) mod nw⌋h_{a,b}(x) = \left\lfloor \frac{(a \cdot x + b) \bmod n}{w} \right\rfloor
-
-    - 其中 aa 是一个随机向量，b∈[0,w]b \in [0, w]，ww 是桶宽；
-    - 模运算使得我们处理的是“环形距离”。
-
-#### ✏️ 解释：
-
-- 由于环形度量空间在本质上只是每一维上做模 nn 的投影，我们只要在哈希函数中显式处理这个周期性即可；
-- 因此借用欧几里得空间的 LSH 方法，加上模 nn，即可实现这一空间下的 LSH。
-
-**2**
-
-度量空间为单位球面 Sd−1\mathbb{S}^{d-1}，距离定义为：
-
-d(x,y)=arccos⁡(⟨x,y⟩)d(x,y) = \arccos(\langle x, y \rangle)
-
-即两个单位向量之间的夹角。
-
-#### ✅ 这是“球面几何”上的距离：
-
-- 所有向量都是单位向量；
-- 相似度用“夹角”来衡量，夹角越小，向量越“相近”。
-
-#### 🔧 LSH设计思路：
-
-- **方法**：使用 **随机超平面（Random Hyperplane）法**。
-
-- 这是专门针对余弦相似度或球面距离设计的 LSH。
-
-    哈希函数形式如下：
-
-    hv(x)={1if ⟨v,x⟩≥00otherwiseh_v(x) =  \begin{cases} 1 & \text{if } \langle v, x \rangle \ge 0 \\ 0 & \text{otherwise} \end{cases}
-
-    - 其中 vv 是一个从单位高斯分布中采样的随机向量；
-    - 本质上是看 xx 在随机超平面哪一侧。
-
-#### ✏️ 解释：
-
-- 这样的哈希函数能够满足：如果两个向量夹角较小，它们被同一个随机超平面分到同一侧的概率较高；
-- 夹角较大的向量落入同一侧的概率较低；
-- 完美符合 LSH 的性质。
 
 
 
@@ -185,21 +119,96 @@ d(x,y)=arccos⁡(⟨x,y⟩)d(x,y) = \arccos(\langle x, y \rangle)
 
 ## 4
 
-Oblivious Subspace Embedding（OSE）旨在将任意 $d$ 维子空间 $\Pi$ 映射到低维空间，同时近似保留所有向量的 $\ell_2$ 范数。
+假设 $n > 2^d$ .考虑使用一个 column sparsity 只有 1 （即，每一列只有一个非零元素） 的矩阵 $\prod \in \mathbb{R}^{m \times n}$ 进行 Oblivious Subspace Embedding (OSE)。考虑这样的随机矩阵 $A \in {0, 1}^{n \times d}$ : $A$ 的每一列随机选择一个位置为 1，其他位置为 0。尝试证明，任意确定的 $\prod$ 为 $A$ 的列空间 进行子空间嵌入都至少需要  $m = \Omega(d^2)$ 即它作为 OSE 不可能降维到 $o(d^2)$ .提示：尝试观察 $\prod Ae_i, \prod(Ae_i, Ae_j)$ 的
 
-常用构造为稀疏矩阵 $S \in \mathbb{R}^{m \times d}$：
+$\ell_2$-norm , 以及你可能需要应用 birthday paradox (随机地把 d 个球丢入 m 个桶中，那么要满足 $m = \Omega(d^2)$才能使得有 $\Omega(1)$的概率，这 d 个球中不会有两个球被丢进了同一个桶中）
 
-- 随机选择映射桶 $h(j) \in {1, ..., m}$
-- 选择符号 $\sigma(j) = \pm 1$
-- 设置 $S_{h(j), j} = \sigma(j)$，其余为 0
 
-对于任意向量 $x$，有：
 
-(1−ε)∥x∥2≤∥Sx∥2≤(1+ε)∥x∥2(1 - \varepsilon)\|x\|_2 \leq \|Sx\|_2 \leq (1 + \varepsilon)\|x\|_2
 
-当 $m = O(d^2/\varepsilon^2)$ 时，上述保证以高概率成立。该技术在稀疏数据降维、线性回归等场景中应用广泛。
 
-------
+考虑 Oblivious Subspace Embedding (OSE) 问题：给定随机矩阵 $A \in \{0,1\}^{n \times d}$（每列独立均匀选择一个位置为 1），和确定矩阵$ \prod \in \mathbb{R}^{m \times n}$（每列只有一个非零元素）。需证明：对任意确定的 $\prod$，若要求 \prod 是 A 的列空间的子空间嵌入（即保持 $\ell_2-$范数近似不变），则必须满足$ m = \Omega(d^2)$。
+
+
+
+1. 矩阵性质：
+    - $\prod $的列稀疏度为 1：$\prod$ 可视为映射 $\sigma: [n] \to [m]$，其中 $\prod_{i,j} = 1 $当且仅当$ \sigma(j) = i$。
+    - $A$ 的列：每列 $a_i$ 是独立均匀选择的标准基向量 $e_{k_i}$（$k_i \in [n]$ 随机）。
+2. 子空间嵌入条件：
+     对所有 $x \in \mathbb{R}^d$，需满足：$(1 - \epsilon) \|Ax\|_2^2 \leq \|\prod A x\|_2^2 \leq (1 + \epsilon) \|Ax\|_2^2.$
+3. 目标：
+     证明当$ m = o(d^2)$ 时，存在向量 x 使得上述条件失败（高概率）。
+
+1
+
+考虑向量$ x = e_i - e_j（$单位坐标向量差）：
+
+- 原始范数：$\|A x\|_2^2 = \|a_i - a_j\|_2^2$。
+- 嵌入范数：$\|\prod A x\|_2^2 = \|\prod a_i - \prod a_j\|_2^2$。
+
+定义事件：$\mathcal{E}_{i,j}: \quad k_i \neq k_j \quad \text{且} \quad \sigma(k_i) = \sigma(k_j).$
+
+
+
+若$ \mathcal{E}_{i,j}$ 发生，则：
+
+- 当 $k_i \neq k_j $时，$\|A x\|_2^2 = 2$（因 $a_i \perp a_j$)。
+- 但 $\sigma(k_i) = \sigma(k_j)$ 时，$\|\prod A x\|_2^2 = 0$（因$ \prod a_i = \prod a_j$）。 此时相对误差为 1（完全失败）。
+
+2
+
+固定 $(i,j)$，$\mathcal{E}_{i,j}$ 的概率：$\mathbb{P}(\mathcal{E}_{i,j}) = \mathbb{P}(k_i \neq k_j) \cdot \mathbb{P}(\sigma(k_i) = \sigma(k_j) \mid k_i \neq k_j).$
+
+$\mathbb{P}(k_i \neq k_j) = 1 - \frac{1}{n} \approx 1$（因 $n > 2^d$ 足够大）。
+
+$\mathbb{P}(\sigma(k_i) = \sigma(k_j) \mid k_i \neq k_j) = \frac{1}{n^2} \sum_{i=1}^m w_i^2$（其中 $w_i = |\sigma^{-1}(i)| $是桶$ i$ 的大小）。
+
+由 Cauchy-Schwarz 不等式：$\sum_{i=1}^m w_i^2 \geq \frac{n^2}{m} \quad \text{(因 } \sum w_i = n\text{)}.$
+
+故: $\mathbb{P}(\mathcal{E}_{i,j}) \geq \left(1 - \frac{1}{n}\right) \frac{1}{m} \geq \frac{c}{m} \quad \text{(常数 } c > 0\text{)}.$
+
+3
+
+令 $X = \sum_{1 \leq i < j \leq d} \mathbf{1}_{\mathcal{E}_{i,j}}$（总冲突对数）。
+
+- 期望：$\mathbb{E}[X] = \binom{d}{2} \mathbb{P}(\mathcal{E}_{i,j}) \geq \frac{d(d-1)}{2} \cdot \frac{c}{m} \sim \frac{c d^2}{m}.$
+
+    若  $m = o(d^2)$，则 $\mathbb{E}[X] \to \infty$。
+
+- 方差：$\operatorname{Var}(X) = \sum_{(i,j)} \sum_{(k,l)} \operatorname{Cov}(\mathbf{1}_{\mathcal{E}_{i,j}}, \mathbf{1}_{\mathcal{E}_{k,l}}).$
+
+    - 不相交对$ (i,j) $与 $(k,l) $协方差为 0（独立性）。
+    - 有公共下标的对数：$O(d^3)$（如$ (i,j)$ 与$ (i,l)$）。
+    - 每对协方差上界：$O(1/m)$（因$ \mathbb{P}(\mathcal{E}_{i,j} \land \mathcal{E}_{i,l}) \leq \mathbb{P}(\sigma(k_j) = \sigma(k_l)) = O(1/m)$）。
+
+$\operatorname{Var}(X) = O\left(\frac{d^3}{m}\right)$
+
+4
+
+比较方差与期望：$\frac{\operatorname{Var}(X)}{\left(\mathbb{E}[X]\right)^2} \leq \frac{C d^3 / m}{(c d^2 / m)^2} = \frac{C m}{c^2 d} \to 0 \quad \text{(因 } m = o(d^2)\text{)}.$
+
+由 Chebyshev 不等式：$\mathbb{P}(X = 0) \leq \frac{\operatorname{Var}(X)}{\left(\mathbb{E}[X]\right)^2} \to 0$
+
+故当 $m = o(d^2)$ 时，$\mathbb{P}(\exists \mathcal{E}_{i,j}) \to 1$。
+
+
+
+对任意确定的 $\prod$，若 $m = o(d^2$)，则以高概率存在 $x = e_i - e_j$ 使得：$\|\prod A x\|_2^2 = 0 \quad \text{但} \quad \|A x\|_2^2 = 2,$
+
+违反子空间嵌入条件。因此必须有 $m = \Omega(d^2)$
+
+
+
+1. 桶映射模型：
+    - d 个球（$A$ 的列）独立随机分配至 m 个桶（$\prod$的行）。
+    - $\sigma$ 是固定映射，桶大小非均匀。
+    - 生日悖论保证：当$ m = o(d^2)$ 时，桶冲突高概率发生。
+2. 失败向量构造：
+    - 冲突对$ (i,j) $对应的 $x = e_i - e_j$ 是嵌入失败的显式反例。
+
+
+
+
 
 ## 5
 
@@ -207,26 +216,26 @@ Oblivious Subspace Embedding（OSE）旨在将任意 $d$ 维子空间 $\Pi$ 映�
 
 在标准的网络流问题中，边（arc）有容量限制，而节点（vertex）没有容量限制。但在您描述的问题中，每条边的容量为无穷大（即不限制流量），而每个节点 $i$ 有容量限制 $c_i$，表示流经该节点的总流量不能超过 $c_i$（包括流入和流出的总和，对于源点和汇点，也适用类似约束：源点 $s$ 的流出量受 $c_s$ 限制，汇点 $t$ 的流入量受 $c_t$ 限制）。
 
-为了解决这种“点容量”模型的最大流问题，我们可以使用一种经典的转换技术：**节点拆分法**（node splitting）。该方法将每个节点拆分为两个部分，从而将节点容量转换为边容量，将问题转化为标准的最大流问题。下面我将详细描述算法设计、步骤，并解释其正确性。
+为了解决这种“点容量”模型的最大流问题，我们可以使用一种经典的转换技术：节点拆分法（node splitting）。该方法将每个节点拆分为两个部分，从而将节点容量转换为边容量，将问题转化为标准的最大流问题。下面我将详细描述算法设计、步骤，并解释其正确性。
 
-**算法设计：最大流求解点容量模型**
+算法设计：最大流求解点容量模型
 
 算法的主要思想是将原始图 $G$ 转化为一个新图 $G'$，其中节点容量被表示为边容量。具体来说，每个节点 $i$ 被拆分成一个“输入节点” $i_{\text{in}}$ 和一个“输出节点” $i_{\text{out}}$，并在它们之间添加一条边，容量为 $c_i$。原始图中的边（容量无穷大）则在 $G'$ 中被转化为连接输出节点到输入节点的边。然后，在 $G'$ 上运行标准最大流算法（如 Dinic 算法或 Edmonds-Karp 算法）。
 
-**输入**：
+输入：
 
 - 有向图 $G = (V, E)$，其中 $V$ 是节点集，$E$ 是边集。
 - 源点 $s \in V$，汇点 $t \in V$。
 - 每个节点 $i \in V$ 的容量 $c_i > 0$（包括源点和汇点）。
 
-**输出**：
+输出：
 
 - 最大流值（从源点 $s$ 到汇点 $t$ 的最大流量）。
 - （可选）流分配方案，即每条边上的流量值（注意：原始图中的边容量为无穷大，所以流分配仅需满足节点容量和流守恒）。
 
-**算法步骤**：
+算法步骤：
 
-1. **构造新图 $G'$**:
+1. 构造新图 $G'$:
 
     - 对于每个节点 $i \in V$
 
@@ -243,28 +252,28 @@ Oblivious Subspace Embedding（OSE）旨在将任意 $d$ 维子空间 $\Pi$ 映�
 
     - （可选）如果图中有自环或多重边，处理方式相同（自环边 $(i, i)$ 会被转化为 $i_{\text{out}} \to i_{\text{in}}$ 边，容量无限）。
 
-2. **在 $G'$ 上运行标准最大流算法**:
+2. 在 $G'$ 上运行标准最大流算法:
 
     - 使用标准最大流算法（例如，Dinic 算法或 Ford-Fulkerson 的 Edmonds-Karp 实现）在 $G'$ 上计算从 $s_{\text{in}}$ 到 $t_{\text{out}}$ 的最大流。
     - 算法输出：最大流值 $f_{\text{max}}$，以及 $G'$ 中各条边上的流值。
 
-3. **恢复原始图的流分配**:
+3. 恢复原始图的流分配:
 
     - 对于原始图中的每条边 $(u, v) \in E$，其流值等于 $G'$ 中边 $(u_{\text{out}}, v_{\text{in}})$ 的流值（因为边容量无限，流值直接由节点容量约束）。
     - 最大流值即为 $G'$ 中的最大流值 $f_{\text{max}}$。
     - 节点 $i$ 的总流量（流经该节点的流量）等于 $G'$ 中边 $(i_{\text{in}}, i_{\text{out}})$ 的流值（此值不超过 $c_i$，保证了节点容量约束）。
 
-**复杂性分析**：
+复杂性分析：
 
 - 节点数：$G'$ 有 $2|V|$ 个节点（每个原始节点拆分为两个）。
 - 边数：$G'$ 有 $|E| + |V|$ 条边（原始每条边对应一条新边，加上每个节点的新边）。
 - 因此，图的大小为 $O(|V| + |E|)$，算法复杂性与标准最大流算法相同（如 Dinic 算法的 $O(|V|^2 |E|)$ 或 Edmonds-Karp 的 $O(|V| |E|^2)$）。转换过程是线性时间的，整体算法为多项式时间。
 
-### 正确性解释
 
-节点拆分法的核心在于将节点容量转化为边容量，从而将点容量问题转化为标准最大流问题。以下通过三个方面证明正确性：**可行性保持**、**容量约束保持**和**最优性保持**。
 
-#### 1. 可行性保持（原始图可行流对应 $G'$ 可行流）
+节点拆分法的核心在于将节点容量转化为边容量，从而将点容量问题转化为标准最大流问题。以下通过三个方面证明正确性：可行性保持、容量约束保持和最优性保持。
+
+1. 可行性保持（原始图可行流对应 $G'$ 可行流）
 
 - 假设原始图 $G$ 中存在一个可行流 $f$，满足所有节点容量约束（即对于每个节点 $i$，流经 $i$ 的总流量 $\leq c_i$）和流守恒（对于中间节点，流入等于流出；对于源点，只有流出；对于汇点，只有流入）。
 
@@ -282,14 +291,14 @@ Oblivious Subspace Embedding（OSE）旨在将任意 $d$ 维子空间 $\Pi$ 映�
 
 - 因此，$f'$ 是 $G'$ 的可行流，且流值等于原始流值。
 
-#### 2. 容量约束保持（点容量约束等价于拆分边容量）
+2. 容量约束保持（点容量约束等价于拆分边容量）
 
 - 在原始图中，节点容量约束要求流经节点 $i$ 的总流量 $\leq c_i$。
 - 在 $G'$ 中，边 $i_{\text{in}} \to i_{\text{out}}$ 的容量为 $c_i$。无论流量如何通过其他边进入 $i_{\text{in}}$ 或从 $i_{\text{out}}$ 流出，流量必须经过此边，因此其流值（即流经节点 $i$ 的流量）不超过 $c_i$。
 - 原始图的无限边容量在 $G'$ 中由无限容量的边（或大容量边 $u_{\text{out}} \to v_{\text{in}}$）处理，不限制流量。
 - 因此，任何 $G'$ 的可行流对应于原始图的可行流，满足所有节点容量约束。
 
-#### 3. 最优性保持（最大流值等价）
+3. 最优性保持（最大流值等价）
 
 - 由于转换是双射的（bijective），原始图的任何可行流对应 $G'$ 的一个可行流，反之亦然。
 - 最大流值相同：原始图的最大流值等于 $ G' $  中从  $ s_{\text{in}} $  到  $ t_{\text{out}} $ 的最大流值。
@@ -300,31 +309,31 @@ Oblivious Subspace Embedding（OSE）旨在将任意 $d$ 维子空间 $\Pi$ 映�
 
 - 标准最大流算法（如 Dinic）在 $G'$ 上保证找到最大流，因此也得到原问题的最大流。
 
-### 例子说明
+
 
 考虑一个简单例子：图中有节点 $V = \{s, a, t\}$，边 $E = \{(s, a), (a, t)\}$，节点容量 $c_s = 2, c_a = 3, c_t = 2$（边容量无穷大）。
 
-- **原始图**：
+- 原始图：
     - 节点：s（源点）、a（中间点）、t（汇点）。
     - 边：(s, a) 和 (a, t)，容量无穷大。
     - 约束：s 的总流出 ≤ 2，a 的总流量 ≤ 3，t 的总流入 ≤ 2。
-- **构造 G'**：
+- 构造 G'：
     - 创建节点：s_in, s_out, a_in, a_out, t_in, t_out。
     - 添加节点边：s_in → s_out（容量 2），a_in → a_out（容量 3），t_in → t_out（容量 2）。
     - 添加原始边对应：s_out → a_in（容量 ∞），a_out → t_in（容量 ∞）。
     - 源点为 s_in，汇点为 t_out。
-- **在 G' 上运行最大流算法**：
+- 在 G' 上运行最大流算法：
     - 最大流可能为 2（因为 s_in → s_out 容量 2，且 t_in → t_out 容量 2）。
     - 例如，流量：s_in → s_out 流值 2，s_out → a_in 流值 2，a_in → a_out 流值 2，a_out → t_in 流值 2，t_in → t_out 流值 2。
     - 恢复原始流：(s, a) 流值 2，(a, t) 流值 2，满足节点容量（s 流出 2，a 流量 2，t 流入 2）。
-- **若节点容量更大**，例如 c_a = 4，则最大流可达 2（受限 c_s 和 c_t）。
+- 若节点容量更大，例如 c_a = 4，则最大流可达 2（受限 c_s 和 c_t）。
 
-### 实现注意事项
 
-- **无穷大容量处理**：在代码中，边 $(u_{\text{out}}, v_{\text{in}})$ 的容量设置为一个大数（如所有 $c_i$ 之和），以避免无穷大带来的问题。理论中不影响正确性。
-- **算法选择**：推荐使用高效的最大流算法，如 Dinic 算法（复杂度 $O(|V|^2 |E|)$），尤其当图较大时。
-- **扩展性**：该方法也适用于无向图（将无向边转为两个有向边）和多源多汇问题（添加超级源和超级汇）。
-- **代码实现**：在 Python 中，可使用 NetworkX 库或自定义实现（例如，基于 BFS 的增广路径搜索）。
+
+- 无穷大容量处理：在代码中，边 $(u_{\text{out}}, v_{\text{in}})$ 的容量设置为一个大数（如所有 $c_i$ 之和），以避免无穷大带来的问题。理论中不影响正确性。
+- 算法选择：推荐使用高效的最大流算法，如 Dinic 算法（复杂度 $O(|V|^2 |E|)$），尤其当图较大时。
+- 扩展性：该方法也适用于无向图（将无向边转为两个有向边）和多源多汇问题（添加超级源和超级汇）。
+- 代码实现：在 Python 中，可使用 NetworkX 库或自定义实现（例如，基于 BFS 的增广路径搜索）。
 
 这个算法高效且正确，能将点容量问题转化为标准最大流问题求解。任何标准最大流算法的正确性基础（如最大流最小割定理）在 $G'$ 上仍适用，从而确保整个方法的正确性。
 
@@ -424,12 +433,274 @@ Oblivious Subspace Embedding（OSE）旨在将任意 $d$ 维子空间 $\Pi$ 映�
 
 ## 7
 
-**König 定理**指出：在任意二分图中，最大匹配数 = 最小顶点覆盖数。该结论源于线性规划对偶性，也可用网络流模型证明。
+Let $G=(L,R,E) $be a bipartite graph. Write down the linear program that finds the maximum matching in $G$, and the linear program that finds the minimum vertex cover of $G$. Prove that the size of the maximum matching in $G$ is equal to the size of the minimum vertex cover in $G$. This suggests that the vertex cover problem in bipartite graphs is polynomial time solvable.
 
-该等价性带来实际算法优势：
 
-- 使用 Hopcroft–Karp 算法在 $O(E\sqrt{V})$ 时间内找到最大匹配；
-- 再用可达标记法构造最小顶点覆盖。
+问题分析与解决思路
 
-因此，二分图的最小顶点覆盖可在多项式时间内高效求解。
+您的核心问题分为三部分：
+建模：为二分图 $G=(L, R, E)$ 写出最大匹配和最小顶点覆盖的线性规划。
+
+证明：证明最大匹配大小等于最小顶点覆盖大小（Kőnig 定理）。
+
+推论：说明二分图顶点覆盖问题是多项式时间可解的。
+
+文档中以下部分直接相关：
+最大匹配：在 "Maximum Bipartite Matching" 部分定义了问题并通过网络流建模（见文档）。
+
+最小顶点覆盖：在 "Vertex Cover" 部分给出了 ILP 形式及 LP 松弛。
+
+对偶性证明：在 "Duality" 部分通过 LP 对偶性建立了最大匹配与最小顶点覆盖的关系。
+
+线性规划建模
+
+(a) 最大匹配的线性规划
+
+在二分图$ G=(L, R, E) $中，定义变量$ y_e \in \{0,1\}$ 表示边 e 是否被选入匹配。目标为最大化匹配边数：
+
+$$\begin{align*}
+\max \quad & \sum_{e \in E} y_e \\
+\text{s.t.} \quad & \sum_{e \ni v} y_e \leq 1, \quad \forall v \in L \cup R \quad \text{(每个顶点至多关联一条边)} \\
+& y_e \geq 0, \quad \forall e \in E
+\end{align*}$$
+
+文档依据： 
+"Maximum Bipartite Matching" 部分（标题及公式）：
+
+"·Problem: Find a maximum matching of a bipartite graph."  
+
+"Integer Linear Program (ILP) for vertex cover: ..."（注：此处虽为顶点覆盖，但最大匹配的ILP类似）
+
+(b) 最小顶点覆盖的线性规划
+
+定义变量$ x_v \in \{0,1\}$ 表示顶点 $v$是否被选入覆盖集。目标为最小化覆盖集大小：
+
+$$\begin{align*}
+\min \quad & \sum_{v \in L \cup R} x_v \\
+\text{s.t.} \quad & x_u + x_v \geq 1, \quad \forall (u,v) \in E \quad \text{(每条边至少有一个端点被覆盖)} \\
+& x_v \geq 0, \quad \forall v \in L \cup R
+\end{align*}$$
+
+文档依据： 
+"Vertex Cover" 部分（标题及公式）：
+
+> "Integer Linear Program (ILP) for vertex cover:  
+>
+> minimize$ \sum_{v \in V} x_v  $
+>
+> subject to $\sum_{v \in e} x_v \geq 1, \ \forall e \in E  $
+>
+> $x_v \in \{0,1\}, \ \forall v \in V$
+
+
+
+等价性证明（Kőnig 定理）
+
+定理：在二分图中，最大匹配大小 M  等于最小顶点覆盖大小 $ C
+$。  
+证明思路（基于文档的 LP 对偶性 和 互补松弛条件）：
+
+(a) 构造对偶问题
+原始问题 (P)：最小顶点覆盖的 LP 松弛（去掉整数约束）：
+
+
+$  \min \sum x_v \quad \text{s.t.} \quad x_u + x_v \geq 1 \ \forall (u,v) \in E, \ x_v \geq 0$
+
+对偶问题 (D)：最大匹配的 LP 松弛：
+
+
+$  \max \sum y_e \quad \text{s.t.} \quad \sum_{e \ni v} y_e \leq 1 \ \forall v \in V, \ y_e \geq 0$
+
+  文档依据： 
+
+>  "Duality" 部分：
+>
+> "primal: $\min \sum x_v s.t. \sum_{v \in e} x_v \geq 1  $
+>
+> dual: $\max \sum y_e s.t. \sum_{e \ni v} y_e \leq 1$
+
+(b) 强对偶性与互补松弛
+强对偶定理：若原始问题和对偶问题均有可行解，则最优值相等（即$ \min \sum x_v = \max \sum y_e$）。
+
+互补松弛条件：最优解 ($x^*, y^*$) 满足：
+
+$  \begin{cases}
+  y_e^ > 0 \implies x_u^ + x_v^* = 1 & \forall e = (u,v) \in E \\
+  x_v^ > 0 \implies \sum_{e \ni v} y_e^ = 1 & \forall v \in V
+  \end{cases}$
+
+二分图性质：二分图的关联矩阵是全单模矩阵（totally unimodular），因此 LP 松弛的最优解为整数解，且与 ILP 最优解一致。  
+
+  文档依据： 
+
+> "Duality" 部分的互补松弛条件：
+>
+> "$∀e: either \sum_{v \in e} x_v = 1$  or  $y_e = 0$"  
+>
+> "$∀v: either \sum_{e \ni v} y_e = 1$  or $x_v = $0"
+
+
+
+(c) 构造顶点覆盖 C
+
+从最大匹配 $M^*$ 出发：
+在残量图中从 L 的未匹配点出发做 BFS，标记访问的顶点。
+
+令 $C = \{\text{标记的 } R \text{ 中顶点}\} \cup \{\text{未标记的 } L \text{ 中顶点}\}$。
+
+C 是顶点覆盖且 $C = M^*
+$（详细步骤见文档 "Flow Decomposition" 和 "Augmenting Path" 部分）。
+
+多项式时间可解性
+
+最大匹配：可通过最大流算法（如 Ford-Fulkerson）在多项式时间求解（文档 "Network Flow" 部分）。
+
+最小顶点覆盖：通过求解其 LP 松弛（全单模性保证整数解）或利用 Kőnig 定理转化为最大匹配问题，均在多项式时间可解。  
+
+  文档依据：  
+
+
+
+>  "Maximum Bipartite Matching" 部分：
+>
+> "Find a maximum matching of a bipartite graph."（隐式通过最大流实现）  
+>
+> "LP Relaxation & Rounding" 部分：
+>
+> "linear programs are solvable in polynomial time!"
+
+
+
+
+
+|    问题部分     |               文档锚点                |        关键内容摘要        |
+| :-------------: | :-----------------------------------: | :------------------------: |
+|   最大匹配 LP   |     "Maximum Bipartite Matching"      |      ILP 形式及流模型      |
+| 最小顶点覆盖 LP |            "Vertex Cover"             |     ILP 形式及 LP 松弛     |
+|   等价性证明    | "Duality" & "Complementary Slackness" |   LP 对偶与互补松弛条件    |
+|  多项式可解性   |   "Network Flow" & "LP Relaxation"    | 最大流算法与 LP 多项式求解 |
+
+
+
+## 8 
+
+考虑 0-1 背包问题：有n个物品，第$ i $ 个物品的价值和重量分别是$v_i, w_i$ , 背包容量C。请写出对应的整数规划，和它的线性规划松弛。设计一个根据松弛线性规划最优解取整以取得优秀整数可行解的方案，并尝试分析你的答案与最优解的近似比。
+
+
+
+目标：
+
+求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in \{0,1\}, \quad \forall i=1,\dots,n.$ 前提下 $\max \displaystyle\sum_{i=1}^n v_i x_i$
+
+
+
+松弛整数约束为连续约束：
+
+求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in [0,1], \quad \forall i=1,\dots,n.$ 前提下 $\max \displaystyle\sum_{i=1}^n v_i x_i$
+
+
+
+LP 最优值 $\text{OPT}_{\text{LP}} \geq \text{OPT}_{\text{IP}}$。
+
+
+
+- 全选整数项：选择所有 $x_i^* = 1$ 的物品，价值$ V_A = \displaystyle\sum_{\{i: x_i^*=1\}} v_i$
+- 最高价值分数项：选择分数项中价值最高的物品 $k = \arg\max_{\{i: 0<x_i^*<1\}} v_i$，价值 $V_B = v_k$。
+
+
+
+输出最优可行解：
+
+$\text{ALG} = \max\{V_A, V_B\}$
+
+- 可行性保证：预处理丢弃 $w_i > C $ 的物品
+
+------
+
+#### 4. 近似比分析
+
+定理：算法满足  $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$ ，近似比为 2。
+
+证明：
+
+
+
+上界关系：
+
+$\text{OPT}_{\text{IP}} \leq \text{OPT}_{\text{LP}}$
+
+
+
+分解 LP 最优解：
+
+- 设 $S_1 = \{i: x_i^* = 1\}$，价值$ V_A = \displaystyle\sum_{i \in S_1} v_i$。
+
+- 设 $S_f = \{i: 0 < x_i^* < 1\}$，其中$v_k = \max_{i \in S_f} v_i$。
+
+- 由约束  $\displaystyle\sum_{i \in S_f} w_i x_i^* \leq C$ 和 $w_i \leq C$
+
+    有：$\text{OPT}_{\text{LP}} = V_A + \underbrace{\sum_{i \in S_f} v_i x_i^*}_{\leq v_k}$ 
+
+
+
+
+
+
+
+$\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max\{V_A, v_k\} = 2 \cdot \text{ALG}$
+
+
+
+紧性示例：
+
+- 物品：$v_1 = 1, w_1 = 1; v_2 = 1, w_2 = 1$，容量 $C = 1$。
+- LP 解：$x_1^* = 0.5, x_2^* = 0.5，\text{OPT}_{\text{LP}} = 1$。
+- $V_A = 0$
+- $V_B = 1$
+- $\text{ALG} = 1，\text{OPT}_{\text{IP}} = 1$ 但通过调整价值可逼近比 2。
+
+
+
+------
+
+### 总结
+
+| 组件          | 内容                                                         |
+| ------------- | ------------------------------------------------------------ |
+| 整数规划 (IP) | $\max \displaystyle\sum v_i x_i \quad \text{s.t.} \sum w_i x_i \leq C, \ x_i \in \{0,1\}$ |
+| LP 松弛       | 松弛$ x_i \in [0,1]$，最优值为上界                           |
+| 取整方案      | 候选解 A（全选整数项） + 候选解 B（最高价值分数项）          |
+| 近似比        | $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$         |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
