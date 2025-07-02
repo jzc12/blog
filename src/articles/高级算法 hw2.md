@@ -441,7 +441,7 @@ $\text{Var}(X) = O\left(\frac{d^3}{m}\right)$
 
 ## 7
 
-Let $G=(L,R,E) $be a bipartite graph. Write down the linear program that finds the maximum matching in $G$, and the linear program that finds the minimum vertex cover of $G$. Prove that the size of the maximum matching in $G$ is equal to the size of the minimum vertex cover in $G$. This suggests that the vertex cover problem in bipartite graphs is polynomial time solvable.
+Let $G=(L, R, E) $be a bipartite graph. Write down the linear program that finds the maximum matching in $G$, and the linear program that finds the minimum vertex cover of $G$. Prove that the size of the maximum matching in $G$ is equal to the size of the minimum vertex cover in $G$. This suggests that the vertex cover problem in bipartite graphs is polynomial time solvable.
 
 
 
