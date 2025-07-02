@@ -145,25 +145,25 @@ $\therefore $ $\mathbf{x} \in \mathbb{S}^{d-1}$ 且 $\|\mathbf{x}\|_\infty \leq 
 
 
 距离定义：
-$$
+$
 d(x,y) = \sqrt{\sum_i \min(|x_i - y_i|, n - |x_i - y_i|)^2}
-$$
+$
 即每一维上的距离是模 $n$ 的圆周距离。
 
 解法思路：
 
 1. 映射到欧氏空间：
     将每个维度 $x_i \in [0,n]$ 映射为圆上的二维向量：
-    $$
+    $
     \varphi_i(x) = \left(\frac{n}{2\pi}\cos\left(\frac{2\pi x_i}{n}\right), \frac{n}{2\pi}\sin\left(\frac{2\pi x_i}{n}\right)\right)
-    $$
+    $
     所有维度拼接后 $\varphi(x) \in \mathbb{R}^{2d}$。
 
 2. 使用欧氏空间的 LSH：
     对映射后的 $\varphi(x)$ 应用随机投影哈希：
-    $$
+    $
     h_{b,t}(x) = \left\lfloor \frac{\langle b, \varphi(x) \rangle + t}{w} \right\rfloor
-    $$
+    $
     其中 $b \sim \mathcal{N}(0, I)$，$t \sim \text{Unif}[0,w]$，$w$ 是桶宽。
 
 3. 理由：
@@ -175,24 +175,24 @@ $$
 
 
 距离定义：
-$$
+$
 d(x, y) = \arccos(\langle x, y \rangle)
-$$
+$
 即两单位向量间的夹角。
 
 解法思路：
 
 1. 使用 SimHash（随机超平面法）：
     对每个向量 $x \in S^{d-1}$，随机选取 $b \sim \mathcal{N}(0,I)$，定义哈希函数：
-    $$
+    $
     h_b(x) = \text{sign}(\langle b, x \rangle) \in \{-1, +1\}
-    $$
+    $
 
 2. 碰撞概率：
     对任意 $x, y \in S^{d-1}$，有：
-    $$
+    $
     \Pr[h_b(x) = h_b(y)] = 1 - \frac{\theta(x,y)}{\pi}, \quad \theta(x,y) = \arccos(\langle x, y \rangle)
-    $$
+    $
     表明夹角越小，碰撞概率越高。
 
 3. 扩展性与优化：
@@ -202,12 +202,12 @@ $$
     - 可先用 JL 投影将 $x$ 降维至 $O(\log n)$ 后再进行哈希；
 
     - 可构造 $(r, cr, p, q)$ LSH 满足：
-        $$
+        $
         \begin{aligned}
         \text{若 } d(x, y) \le r &\Rightarrow \Pr[h(x)=h(y)] \ge p \\
         \text{若 } d(x, y) > cr &\Rightarrow \Pr[h(x)=h(y)] \le q
         \end{aligned}
-        $$
+        $
 
 
 
@@ -529,9 +529,161 @@ $\text{Var}(X) = O\left(\frac{d^3}{m}\right)$
 
 
 
+问题分析与解决思路
+
+您的核心问题分为三部分：
+建模：为二分图 $G=(L, R, E)$ 写出最大匹配和最小顶点覆盖的线性规划。
+
+证明：证明最大匹配大小等于最小顶点覆盖大小（Kőnig 定理）。
+
+推论：说明二分图顶点覆盖问题是多项式时间可解的。
+
+文档中以下部分直接相关：
+最大匹配：在 "Maximum Bipartite Matching" 部分定义了问题并通过网络流建模（见文档）。
+
+最小顶点覆盖：在 "Vertex Cover" 部分给出了 ILP 形式及 LP 松弛。
+
+对偶性证明：在 "Duality" 部分通过 LP 对偶性建立了最大匹配与最小顶点覆盖的关系。
+
+线性规划建模
+
+(a) 最大匹配的线性规划
+
+在二分图$ G=(L, R, E) $中，定义变量$ y_e \in \{0, 1\}$ 表示边 e 是否被选入匹配。目标为最大化匹配边数：
+
+$\max \displaystyle\sum_{e \in E} y_e$
+
+
+
+$\text{s.t.} \quad \displaystyle\sum_{e \ni v} y_e \leq 1 \quad \forall v \in L \cup R \quad \text{(每个顶点至多关联一条边)}  y_e \geq 0 \quad \forall e \in E$
+
+
+
+文档依据： 
+"Maximum Bipartite Matching" 部分（标题及公式）：
+
+"·Problem: Find a maximum matching of a bipartite graph."  
+
+"Integer Linear Program (ILP) for vertex cover: ..."（注：此处虽为顶点覆盖，但最大匹配的ILP类似）
+
+(b) 最小顶点覆盖的线性规划
+
+定义变量$ x_v \in \{0, 1\}$ 表示顶点 $v$是否被选入覆盖集。目标为最小化覆盖集大小：
+
+$\min \quad \sum_{v \in L \cup R} x_v$
+
+$\text{s.t.} \quad x_u + x_v \geq 1 \quad \forall (u,v) \in E \quad \text{(每条边至少有一个端点被覆盖)} x_v \geq 0 \quad \forall v \in L \cup R$
+
+文档依据： 
+"Vertex Cover" 部分（标题及公式）：
+
+> "Integer Linear Program (ILP) for vertex cover:  
+>
+> minimize$ \displaystyle\sum_{v \in V} x_v  $
+>
+> subject to $\displaystyle\sum_{v \in e} x_v \geq 1, \ \forall e \in E  $
+>
+> $x_v \in \{0, 1\}  \ \forall v \in V$
+
+
+
+等价性证明（Kőnig 定理）
+
+定理：在二分图中，最大匹配大小 M  等于最小顶点覆盖大小 $ C
+$。  
+证明思路（基于文档的 LP 对偶性 和 互补松弛条件）：
+
+(a) 构造对偶问题
+原始问题 (P)：最小顶点覆盖的 LP 松弛（去掉整数约束）：
+
+
+$  \min \sum x_v \quad \text{s.t.} \quad x_u + x_v \geq 1 \ \forall (u,v) \in E, \ x_v \geq 0$
+
+对偶问题 (D)：最大匹配的 LP 松弛：
+
+
+$  \max \sum y_e \quad \text{s.t.} \quad \sum_{e \ni v} y_e \leq 1 \ \forall v \in V, \ y_e \geq 0$
+
+  文档依据： 
+
+>  "Duality" 部分：
+>
+>  "primal: $\min \displaystyle\sum x_v s.t. \displaystyle\sum_{v \in e} x_v \geq 1  $
+>
+>  dual: $\max \displaystyle\sum y_e s.t. \sum_{e \ni v} y_e \leq 1$
+
+(b) 强对偶性与互补松弛
+强对偶定理：若原始问题和对偶问题均有可行解，则最优值相等（即$ \min \sum x_v = \max \sum y_e$）。
+
+互补松弛条件：最优解 ($x^*, y^*$) 满足：
+
+$  \begin{cases}
+  y_e^ > 0 \implies x_u^ + x_v^* = 1 & \forall e = (u,v) \in E \\
+  x_v^ > 0 \implies \sum_{e \ni v} y_e^ = 1 & \forall v \in V
+  \end{cases}$
+
+二分图性质：二分图的关联矩阵是全单模矩阵（totally unimodular），因此 LP 松弛的最优解为整数解，且与 ILP 最优解一致。  
+
+  文档依据： 
+
+> "Duality" 部分的互补松弛条件：
+>
+> "$∀e: either \sum_{v \in e} x_v = 1$  or  $y_e = 0$"  
+>
+> "$∀v: either \sum_{e \ni v} y_e = 1$  or $x_v = $0"
+
+
+
+(c) 构造顶点覆盖 C
+
+从最大匹配 $M^*$ 出发：
+在残量图中从 L 的未匹配点出发做 BFS，标记访问的顶点。
+
+令 $C = \{\text{标记的 } R \text{ 中顶点}\} \cup \{\text{未标记的 } L \text{ 中顶点}\}$。
+
+C 是顶点覆盖且 $C = M^*
+$（详细步骤见文档 "Flow Decomposition" 和 "Augmenting Path" 部分）。
+
+多项式时间可解性
+
+最大匹配：可通过最大流算法（如 Ford-Fulkerson）在多项式时间求解（文档 "Network Flow" 部分）。
+
+最小顶点覆盖：通过求解其 LP 松弛（全单模性保证整数解）或利用 Kőnig 定理转化为最大匹配问题，均在多项式时间可解。  
+
+  文档依据：  
+
+
+
+>  "Maximum Bipartite Matching" 部分：
+>
+>  "Find a maximum matching of a bipartite graph."（隐式通过最大流实现）  
+>
+>  "LP Relaxation & Rounding" 部分：
+>
+>  "linear programs are solvable in polynomial time!"
+
+
+
+
+
+|    问题部分     |               文档锚点                |        关键内容摘要        |
+| :-------------: | :-----------------------------------: | :------------------------: |
+|   最大匹配 LP   |     "Maximum Bipartite Matching"      |      ILP 形式及流模型      |
+| 最小顶点覆盖 LP |            "Vertex Cover"             |     ILP 形式及 LP 松弛     |
+|   等价性证明    | "Duality" & "Complementary Slackness" |   LP 对偶与互补松弛条件    |
+|  多项式可解性   |   "Network Flow" & "LP Relaxation"    | 最大流算法与 LP 多项式求解 |
+
 
 
 ## 8 
+
+
+
+
+
+------
+
+
 
 
 
