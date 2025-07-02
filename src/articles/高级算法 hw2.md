@@ -441,7 +441,7 @@ $\text{Var}(X) = O\left(\frac{d^3}{m}\right)$
 
 ## 7
 
-Let $G=(L, R, E) $be a bipartite graph. Write down the linear program that finds the maximum matching in $G$, and the linear program that finds the minimum vertex cover of $G$. Prove that the size of the maximum matching in $G$ is equal to the size of the minimum vertex cover in $G$. This suggests that the vertex cover problem in bipartite graphs is polynomial time solvable.
+Let G=(L,R,E)  $G$, and the linear program that finds the minimum vertex cover of $G$. Prove that the size of the maximum matching in $G$ is equal to the size of the minimum vertex cover in $G$. This suggests that the vertex cover problem in bipartite graphs is polynomial time solvable.
 
 
 
@@ -457,13 +457,13 @@ Let $G=(L, R, E) $be a bipartite graph. Write down the linear program that finds
 
 目标：
 
-求 满足 $ \displaystyle \sum_{i=1}^n w_i x_i \leq C, x_i \in \{0,1\}, \quad \forall i=1,\dots,n.$ 前提下 $\max   \displaystyle \sum_{i=1}^n v_i x_i$
+求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C x_i \in \{0,1\} \quad \forall i=1 \dots n.$ 前提下 $\max   \displaystyle\sum_{i=1}^n v_i x_i$
 
 
 
 松弛整数约束为连续约束：
 
-求 满足 $ \displaystyle \sum_{i=1}^n w_i x_i \leq C, x_i \in [0,1], \quad \forall i=1,\dots,n.$ 前提下 $\max  \displaystyle\sum_{i=1}^n v_i x_i$
+求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C  x_i \in [0,1]  \quad \forall i=1 \dots n.$ 前提下 $\max  \displaystyle\sum_{i=1}^n v_i x_i$
 
 
 
@@ -471,7 +471,7 @@ LP 最优值 $\text{OPT}_{\text{LP}} \geq \text{OPT}_{\text{IP}}$。
 
 
 
-- 全选整数项：选择所有 $x_i^* = 1$ 的物品，价值$ V_A = \displaystyle \sum_{\{i: x_i^*=1\}} v_i$
+- 全选整数项：选择所有 $x_i^* = 1$ 的物品，价值$ V_A = \displaystyle\sum_{\{i: x_i^*=1\}} v_i$
 - 最高价值分数项：选择分数项中价值最高的物品 $k = \arg \max_{\{i: 0<x_i^*<1\}} v_i$，价值 $V_B = v_k$。
 
 
@@ -500,11 +500,11 @@ $\text{OPT}_{\text{IP}} \leq \text{OPT}_{\text{LP}}$
 
 分解 LP 最优解：
 
-- 设 $S_1 = \{i: x_i^* = 1\}$，价值$ V_A = \displaystyle \sum_{i \in S_1} v_i$。
+- 设 $S_1 = \{i: x_i^* = 1\}$，价值$ V_A = \displaystyle\sum_{i \in S_1} v_i$。
 
 - 设 $S_f = \{i: 0 < x_i^* < 1\}$，其中$v_k = \max_{i \in S_f} v_i$。
 
-- 由约束  $\displaystyle \sum_{i \in S_f} w_i x_i^* \leq C$ 和 $w_i \leq C$
+- 由约束  $\displaystyle\sum_{i \in S_f} w_i x_i^* \leq C$ 和 $w_i \leq C$
 
     有：$\text{OPT}_{\text{LP}} = V_A + \underbrace{\sum_{i \in S_f} v_i x_i^*}_{\leq v_k}$ 
 
@@ -534,12 +534,10 @@ $\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max \{V_A, v_k\} = 2 \cdot \text{
 
 | 组件          | 内容                                                         |
 | ------------- | ------------------------------------------------------------ |
-| 整数规划 (IP) | $\max \displaystyle \sum v_i x_i \quad \text{s.t.} \sum w_i x_i \leq C, \ x_i \in \{0,1\}$ |
+| 整数规划 (IP) | $\max \displaystyle\sum v_i x_i \quad \text{s.t.} \sum w_i x_i \leq C, \ x_i \in \{0,1\}$ |
 | LP 松弛       | 松弛$ x_i \in [0,1]$,最优值为上界                            |
 | 取整方案      | 候选解 A（全选整数项） + 候选解 B（最高价值分数项）          |
 | 近似比        | $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$         |
-
-
 
 
 
