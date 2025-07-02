@@ -28,13 +28,32 @@ summary: 高级算法作业2
 
 （1）简单制表要求将键拆分成 c个固定位宽 d的值。对不同长度的值，需要填充或截断处理，而且是线性结构。
 
-（2）简单制表被证明是 4-独立的，但在要求极高质量哈希且需要高于 4-独立性保证的应用中，简单制表可能会存在问题。
+（2）简单制表在要求极高质量哈希的应用中，简单制表可能会存在问题。
 
 
 
-针对问题 1.
+针对问题1.
 
 扭曲制表哈希
+
+为了解决简单制表哈希在输入结构线性、冲突集中等问题，扭曲制表哈希引入了“扭曲”步骤打乱输入结构，提高哈希分布质量。
+
+也是分为三个步骤
+
+1. $X \to (x_0, x_1, \dots, x_{c-1})$，  每个 $x_i$是 X 按顺序的 d 位的值
+
+2. c 个随即表的初始化，每个表 有 $2^d$  个数
+
+3. 计算哈希值（扭曲操作）：
+
+- 首先计算：$h' = T_1[x_1] \oplus T_2[x_2] \oplus \cdots \oplus T_{c-1}[x_{c-1}]$
+- 然后将这个中间结果 $h'$ 视为“扰动项”加到 $x_0$ 上，  $h(x) = T_0[x_0 \oplus h'] \oplus h'$
+
+对比简单制表,扭曲制表在高位信息和低位访问路径之间建立了依赖，避免了冲突“只集中在某一低位”的局限；
+
+可能问题：与简单制表相比，实现复杂度略高，尤其在 SIMD 或硬件优化环境中不如后者简单。
+
+
 
 
 
@@ -45,6 +64,20 @@ summary: 高级算法作业2
 双表制表哈希想法就是再单个简单制表哈希的基础上再套一层，相同的三个步骤再走一遍，只是 c 和 d 的值在第二次的映射可以变化。
 
 我觉得加为两层的制表哈希想法很简单，但是确实很有用，第二层提高了更多的独立性，但是引入的问题是更多的随机表初始化的消耗和计算复杂度的增加。
+
+
+
+第一层提供基础的混合与打散；
+
+第二层对第一层结果进一步扰动，使得整体哈希函数能达到较高的独立性；
+
+可能问题：
+
+额外的存储开销：需要 $c + c'$ 张随机表；
+
+计算复杂度提升：相比简单制表哈希，增加了两倍查表和一次额外 XOR 的计算；
+
+实际性能在某些高性能场景可能不如扭曲制表哈希，因其不具备局部扰动优化
 
 
 
@@ -69,33 +102,33 @@ $\mathbb{E}[\|A \mathbf{x}\|_2^2] = \sum_{i=1}^k \mathbb{E}[Y_i^2] = k \cdot \fr
 
 $\because$
 
-$\mathbb{E}[Y_i^4] = 3 \cdot \operatorname{Var}(Y_i)^2 = 3 \cdot \left(\frac{1}{k}\right)^2 = \frac{3}{k^2}$
+$\mathbb{E}[Y_i^4] = 3 \cdot \text{Var}(Y_i)^2 = 3 \cdot \left(\frac{1}{k}\right)^2 = \frac{3}{k^2}$
 
-$\operatorname{Var}(Y_i^2) = \mathbb{E}[Y_i^4] - (\mathbb{E}[Y_i^2])^2 = \frac{3}{k^2} - \frac{1}{k^2} = \frac{2}{k^2}$
+$\text{Var}(Y_i^2) = \mathbb{E}[Y_i^4] - (\mathbb{E}[Y_i^2])^2 = \frac{3}{k^2} - \frac{1}{k^2} = \frac{2}{k^2}$
 
 $\therefore$
 
-$\operatorname{Var}(\|A\mathbf{x}\|_2^2) = k \cdot \operatorname{Var}(Y_i^2) = k \cdot \frac{2}{k^2} = \frac{2}{k}$
+$\text{Var}(\|A\mathbf{x}\|_2^2) = k \cdot \text{Var}(Y_i^2) = k \cdot \frac{2}{k^2} = \frac{2}{k}$
 
 
 
 若 $\|\mathbf{x}\|_\infty \leq \alpha$，则：
 
-$\operatorname{Var}(Y_i) = \frac{1}{k} \sum_{j=1}^d x_j^2 \leq \frac{1}{k} \cdot d \cdot \alpha^2$
+$\text{Var}(Y_i) = \frac{1}{k} \sum_{j=1}^d x_j^2 \leq \frac{1}{k} \cdot d \cdot \alpha^2$
 
 $\therefore$
 
-$\operatorname{Var}(Y_i^2) \leq 2 \cdot (\operatorname{Var}(Y_i))^2 \leq 2 \cdot \left( \frac{d \alpha^2}{k} \right)^2 = \frac{2 d^2 \alpha^4}{k^2}$
+$\text{Var}(Y_i^2) \leq 2 \cdot (\text{Var}(Y_i))^2 \leq 2 \cdot \left( \frac{d \alpha^2}{k} \right)^2 = \frac{2 d^2 \alpha^4}{k^2}$
 
 总方差为：
 
-$\operatorname{Var}(\|A\mathbf{x}\|_2^2) \leq k \cdot \frac{2 d^2 \alpha^4}{k^2} = \frac{2 d^2 \alpha^4}{k}$
+$\text{Var}(\|A\mathbf{x}\|_2^2) \leq k \cdot \frac{2 d^2 \alpha^4}{k^2} = \frac{2 d^2 \alpha^4}{k}$
 
 
 
 由切比雪夫不等式：
 
-$\mathbb{P}\left[ \left| \|A\mathbf{x}\|_2^2 - 1 \right| > \epsilon \right] \leq \frac{\operatorname{Var}(\|A\mathbf{x}\|_2^2)}{\epsilon^2} \leq \frac{2 d^2 \alpha^4}{k \epsilon^2}$
+$\mathbb{P}\left[ \left| \|A\mathbf{x}\|_2^2 - 1 \right| > \epsilon \right] \leq \frac{\text{Var}(\|A\mathbf{x}\|_2^2)}{\epsilon^2} \leq \frac{2 d^2 \alpha^4}{k \epsilon^2}$
 
 右边不超过 $\delta$，得：
 
@@ -110,6 +143,67 @@ $\therefore $ $\mathbf{x} \in \mathbb{S}^{d-1}$ 且 $\|\mathbf{x}\|_\infty \leq 
 ## 3
 
 
+
+距离定义：
+$$
+d(x,y) = \sqrt{\sum_i \min(|x_i - y_i|, n - |x_i - y_i|)^2}
+$$
+即每一维上的距离是模 $n$ 的圆周距离。
+
+解法思路：
+
+1. 映射到欧氏空间：
+   将每个维度 $x_i \in [0,n]$ 映射为圆上的二维向量：
+   $$
+   \varphi_i(x) = \left(\frac{n}{2\pi}\cos\left(\frac{2\pi x_i}{n}\right), \frac{n}{2\pi}\sin\left(\frac{2\pi x_i}{n}\right)\right)
+   $$
+   所有维度拼接后 $\varphi(x) \in \mathbb{R}^{2d}$。
+
+2. 使用欧氏空间的 LSH：
+   对映射后的 $\varphi(x)$ 应用随机投影哈希：
+   $$
+   h_{b,t}(x) = \left\lfloor \frac{\langle b, \varphi(x) \rangle + t}{w} \right\rfloor
+   $$
+   其中 $b \sim \mathcal{N}(0, I)$，$t \sim \text{Unif}[0,w]$，$w$ 是桶宽。
+
+3. 理由：
+   - 映射 $\varphi$ 保留了圆周距离的相似性；
+   - 随机投影在欧氏空间中满足 LSH 定义，即相近点哈希值碰撞概率大；
+   - 可使用 JL 引理将维度降至 $k=O(\epsilon^{-2}\log n)$ 以提高效率。
+
+
+
+距离定义：
+$$
+d(x, y) = \arccos(\langle x, y \rangle)
+$$
+即两单位向量间的夹角。
+
+解法思路：
+
+1. 使用 SimHash（随机超平面法）：
+   对每个向量 $x \in S^{d-1}$，随机选取 $b \sim \mathcal{N}(0,I)$，定义哈希函数：
+   $$
+   h_b(x) = \text{sign}(\langle b, x \rangle) \in \{-1, +1\}
+   $$
+
+2. 碰撞概率：
+   对任意 $x, y \in S^{d-1}$，有：
+   $$
+   \Pr[h_b(x) = h_b(y)] = 1 - \frac{\theta(x,y)}{\pi}, \quad \theta(x,y) = \arccos(\langle x, y \rangle)
+   $$
+   表明夹角越小，碰撞概率越高。
+
+3. 扩展性与优化：
+   - 串联多个 $h_{b_i}$，形成哈希签名（如 $k$ 位）；
+   - 可先用 JL 投影将 $x$ 降维至 $O(\log n)$ 后再进行哈希；
+   - 可构造 $(r, cr, p, q)$ LSH 满足：
+     $$
+     \begin{aligned}
+     \text{若 } d(x, y) \le r &\Rightarrow \Pr[h(x)=h(y)] \ge p \\
+     \text{若 } d(x, y) > cr &\Rightarrow \Pr[h(x)=h(y)] \le q
+     \end{aligned}
+     $$
 
 
 
@@ -127,24 +221,20 @@ $\ell_2$-norm , 以及你可能需要应用 birthday paradox (随机地把 d 个
 
 
 
-考虑 Oblivious Subspace Embedding (OSE) 问题：给定随机矩阵 $A \in \{0,1\}^{n \times d}$（每列独立均匀选择一个位置为 1），和确定矩阵$ \prod \in \mathbb{R}^{m \times n}$（每列只有一个非零元素）。需证明：对任意确定的 $\prod$，若要求 \prod 是 A 的列空间的子空间嵌入（即保持 $\ell_2-$范数近似不变），则必须满足$ m = \Omega(d^2)$。
+$\prod $的列稀疏度为 1：$\prod$ 可视为映射 $\sigma: [n] \to [m]$，其中 $\prod_{i,j} = 1 $当且仅当$ \sigma(j) = i$。
+
+$A$ 的列：每列 $a_i$ 是独立均匀选择的标准基向量 $e_{k_i}$（$k_i \in [n]$ 随机）。
+
+对所有 $x \in \mathbb{R}^d$，需满足：$(1 - \epsilon) \|Ax\|_2^2 \leq \|\prod A x\|_2^2 \leq (1 + \epsilon) \|Ax\|_2^2.$
+证明当$ m = o(d^2)$ 时，存在向量 x 使得上述条件失败（高概率）。
 
 
-
-1. 矩阵性质：
-    - $\prod $的列稀疏度为 1：$\prod$ 可视为映射 $\sigma: [n] \to [m]$，其中 $\prod_{i,j} = 1 $当且仅当$ \sigma(j) = i$。
-    - $A$ 的列：每列 $a_i$ 是独立均匀选择的标准基向量 $e_{k_i}$（$k_i \in [n]$ 随机）。
-2. 子空间嵌入条件：
-     对所有 $x \in \mathbb{R}^d$，需满足：$(1 - \epsilon) \|Ax\|_2^2 \leq \|\prod A x\|_2^2 \leq (1 + \epsilon) \|Ax\|_2^2.$
-3. 目标：
-     证明当$ m = o(d^2)$ 时，存在向量 x 使得上述条件失败（高概率）。
-
-1
 
 考虑向量$ x = e_i - e_j（$单位坐标向量差）：
 
-- 原始范数：$\|A x\|_2^2 = \|a_i - a_j\|_2^2$。
-- 嵌入范数：$\|\prod A x\|_2^2 = \|\prod a_i - \prod a_j\|_2^2$。
+原始范数：$\|A x\|_2^2 = \|a_i - a_j\|_2^2$。
+
+嵌入范数：$\|\prod A x\|_2^2 = \|\prod a_i - \prod a_j\|_2^2$。
 
 定义事件：$\mathcal{E}_{i,j}: \quad k_i \neq k_j \quad \text{且} \quad \sigma(k_i) = \sigma(k_j).$
 
@@ -152,10 +242,11 @@ $\ell_2$-norm , 以及你可能需要应用 birthday paradox (随机地把 d 个
 
 若$ \mathcal{E}_{i,j}$ 发生，则：
 
-- 当 $k_i \neq k_j $时，$\|A x\|_2^2 = 2$（因 $a_i \perp a_j$)。
-- 但 $\sigma(k_i) = \sigma(k_j)$ 时，$\|\prod A x\|_2^2 = 0$（因$ \prod a_i = \prod a_j$）。 此时相对误差为 1（完全失败）。
+当 $k_i \neq k_j $时，$\|A x\|_2^2 = 2$（因 $a_i \perp a_j$)。
 
-2
+但 $\sigma(k_i) = \sigma(k_j)$ 时，$\|\prod A x\|_2^2 = 0$（因$ \prod a_i = \prod a_j$）。
+
+
 
 固定 $(i,j)$，$\mathcal{E}_{i,j}$ 的概率：$\mathbb{P}(\mathcal{E}_{i,j}) = \mathbb{P}(k_i \neq k_j) \cdot \mathbb{P}(\sigma(k_i) = \sigma(k_j) \mid k_i \neq k_j).$
 
@@ -167,27 +258,27 @@ $\mathbb{P}(\sigma(k_i) = \sigma(k_j) \mid k_i \neq k_j) = \frac{1}{n^2} \sum_{i
 
 故: $\mathbb{P}(\mathcal{E}_{i,j}) \geq \left(1 - \frac{1}{n}\right) \frac{1}{m} \geq \frac{c}{m} \quad \text{(常数 } c > 0\text{)}.$
 
-3
+
 
 令 $X = \sum_{1 \leq i < j \leq d} \mathbf{1}_{\mathcal{E}_{i,j}}$（总冲突对数）。
 
-- 期望：$\mathbb{E}[X] = \binom{d}{2} \mathbb{P}(\mathcal{E}_{i,j}) \geq \frac{d(d-1)}{2} \cdot \frac{c}{m} \sim \frac{c d^2}{m}.$
+期望：$\mathbb{E}[X] = \binom{d}{2} \mathbb{P}(\mathcal{E}_{i,j}) \geq \frac{d(d-1)}{2} \cdot \frac{c}{m} \sim \frac{c d^2}{m}.$
 
-    若  $m = o(d^2)$，则 $\mathbb{E}[X] \to \infty$。
+若  $m = o(d^2)$，则 $\mathbb{E}[X] \to \infty$。
 
-- 方差：$\operatorname{Var}(X) = \sum_{(i,j)} \sum_{(k,l)} \operatorname{Cov}(\mathbf{1}_{\mathcal{E}_{i,j}}, \mathbf{1}_{\mathcal{E}_{k,l}}).$
+方差：$\text{Var}(X) = \sum_{(i,j)} \sum_{(k,l)} \text{Cov}(\mathbf{1}_{\mathcal{E}_{i,j}}, \mathbf{1}_{\mathcal{E}_{k,l}}).$
 
-    - 不相交对$ (i,j) $与 $(k,l) $协方差为 0（独立性）。
-    - 有公共下标的对数：$O(d^3)$（如$ (i,j)$ 与$ (i,l)$）。
-    - 每对协方差上界：$O(1/m)$（因$ \mathbb{P}(\mathcal{E}_{i,j} \land \mathcal{E}_{i,l}) \leq \mathbb{P}(\sigma(k_j) = \sigma(k_l)) = O(1/m)$）。
+不相交对$ (i,j) $与 $(k,l) $协方差为 0（独立性）。
 
-$\operatorname{Var}(X) = O\left(\frac{d^3}{m}\right)$
+有公共下标的对数：$O(d^3)$（如$ (i,j)$ 与$ (i,l)$）。
 
-4
+每对协方差上界：$O(1/m)$（因$ \mathbb{P}(\mathcal{E}_{i,j} \land \mathcal{E}_{i,l}) \leq \mathbb{P}(\sigma(k_j) = \sigma(k_l)) = O(1/m)$）。
 
-比较方差与期望：$\frac{\operatorname{Var}(X)}{\left(\mathbb{E}[X]\right)^2} \leq \frac{C d^3 / m}{(c d^2 / m)^2} = \frac{C m}{c^2 d} \to 0 \quad \text{(因 } m = o(d^2)\text{)}.$
+$\text{Var}(X) = O\left(\frac{d^3}{m}\right)$
 
-由 Chebyshev 不等式：$\mathbb{P}(X = 0) \leq \frac{\operatorname{Var}(X)}{\left(\mathbb{E}[X]\right)^2} \to 0$
+比较方差与期望：$\frac{\text{Var}(X)}{\left(\mathbb{E}[X]\right)^2} \leq \frac{C d^3 / m}{(c d^2 / m)^2} = \frac{C m}{c^2 d} \to 0 \quad \text{(因 } m = o(d^2)\text{)}.$
+
+由 Chebyshev 不等式：$\mathbb{P}(X = 0) \leq \frac{\text{Var}(X)}{\left(\mathbb{E}[X]\right)^2} \to 0$
 
 故当 $m = o(d^2)$ 时，$\mathbb{P}(\exists \mathcal{E}_{i,j}) \to 1$。
 
@@ -199,12 +290,13 @@ $\operatorname{Var}(X) = O\left(\frac{d^3}{m}\right)$
 
 
 
-1. 桶映射模型：
-    - d 个球（$A$ 的列）独立随机分配至 m 个桶（$\prod$的行）。
-    - $\sigma$ 是固定映射，桶大小非均匀。
-    - 生日悖论保证：当$ m = o(d^2)$ 时，桶冲突高概率发生。
-2. 失败向量构造：
-    - 冲突对$ (i,j) $对应的 $x = e_i - e_j$ 是嵌入失败的显式反例。
+桶映射模型：
+- d 个球（$A$ 的列）独立随机分配至 m 个桶（$\prod$的行）。
+- $\sigma$ 是固定映射，桶大小非均匀。
+- 生日悖论保证：当$ m = o(d^2)$ 时，桶冲突高概率发生。
+
+失败向量构造：
+- 冲突对$ (i,j) $对应的 $x = e_i - e_j$ 是嵌入失败的显式反例。
 
 
 
@@ -338,198 +430,6 @@ $\operatorname{Var}(X) = O\left(\frac{d^3}{m}\right)$
 这个算法高效且正确，能将点容量问题转化为标准最大流问题求解。任何标准最大流算法的正确性基础（如最大流最小割定理）在 $G'$ 上仍适用，从而确保整个方法的正确性。
 
 ------
-
-## 6
-
-问题描述
-
-某工厂需要采购 K 种零件$j \in [K]$，每种零件 j 的日需求量为$ d_j$。有 m 家供应商$i \in [m]$，第 i 家供应商提供零件 j 的单位价格为 $a_{ij}$，且最多供应 $c_{ij}$ 个零件 j。目标是设计一个算法，求解最小化总采购成本的问题，并确保满足所有零件需求。如果总供应能力无法满足所有需求，算法应报告问题不可行。
-
-算法设计
-
-由于每个零件的采购决策相互独立（即，供应商对每种零件的供应能力 $c_{ij} $是独立的，没有共享的总供应约束），问题可以分解为 K 个独立的子问题，每个子问题针对一种零件 j，求解最小采购成本以满足需求 $d_j$。对于每个零件 j，最小成本子问题可以通过贪心策略求解：按单位价格 $a_{ij} $从低到高排序供应商，并从最低价格的供应商开始采购，直到满足需求 $d_j$。
-
-算法步骤
-初始化总成本：设 total_cost = 0。
-
-遍历每种零件：对于每个零件$ j \in [K]$ 执行以下步骤：
-
-检查需求：如果 $d_j $= 0（即该零件无需求），则跳过当前零件（成本为 0）。
-
-构建可用供应商列表：收集所有能提供零件 j 的供应商，即 $c_{ij} $> 0 的供应商。列表元素为元组 $i a_{ij} c_{ij}$，其中 i 是供应商索引。
-
-检查可行性：如果列表为空（无供应商能提供零件 j）且 $d_j $> 0，则问题不可行，算法输出“不可行”并终止。
-
-排序供应商：对可用供应商列表按单位价格 $a_{ij} $升序排序（即价格从低到高）。
-
-贪心采购：
-
-设剩余需求 rem = $d_j$ 和当前零件成本$ cost_j$ = 0。
-
-遍历排序后的供应商列表（从最低价格开始）：
-
-计算可采购量：amount = min(rem  $ c_{ij}$)。
-
-更新成本：$cost_j $+= amount * $a_{ij}$。
-
-更新剩余需求：rem -= amount。
-
-如果 rem == 0，则需求满足，跳出循环。
-
-如果遍历结束后 rem > 0（即所有供应商的总供应能力不足），则问题不可行，输出“不可行”并终止。
-
-累加总成本：如果需求满足，total_cost += $cost_j$。
-输出结果：如果所有零件需求均满足，输出 total_cost 作为最小总采购成本。
-
-时间复杂度
-对于每个零件 j，构建供应商列表的时间为 O(m)（遍历所有供应商）。
-
-对供应商排序的时间为 O($m \log m$)（使用快速排序或归并排序）。
-
-贪心采购的扫描时间为 O(m)。
-
-因此，处理一个零件 j 的总时间为 O($m + m \log m$) = O($m \log m$)。
-
-对于所有 K 个零件，总时间为 O($K \cdot m \log m$)。
-
-输入大小为 O($K m$)（每个供应商-零件对有价格和容量），因此算法是输入大小的多项式时间。
-
-空间复杂度
-空间主要用于存储输入数据和中间列表。每个零件 j 的供应商列表最多有 m 个元素，因此额外空间为 O($K m$)。
-
-总体空间复杂度为 O($K m$)，与输入大小相同。
-
-正确性解释
-
-算法正确性基于以下两个关键点：子问题独立性和贪心策略最优性。
-子问题独立性：
-
-约束分析：供应商的供应能力$ c_{ij}$ 是特定于零件 j 的（即每个零件的供应决策不共享任何约束）。零件之间无耦合，因此总最小成本等于每个零件 j 的最小成本之和。
-
-可行性：如果所有零件 j 的需求都能独立满足，则整个问题可行；否则，任意零件 j 无法满足需求会导致整体不可行。算法在遍历零件时立即检查可行性。
-贪心策略最优性（针对单个零件 j）：
-
-问题模型：对于固定零件 j，问题可建模为：最小化$ \sum_{i} a_{ij} x_{ij}$，满足 $\sum_{i} x_{ij} \geq d_j$ 且 $0 \leq x_{ij} \leq c_{ij}$。其中，$x_{ij}$ 是从供应商 i 采购零件 j 的数量。
-
-贪心选择：将供应商按 $a_{ij} $升序排序，并优先从最低价格供应商采购最大可能量（即尽可能使用$ c_{ij}$），直到满足需求 $d_j$。
-
-最优性证明（反证法）：
-
-假设存在一个更优解（成本更低），其中某个高价格供应商（如$ a_{i_2 j} > a_{i_1 j}$）被优先使用，而低价格供应商 i_1 未被充分利用（即 $x_{i_1 j} < c_{i_1 j}$）。
-
-则可以通过减少高价格供应商的采购量，增加低价格供应商的采购量（因为 $a_{i_2 j} > a_{i_1 j}$），构造一个新解：设$ \delta = \min(c_{i_1 j} - x_{i_1 j}, x_{i_2 j}) > 0$，更新$ x_{i_1 j} = x_{i_1 j} + \delta$ 和 $x_{i_2 j} = x_{i_2 j} - \delta$。
-
-新解的成本变化为 $\delta \cdot (a_{i_1 j} - a_{i_2 j}) < 0$（因为$ a_{i_1 j} < a_{i_2 j}$），成本降低，与原解“更优”矛盾。
-
-因此，任何不从最低价格供应商优先采购的策略都不是最优。贪心策略（按价格排序并顺序采购）确保了局部最优，且由于问题结构简单（线性目标函数和独立容量约束），局部最优即为全局最优。
-
-需求满足：贪心扫描确保在供应商排序后充分利用低价资源；如果排序后总供应能力小于 $d_j$，则问题不可行。
-
-综上，该算法高效地求解了最小采购成本问题，并保证正确性。实际实现中，若参数均为整数，采购量 $x_{ij} $自然为整数；若需求$ d_j$ 或容量$ c_{ij}$ 为实数，算法同样适用。
-
-
-
-------
-
-## 7
-
-Let $G=(L,R,E) $be a bipartite graph. Write down the linear program that finds the maximum matching in $G$, and the linear program that finds the minimum vertex cover of $G$. Prove that the size of the maximum matching in $G$ is equal to the size of the minimum vertex cover in $G$. This suggests that the vertex cover problem in bipartite graphs is polynomial time solvable.
-
-
-
-## 8 
-
-考虑 0-1 背包问题：有n个物品，第$ i $ 个物品的价值和重量分别是$v_i, w_i$ , 背包容量C。请写出对应的整数规划，和它的线性规划松弛。设计一个根据松弛线性规划最优解取整以取得优秀整数可行解的方案，并尝试分析你的答案与最优解的近似比。
-
-
-
-目标：
-
-求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in \{0,1\}, \quad \forall i=1,\dots,n.$ 前提下 $\max   \displaystyle\sum_{i=1}^n v_i x_i$
-
-
-
-松弛整数约束为连续约束：
-
-求 满足 $ \displaystyle\sum_{i=1}^n w_i x_i \leq C, x_i \in [0,1], \quad \forall i=1,\dots,n.$ 前提下 $\max  \displaystyle\sum_{i=1}^n v_i x_i$
-
-
-
-LP 最优值 $\text{OPT}_{\text{LP}} \geq \text{OPT}_{\text{IP}}$。
-
-
-
-- 全选整数项：选择所有 $x_i^* = 1$ 的物品，价值$ V_A = \displaystyle\sum_{\{i: x_i^*=1\}} v_i$
-- 最高价值分数项：选择分数项中价值最高的物品 $k = \arg \max_{\{i: 0<x_i^*<1\}} v_i$，价值 $V_B = v_k$。
-
-
-
-输出最优可行解：
-
-$\text{ALG} = \max \{V_A, V_B\}$
-
-- 可行性保证：预处理丢弃 $w_i > C $ 的物品
-
-------
-
-#### 4. 近似比分析
-
-定理：算法满足  $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$ ，近似比为 2。
-
-证明：
-
-
-
-上界关系：
-
-$\text{OPT}_{\text{IP}} \leq \text{OPT}_{\text{LP}}$
-
-
-
-分解 LP 最优解：
-
-- 设 $S_1 = \{i: x_i^* = 1\}$，价值$ V_A = \displaystyle\sum_{i \in S_1} v_i$。
-
-- 设 $S_f = \{i: 0 < x_i^* < 1\}$，其中$v_k = \max_{i \in S_f} v_i$。
-
-- 由约束  $\displaystyle\sum_{i \in S_f} w_i x_i^* \leq C$ 和 $w_i \leq C$
-
-    有：$\text{OPT}_{\text{LP}} = V_A + \underbrace{\sum_{i \in S_f} v_i x_i^*}_{\leq v_k}$ 
-
-
-
-
-
-
-
-$\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max \{V_A, v_k\} = 2 \cdot \text{ALG}$
-
-
-
-紧性示例：
-
-- 物品：$v_1 = 1, w_1 = 1; v_2 = 1, w_2 = 1$，容量 $C = 1$。
-- LP 解：$x_1^* = 0.5, x_2^* = 0.5,\text{OPT}_{\text{LP}} = 1$。
-- $V_A = 0$
-- $V_B = 1$
-- $\text{ALG} = 1,\text{OPT}_{\text{IP}} = 1$ 但通过调整价值可逼近比 2。
-
-
-
-------
-
-### 总结
-
-| 组件          | 内容                                                         |
-| ------------- | ------------------------------------------------------------ |
-| 整数规划 (IP) | $\max \displaystyle\sum v_i x_i \quad \text{s.t.} \sum w_i x_i \leq C, \ x_i \in \{0,1\}$ |
-| LP 松弛       | 松弛$ x_i \in [0,1]$,最优值为上界                            |
-| 取整方案      | 候选解 A（全选整数项） + 候选解 B（最高价值分数项）          |
-| 近似比        | $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$         |
-
-
-
-
 
 
 
