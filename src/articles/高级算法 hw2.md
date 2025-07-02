@@ -153,23 +153,24 @@ $$
 解法思路：
 
 1. 映射到欧氏空间：
-   将每个维度 $x_i \in [0,n]$ 映射为圆上的二维向量：
-   $$
-   \varphi_i(x) = \left(\frac{n}{2\pi}\cos\left(\frac{2\pi x_i}{n}\right), \frac{n}{2\pi}\sin\left(\frac{2\pi x_i}{n}\right)\right)
-   $$
-   所有维度拼接后 $\varphi(x) \in \mathbb{R}^{2d}$。
+    将每个维度 $x_i \in [0,n]$ 映射为圆上的二维向量：
+    $$
+    \varphi_i(x) = \left(\frac{n}{2\pi}\cos\left(\frac{2\pi x_i}{n}\right), \frac{n}{2\pi}\sin\left(\frac{2\pi x_i}{n}\right)\right)
+    $$
+    所有维度拼接后 $\varphi(x) \in \mathbb{R}^{2d}$。
 
 2. 使用欧氏空间的 LSH：
-   对映射后的 $\varphi(x)$ 应用随机投影哈希：
-   $$
-   h_{b,t}(x) = \left\lfloor \frac{\langle b, \varphi(x) \rangle + t}{w} \right\rfloor
-   $$
-   其中 $b \sim \mathcal{N}(0, I)$，$t \sim \text{Unif}[0,w]$，$w$ 是桶宽。
+    对映射后的 $\varphi(x)$ 应用随机投影哈希：
+    $$
+    h_{b,t}(x) = \left\lfloor \frac{\langle b, \varphi(x) \rangle + t}{w} \right\rfloor
+    $$
+    其中 $b \sim \mathcal{N}(0, I)$，$t \sim \text{Unif}[0,w]$，$w$ 是桶宽。
 
 3. 理由：
-   - 映射 $\varphi$ 保留了圆周距离的相似性；
-   - 随机投影在欧氏空间中满足 LSH 定义，即相近点哈希值碰撞概率大；
-   - 可使用 JL 引理将维度降至 $k=O(\epsilon^{-2}\log n)$ 以提高效率。
+
+    - 映射 $\varphi$ 保留了圆周距离的相似性；
+    - 随机投影在欧氏空间中满足 LSH 定义，即相近点哈希值碰撞概率大；
+    - 可使用 JL 引理将维度降至 $k=O(\epsilon^{-2}\log n)$ 以提高效率。
 
 
 
@@ -182,28 +183,31 @@ $$
 解法思路：
 
 1. 使用 SimHash（随机超平面法）：
-   对每个向量 $x \in S^{d-1}$，随机选取 $b \sim \mathcal{N}(0,I)$，定义哈希函数：
-   $$
-   h_b(x) = \text{sign}(\langle b, x \rangle) \in \{-1, +1\}
-   $$
+    对每个向量 $x \in S^{d-1}$，随机选取 $b \sim \mathcal{N}(0,I)$，定义哈希函数：
+    $$
+    h_b(x) = \text{sign}(\langle b, x \rangle) \in \{-1, +1\}
+    $$
 
 2. 碰撞概率：
-   对任意 $x, y \in S^{d-1}$，有：
-   $$
-   \Pr[h_b(x) = h_b(y)] = 1 - \frac{\theta(x,y)}{\pi}, \quad \theta(x,y) = \arccos(\langle x, y \rangle)
-   $$
-   表明夹角越小，碰撞概率越高。
+    对任意 $x, y \in S^{d-1}$，有：
+    $$
+    \Pr[h_b(x) = h_b(y)] = 1 - \frac{\theta(x,y)}{\pi}, \quad \theta(x,y) = \arccos(\langle x, y \rangle)
+    $$
+    表明夹角越小，碰撞概率越高。
 
 3. 扩展性与优化：
-   - 串联多个 $h_{b_i}$，形成哈希签名（如 $k$ 位）；
-   - 可先用 JL 投影将 $x$ 降维至 $O(\log n)$ 后再进行哈希；
-   - 可构造 $(r, cr, p, q)$ LSH 满足：
-     $$
-     \begin{aligned}
-     \text{若 } d(x, y) \le r &\Rightarrow \Pr[h(x)=h(y)] \ge p \\
-     \text{若 } d(x, y) > cr &\Rightarrow \Pr[h(x)=h(y)] \le q
-     \end{aligned}
-     $$
+
+    - 串联多个 $h_{b_i}$，形成哈希签名（如 $k$ 位）；
+
+    - 可先用 JL 投影将 $x$ 降维至 $O(\log n)$ 后再进行哈希；
+
+    - 可构造 $(r, cr, p, q)$ LSH 满足：
+        $$
+        \begin{aligned}
+        \text{若 } d(x, y) \le r &\Rightarrow \Pr[h(x)=h(y)] \ge p \\
+        \text{若 } d(x, y) > cr &\Rightarrow \Pr[h(x)=h(y)] \le q
+        \end{aligned}
+        $$
 
 
 
@@ -435,7 +439,105 @@ $\text{Var}(X) = O\left(\frac{d^3}{m}\right)$
 
 
 
+## 7
 
+Let $G=(L,R,E) $be a bipartite graph. Write down the linear program that finds the maximum matching in $G$, and the linear program that finds the minimum vertex cover of $G$. Prove that the size of the maximum matching in $G$ is equal to the size of the minimum vertex cover in $G$. This suggests that the vertex cover problem in bipartite graphs is polynomial time solvable.
+
+
+
+
+
+
+
+## 8 
+
+考虑 0-1 背包问题：有n个物品，第$ i $ 个物品的价值和重量分别是$v_i, w_i$ , 背包容量C。请写出对应的整数规划，和它的线性规划松弛。设计一个根据松弛线性规划最优解取整以取得优秀整数可行解的方案，并尝试分析你的答案与最优解的近似比。
+
+
+
+目标：
+
+求 满足 $ \displaystyle \sum_{i=1}^n w_i x_i \leq C, x_i \in \{0,1\}, \quad \forall i=1,\dots,n.$ 前提下 $\max   \displaystyle \sum_{i=1}^n v_i x_i$
+
+
+
+松弛整数约束为连续约束：
+
+求 满足 $ \displaystyle \sum_{i=1}^n w_i x_i \leq C, x_i \in [0,1], \quad \forall i=1,\dots,n.$ 前提下 $\max  \displaystyle\sum_{i=1}^n v_i x_i$
+
+
+
+LP 最优值 $\text{OPT}_{\text{LP}} \geq \text{OPT}_{\text{IP}}$。
+
+
+
+- 全选整数项：选择所有 $x_i^* = 1$ 的物品，价值$ V_A = \displaystyle \sum_{\{i: x_i^*=1\}} v_i$
+- 最高价值分数项：选择分数项中价值最高的物品 $k = \arg \max_{\{i: 0<x_i^*<1\}} v_i$，价值 $V_B = v_k$。
+
+
+
+输出最优可行解：
+
+$\text{ALG} = \max \{V_A, V_B\}$
+
+- 可行性保证：预处理丢弃 $w_i > C $ 的物品
+
+------
+
+#### 4. 近似比分析
+
+定理：算法满足  $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$ ，近似比为 2。
+
+证明：
+
+
+
+上界关系：
+
+$\text{OPT}_{\text{IP}} \leq \text{OPT}_{\text{LP}}$
+
+
+
+分解 LP 最优解：
+
+- 设 $S_1 = \{i: x_i^* = 1\}$，价值$ V_A = \displaystyle \sum_{i \in S_1} v_i$。
+
+- 设 $S_f = \{i: 0 < x_i^* < 1\}$，其中$v_k = \max_{i \in S_f} v_i$。
+
+- 由约束  $\displaystyle \sum_{i \in S_f} w_i x_i^* \leq C$ 和 $w_i \leq C$
+
+    有：$\text{OPT}_{\text{LP}} = V_A + \underbrace{\sum_{i \in S_f} v_i x_i^*}_{\leq v_k}$ 
+
+
+
+
+
+
+
+$\text{OPT}_{\text{IP}} \leq V_A + v_k \leq 2 \max \{V_A, v_k\} = 2 \cdot \text{ALG}$
+
+
+
+紧性示例：
+
+- 物品：$v_1 = 1, w_1 = 1; v_2 = 1, w_2 = 1$，容量 $C = 1$。
+- LP 解：$x_1^* = 0.5, x_2^* = 0.5,\text{OPT}_{\text{LP}} = 1$。
+- $V_A = 0$
+- $V_B = 1$
+- $\text{ALG} = 1,\text{OPT}_{\text{IP}} = 1$ 但通过调整价值可逼近比 2。
+
+
+
+------
+
+### 总结
+
+| 组件          | 内容                                                         |
+| ------------- | ------------------------------------------------------------ |
+| 整数规划 (IP) | $\max \displaystyle \sum v_i x_i \quad \text{s.t.} \sum w_i x_i \leq C, \ x_i \in \{0,1\}$ |
+| LP 松弛       | 松弛$ x_i \in [0,1]$,最优值为上界                            |
+| 取整方案      | 候选解 A（全选整数项） + 候选解 B（最高价值分数项）          |
+| 近似比        | $\text{ALG} \geq \frac{1}{2} \text{OPT}_{\text{IP}}$         |
 
 
 

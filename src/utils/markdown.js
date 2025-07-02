@@ -26,12 +26,17 @@ hljs.registerLanguage('csharp', csharp);
 // 预处理数学定界符，确保 KaTeX 渲染时的正确间距
 function preprocessMathDelimiters(content) {
     if (!content) return '';
-    content = content.replace(/\$\s*(.*?)\s*\$/g, (match, formula) => {
-        return formula.trim() ? `$${formula.trim()}$` : match;
+
+    // 处理行内公式，只做基本的空格处理
+    content = content.replace(/\$([^$]+?)\$/g, (match, formula) => {
+        return `$${formula.trim()}$`;
     });
-    content = content.replace(/\$\$\s*([\s\S]*?)\s*\$\$/g, (match, formula) => {
-        return formula.trim() ? `$$${formula.trim()}$$` : match;
+
+    // 处理块级公式，只做基本的空格处理
+    content = content.replace(/\$\$([\s\S]+?)\$\$/g, (match, formula) => {
+        return `$$${formula.trim()}$$`;
     });
+
     return content;
 }
 
@@ -72,14 +77,14 @@ const md = new MarkdownIt({
                 }).join('');
 
                 return `
-<div class="code-block-wrapper">
-    <button class="copy-button" data-copied="false">
-        <span class="icon"></span>
-    </button>
-    <pre class="hljs with-line-numbers">
-        <code>${withLineNumbers}</code>
-    </pre>
-</div>`;
+                <div class="code-block-wrapper">
+                    <button class="copy-button" data-copied="false">
+                        <span class="icon"></span>
+                    </button>
+                    <pre class="hljs with-line-numbers">
+                        <code>${withLineNumbers}</code>
+                    </pre>
+                </div>`;
             } catch (_) { }
         }
 
@@ -122,8 +127,21 @@ md.renderer.rules.fence = function (tokens, idx, options) {
 md.use(mk, {
     throwOnError: false,
     errorColor: '#cc0000',
-    strict: false,
-    delimiters: 'dollars' // 使用 $...$ 和 $$...$$
+    strict: 'ignore',
+    trust: true,
+    maxSize: 100,
+    maxExpand: 1000,
+    macros: {
+        '\\R': '\\mathbb{R}',
+        '\\N': '\\mathbb{N}',
+        '\\Z': '\\mathbb{Z}',
+        '\\Q': '\\mathbb{Q}',
+        '\\C': '\\mathbb{C}'
+    },
+    delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false }
+    ]
 });
 
 // ============ 插件：抽取标题并构建大纲结构 ================

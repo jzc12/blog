@@ -341,3 +341,49 @@ body {
         padding: 1rem 0;
     }
 }
+
+/* 数学公式错误样式 */
+.math-error,
+.math-error-block {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #ff4d4f;
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: 0 2px;
+    background-color: rgba(255, 77, 79, 0.1);
+    color: #ff4d4f;
+    cursor: help;
+}
+
+.math-error-block {
+    display: block;
+    margin: 1em 0;
+    padding: 1em;
+}
+
+.math-error::after,
+.math-error-block::after {
+    content: '⚠️';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px;
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .math-error,
+[data-theme="dark"] .math-error-block {
+    border-color: #ff7875;
+    background-color: rgba(255, 77, 79, 0.2);
+    color: #ff7875;
+}
+
+[data-theme="dark"] .math-error::after,
+[data-theme="dark"] .math-error-block::after {
+    background-color: var(--vp-c-bg);
+}
