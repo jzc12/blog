@@ -186,18 +186,6 @@ export default {
       this.$router.push('/tip');
     },
 
-    async fetchVisitorInfo() {
-      try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        this.visitorIP = data.ip;
-      } catch (error) {
-        console.error('获取访客信息失败:', error);
-        this.visitorIP = '无法获取';
-        this.visitorRegion = '未知';
-      }
-    },
-
     updateCurrentTime() {
       const now = new Date();
       this.currentTime = now.toLocaleString('zh-CN', {
@@ -215,14 +203,6 @@ export default {
         const wordCount = this.renderedContent.replace(/<[^>]*>/g, '').length;
         this.readingTime = Math.ceil(wordCount / 500);
       }
-    },
-
-    fetchRecentArticles() {
-      this.recentArticles = [
-        { id: 1, title: '示例文章1', path: '/articles/example1', date: '2024-03-20' },
-        { id: 2, title: '示例文章2', path: '/articles/example2', date: '2024-03-19' },
-        { id: 3, title: '示例文章3', path: '/articles/example3', date: '2024-03-18' },
-      ];
     }
   },
   setup() {
@@ -266,11 +246,8 @@ export default {
   },
 
   mounted() {
-    // 初始化右侧边栏数据
-    this.fetchVisitorInfo();
     this.updateCurrentTime();
     this.timeInterval = setInterval(() => this.updateCurrentTime(), 1000);
-    this.fetchRecentArticles();
   },
 }
 </script>

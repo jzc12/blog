@@ -90,7 +90,7 @@
       }
     },
     methods: {
-            async fetchVisitorInfo() {
+      async fetchVisitorInfo() {
         try {
           const ipRes = await fetch('https://qifu-api.baidubce.com/ip/local/geo/v1/district');
           const ipData = await ipRes.json();
@@ -102,7 +102,6 @@
           this.visitorInfo.city = loc.city || '未知';
   
         } catch (err) {
-          console.error('获取访客信息失败', err);
           this.visitorInfo = {
             ip: '无法获取',
             country: '未知',
