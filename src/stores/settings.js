@@ -3,15 +3,13 @@ import { defineStore } from 'pinia';
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
         fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '2'),
-        fontSizeSteps: ['14px', '16px', '18px', '20px', '22px'],
+        fontSizeSteps: ['14', '16', '18', '20', '22'],
         contentOpacity: 85,
         theme: 'system', // 'light', 'dark', or 'system'
         systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light', // 初始化时就检测系统主题
     }),
     getters: {
-        currentFontSize() {
-            return this.fontSizeSteps[this.fontSizeIndex];
-        },
+        currentFontSize: (state) => `${state.fontSizeSteps[state.fontSizeIndex]}px`,
         effectiveTheme() {
             return this.theme === 'system' ? this.systemTheme : this.theme;
         },
@@ -63,11 +61,10 @@ export const useSettingsStore = defineStore('settings', {
         },
 
         setFontSize(index) {
-            this.fontSizeIndex = index;
-            localStorage.setItem('fontSizeIndex', index.toString());
-            this.applyFontSize();
+            if (index >= 0 && index < this.fontSizeSteps.length) {
+                this.fontSizeIndex = index;
+            }
         },
-
         applyFontSize() {
             document.documentElement.style.setProperty('--global-font-size', this.currentFontSize);
         },
@@ -78,7 +75,6 @@ export const useSettingsStore = defineStore('settings', {
             this.theme = 'system';
             localStorage.setItem('fontSizeIndex', '2');
             this.detectSystemTheme();
-            this.applyFontSize();
         }
     },
 

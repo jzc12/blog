@@ -17,7 +17,7 @@
     --bg-primary: rgba(255, 255, 255, 1);
     --bg-secondary: rgba(255, 255, 255, 0.8);
     --bg-tertiary: rgba(255, 255, 255, 0.6);
-    --bg-overlay: rgba(168, 230, 207, 0.15);
+    --bg-overlay: rgba(255, 255, 255, 0.15);
     --content-bg: rgba(255, 255, 255, var(--content-opacity, 0.95));
 
     /* 文本色系 Text Colors */
@@ -98,7 +98,7 @@
     --bg-primary: rgba(28, 32, 34, 1);
     --bg-secondary: rgba(28, 32, 34, 0.8);
     --bg-tertiary: rgba(28, 32, 34, 0.6);
-    --bg-overlay: rgba(168, 230, 207, 0.05);
+    --bg-overlay: rgba(68, 73, 71, 0.05);
     --content-bg: rgba(28, 32, 34, var(--content-opacity, 0.95));
 
     /* 文本色系 */

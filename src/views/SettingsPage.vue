@@ -51,7 +51,7 @@
           <i class="fas fa-text-height"></i>
           字体大小
         </h2>
-        <span class="setting-description">调整字体大小 x 已经异常我还找不到问题，之后再改吧</span>
+        <span class="setting-description">调整字体大小 x 已经异常，之后再改吧</span>
       </div>
       <div class="control-group">
         <!-- 字体大小滑块 -->
