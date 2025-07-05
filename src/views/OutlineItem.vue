@@ -93,26 +93,4 @@ export default {
 
 <style scoped>
 @import '../css/outline.css';
-
-/* ========================== 本地样式覆盖 ============================== */
-.outline-item-wrapper {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 占位图标样式 */
-.toggle-icon.placeholder {
-  visibility: hidden;
-}
-
-/* 列表项基础样式 */
-li {
-  list-style: none;
-}
-
-/* 嵌套列表样式 */
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
 </style>

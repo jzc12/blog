@@ -156,6 +156,10 @@
     box-shadow: var(--shadow-sm);
 }
 
+.markdown-body pre mermaid {
+    justify-content: center;
+}
+
 /* ========================== 复制按钮样式 ============================== */
 .copy-button {
     position: absolute;

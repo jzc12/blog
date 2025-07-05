@@ -11,9 +11,9 @@
         <div class="nav-li">
           <component :is="item.icon" class="icon" />
           <span>{{ item.text }}</span>
-          <div class="nav-span" v-if="item.count">
+          <!-- <div class="nav-span" v-if="item.count">
             <span>{{ item.count }}</span>
-          </div>
+          </div> -->
         </div>
       </router-link>
     </div>

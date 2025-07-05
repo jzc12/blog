@@ -57,8 +57,14 @@
 .nav-li:hover {
     background: var(--bg-hover);
     color: var(--primary-green);
-    transform: none;
+    transform: translateY(-2px);
 }
+
+.nav-li:hover .icon {
+    color: var(--primary-green);
+}
+
+
 
 /* 导航项计数器 */
 .nav-span {
