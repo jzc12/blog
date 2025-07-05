@@ -1,3 +1,4 @@
+
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import os
@@ -6,14 +7,44 @@ from datetime import datetime
 import re
 import subprocess
 
+# 工具提示类
+class ToolTip:
+    def __init__(self, widget, text):
+        self.widget = widget
+        self.text = text
+        self.tip_window = None
+        widget.bind("<Enter>", self.show_tip)
+        widget.bind("<Leave>", self.hide_tip)
+
+    def show_tip(self, event=None):
+        if self.tip_window:
+            return
+        x, y, _, _ = self.widget.bbox("insert") or (0, 0, 0, 0)
+        x += self.widget.winfo_rootx() + 30
+        y += self.widget.winfo_rooty() + 20
+        self.tip_window = tw = tk.Toplevel(self.widget)
+        tw.wm_overrideredirect(True)
+        tw.wm_geometry(f"+{x}+{y}")
+        label = tk.Label(tw, text=self.text, background="#ffffe0", relief='solid', borderwidth=1,
+                         font=("Segoe UI", 9))
+        label.pack(ipadx=5, ipady=2)
+
+    def hide_tip(self, event=None):
+        if self.tip_window:
+            self.tip_window.destroy()
+            self.tip_window = None
+
 class ModernFrame(ttk.Frame):
-    """现代风格的Frame"""
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
         self.configure(style='Modern.TFrame')
 
+class CardFrame(ttk.Frame):
+    def __init__(self, master=None, **kwargs):
+        super().__init__(master, **kwargs)
+        self.configure(style='Card.TFrame', padding=10)
+
 class ModernButton(ttk.Button):
-    """现代风格的Button"""
     def __init__(self, master=None, **kwargs):
         if 'style' not in kwargs:
             kwargs['style'] = 'Modern.TButton'
@@ -23,15 +54,14 @@ class MarkdownProcessorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Markdown 编辑器")
-        self.root.geometry("1000x700")  # 增加窗口大小
-        self.root.minsize(1000, 700)
-        
-        # 设置主题色
+        self.root.geometry("1050x600")
+        self.root.minsize(1050, 600)
+
         self.colors = {
-            'bg': '#f0f2f5',            # 更柔和的背景色
+            'bg': '#f0f2f5',
             'sidebar': '#ffffff',
-            'primary': '#4f46e5',       # 更现代的主色调
-            'primary_hover': '#4338ca',
+            'primary': '#4f46e5',
+            'primary_hover': '#7ba2ef',
             'secondary': '#6b7280',
             'text': '#111827',
             'text_secondary': '#4b5563',
@@ -39,126 +69,67 @@ class MarkdownProcessorApp:
             'success': '#10b981',
             'error': '#ef4444',
             'card': '#ffffff',
-            'hover': '#f3f4f6'
+            'hover': '#7ba2ef'
         }
 
         self.folder_path = tk.StringVar()
+        self.commit_message = tk.StringVar(value="add files")
+
         self.file_statuses = []
         self.current_file = None
         self.current_content = {}
         self.has_unsaved_changes = False
-        self.commit_message = tk.StringVar(value="add files")  # 添加提交消息变量
 
         self.setup_styles()
         self.create_gui()
 
     def setup_styles(self):
-        """设置现代风格的主题"""
         style = ttk.Style()
         style.theme_use('clam')
 
-        # 主框架样式
-        style.configure('Modern.TFrame',
-            background=self.colors['bg']
-        )
+        style.configure('Modern.TFrame', background=self.colors['bg'])
+        style.configure('Sidebar.TFrame', background=self.colors['sidebar'])
+        style.configure('Card.TFrame', background=self.colors['card'], relief='solid', borderwidth=1)
 
-        # 侧边栏框架样式
-        style.configure('Sidebar.TFrame',
-            background=self.colors['sidebar']
-        )
+        style.configure('Modern.TButton', background=self.colors['primary'], foreground='white',
+                        padding=(15, 10), font=('Segoe UI', 10), borderwidth=0)
+        style.map('Modern.TButton', background=[('active', self.colors['primary_hover'])])
 
-        # 现代按钮样式
-        style.configure('Modern.TButton',
-            background=self.colors['primary'],
-            foreground='white',
-            padding=(15, 8),
-            font=('Segoe UI', 9),
-            borderwidth=0
-        )
-        style.map('Modern.TButton',
-            background=[('active', self.colors['primary_hover'])],
-            foreground=[('active', 'white')]
-        )
+        style.configure('Success.TButton', background=self.colors['success'], foreground='white',
+                        padding=(15, 10), font=('Segoe UI', 10), borderwidth=0)
 
-        # 成功按钮样式
-        style.configure('Success.TButton',
-            background=self.colors['success'],
-            foreground='white',
-            padding=(15, 8),
-            font=('Segoe UI', 9),
-            borderwidth=0
-        )
-        style.map('Success.TButton',
-            background=[('active', self.colors['success'])]
-        )
+        style.configure('Secondary.TButton', background=self.colors['secondary'], foreground='white',
+                        padding=(15, 10), font=('Segoe UI', 10), borderwidth=0)
 
-        # 次要按钮样式
-        style.configure('Secondary.TButton',
-            background=self.colors['secondary'],
-            foreground='white',
-            padding=(15, 8),
-            font=('Segoe UI', 9),
-            borderwidth=0
-        )
+        style.configure('Modern.Treeview', background=self.colors['sidebar'],
+                        fieldbackground=self.colors['sidebar'], foreground=self.colors['text'],
+                        font=('Segoe UI', 10), rowheight=35, borderwidth=0)
+        style.configure('Modern.Treeview.Heading', background=self.colors['bg'],
+                        foreground=self.colors['text_secondary'], font=('Segoe UI', 10, 'bold'), padding=(10, 5))
+        style.map('Modern.Treeview', background=[('selected', self.colors['primary'])],
+                   foreground=[('selected', 'white')])
 
-        # 列表样式
-        style.configure('Modern.Treeview',
-            background=self.colors['sidebar'],
-            fieldbackground=self.colors['sidebar'],
-            foreground=self.colors['text'],
-            font=('Segoe UI', 9),
-            rowheight=35,
-            borderwidth=0
-        )
-        style.configure('Modern.Treeview.Heading',
-            background=self.colors['bg'],
-            foreground=self.colors['text_secondary'],
-            font=('Segoe UI', 9, 'bold'),
-            padding=(10, 5),
-            borderwidth=0
-        )
-        style.map('Modern.Treeview',
-            background=[('selected', self.colors['primary'])],
-            foreground=[('selected', 'white')]
-        )
+        style.configure('Modern.TEntry', background='white', foreground=self.colors['text'],
+                        fieldbackground='white', borderwidth=1, padding=5)
 
-        # 输入框样式
-        style.configure('Modern.TEntry',
-            background='white',
-            foreground=self.colors['text'],
-            fieldbackground='white',
-            borderwidth=1,
-            padding=5
-        )
-
-        # 标签样式
-        style.configure('Modern.TLabel',
-            background=self.colors['bg'],
-            foreground=self.colors['text_secondary'],
-            font=('Segoe UI', 9)
-        )
+        style.configure('Modern.TLabel', background=self.colors['bg'], foreground=self.colors['text_secondary'],
+                        font=('Segoe UI', 10))
 
     def create_gui(self):
-        """创建现代风格的GUI"""
-        # 主容器
         self.main_container = ModernFrame(self.root)
         self.main_container.pack(fill="both", expand=True)
 
-        # 顶部工具栏
         self.create_toolbar()
 
-        # 主要内容区域
         content = ModernFrame(self.main_container)
         content.pack(fill="both", expand=True, padx=20, pady=(0, 20))
         content.grid_columnconfigure(1, weight=1)
         content.grid_rowconfigure(0, weight=1)
 
-        # 左侧文件列表
         self.create_file_list(content)
-
-        # 右侧编辑区
         self.create_editor(content)
 
+    
     def create_toolbar(self):
         """创建顶部工具栏"""
         toolbar = ModernFrame(self.main_container)
@@ -209,9 +180,9 @@ class MarkdownProcessorApp:
             command=self.scan_files
         ).pack(side="left", padx=5)
 
-        ModernButton(btn_frame, text="处理所有", 
+        """ ModernButton(btn_frame, text="处理所有", 
             command=self.process_all_files
-        ).pack(side="left")
+        ).pack(side="left") """
 
     def create_file_list(self, parent):
         """创建文件列表区域"""
@@ -550,6 +521,7 @@ class MarkdownProcessorApp:
                 
         except Exception as e:
             messagebox.showerror("错误", f"执行 Git 操作时出错：{str(e)}")
+
 
 if __name__ == '__main__':
     root = tk.Tk()
