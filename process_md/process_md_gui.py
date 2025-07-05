@@ -4,6 +4,7 @@ import os
 from md_processor import update_file, check_file_status
 from datetime import datetime
 import re
+import subprocess
 
 class ModernFrame(ttk.Frame):
     """现代风格的Frame"""
@@ -22,22 +23,23 @@ class MarkdownProcessorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Markdown 编辑器")
-        self.root.geometry("900x600")
-        self.root.minsize(900, 600)
+        self.root.geometry("1000x700")  # 增加窗口大小
+        self.root.minsize(1000, 700)
         
         # 设置主题色
         self.colors = {
-            'bg': '#f8f9fa',
+            'bg': '#f0f2f5',            # 更柔和的背景色
             'sidebar': '#ffffff',
-            'primary': '#3b82f6',
-            'primary_hover': '#2563eb',
-            'secondary': '#64748b',
-            'text': '#1e293b',
-            'text_secondary': '#64748b',
-            'border': '#e2e8f0',
-            'success': '#22c55e',
+            'primary': '#4f46e5',       # 更现代的主色调
+            'primary_hover': '#4338ca',
+            'secondary': '#6b7280',
+            'text': '#111827',
+            'text_secondary': '#4b5563',
+            'border': '#e5e7eb',
+            'success': '#10b981',
             'error': '#ef4444',
-            'card': '#ffffff'
+            'card': '#ffffff',
+            'hover': '#f3f4f6'
         }
 
         self.folder_path = tk.StringVar()
@@ -45,6 +47,7 @@ class MarkdownProcessorApp:
         self.current_file = None
         self.current_content = {}
         self.has_unsaved_changes = False
+        self.commit_message = tk.StringVar(value="add files")  # 添加提交消息变量
 
         self.setup_styles()
         self.create_gui()
@@ -75,6 +78,18 @@ class MarkdownProcessorApp:
         style.map('Modern.TButton',
             background=[('active', self.colors['primary_hover'])],
             foreground=[('active', 'white')]
+        )
+
+        # 成功按钮样式
+        style.configure('Success.TButton',
+            background=self.colors['success'],
+            foreground='white',
+            padding=(15, 8),
+            font=('Segoe UI', 9),
+            borderwidth=0
+        )
+        style.map('Success.TButton',
+            background=[('active', self.colors['success'])]
         )
 
         # 次要按钮样式
@@ -163,6 +178,27 @@ class MarkdownProcessorApp:
         self.folder_entry.pack(side="left", padx=(0, 10))
 
         ModernButton(folder_frame, text="选择文件夹", command=self.browse_folder).pack(side="left")
+
+        # Git 提交区域
+        git_frame = ModernFrame(toolbar)
+        git_frame.grid(row=0, column=1, padx=20, sticky="e")
+
+        ttk.Label(git_frame, 
+            text="提交信息:",
+            style='Modern.TLabel'
+        ).pack(side="left", padx=(0, 5))
+
+        ttk.Entry(git_frame,
+            textvariable=self.commit_message,
+            style='Modern.TEntry',
+            width=30
+        ).pack(side="left", padx=(0, 10))
+
+        ModernButton(git_frame,
+            text="Git 提交",
+            style='Success.TButton',
+            command=self.git_push
+        ).pack(side="left")
 
         # 右侧按钮
         btn_frame = ModernFrame(toolbar)
@@ -481,6 +517,39 @@ class MarkdownProcessorApp:
                     return True
                 return False
         return True
+
+    def git_push(self):
+        """执行 Git 提交操作"""
+        try:
+            # 获取脚本路径
+            script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'gitpush.ps1')
+            
+            # 构建命令
+            command = ['powershell', '-ExecutionPolicy', 'Bypass', '-File', script_path]
+            if self.commit_message.get() != "add files":  # 如果不是默认消息，添加参数
+                command.extend(['-message', self.commit_message.get()])
+            
+            # 执行命令
+            process = subprocess.Popen(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+            
+            # 获取输出
+            stdout, stderr = process.communicate()
+            
+            if process.returncode == 0:
+                if "No changes to commit" in stdout:
+                    messagebox.showinfo("Git 状态", "没有需要提交的更改。")
+                else:
+                    messagebox.showinfo("成功", "Git 操作完成！")
+            else:
+                messagebox.showerror("错误", f"Git 操作失败：\n{stderr}")
+                
+        except Exception as e:
+            messagebox.showerror("错误", f"执行 Git 操作时出错：{str(e)}")
 
 if __name__ == '__main__':
     root = tk.Tk()
