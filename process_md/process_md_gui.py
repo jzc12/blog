@@ -91,31 +91,128 @@ class MarkdownProcessorApp:
         style.configure('Sidebar.TFrame', background=self.colors['sidebar'])
         style.configure('Card.TFrame', background=self.colors['card'], relief='solid', borderwidth=1)
 
-        style.configure('Modern.TButton', background=self.colors['primary'], foreground='white',
-                        padding=(15, 10), font=('Segoe UI', 10), borderwidth=0)
-        style.map('Modern.TButton', background=[('active', self.colors['primary_hover'])])
+        # 按钮样式
+        style.configure('Modern.TButton', 
+            background=self.colors['primary'],
+            foreground='white',
+            padding=(15, 10),
+            font=('Segoe UI', 10),
+            borderwidth=0
+        )
+        style.map('Modern.TButton',
+            background=[('active', self.colors['hover'])]
+        )
 
-        style.configure('Success.TButton', background=self.colors['success'], foreground='white',
-                        padding=(15, 10), font=('Segoe UI', 10), borderwidth=0)
+        # 成功按钮样式
+        style.configure('Success.TButton',
+            background=self.colors['success'],
+            foreground='white',
+            padding=(15, 10),
+            font=('Segoe UI', 10),
+            borderwidth=0
+        )
+        style.map('Success.TButton',
+            background=[('active', self.colors['hover'])]
+        )
 
-        style.configure('Secondary.TButton', background=self.colors['secondary'], foreground='white',
-                        padding=(15, 10), font=('Segoe UI', 10), borderwidth=0)
+        # 次要按钮样式
+        style.configure('Secondary.TButton',
+            background=self.colors['secondary'],
+            foreground='white',
+            padding=(15, 10),
+            font=('Segoe UI', 10),
+            borderwidth=0
+        )
+        style.map('Secondary.TButton',
+            background=[('active', self.colors['hover'])]
+        )
 
-        style.configure('Modern.Treeview', background=self.colors['sidebar'],
-                        fieldbackground=self.colors['sidebar'], foreground=self.colors['text'],
-                        font=('Segoe UI', 10), rowheight=35, borderwidth=0)
-        style.configure('Modern.Treeview.Heading', background=self.colors['bg'],
-                        foreground=self.colors['text_secondary'], font=('Segoe UI', 10, 'bold'), padding=(10, 5))
-        style.map('Modern.Treeview', background=[('selected', self.colors['primary'])],
-                   foreground=[('selected', 'white')])
+        style.configure('Modern.Treeview',
+            background=self.colors['sidebar'],
+            fieldbackground=self.colors['sidebar'],
+            foreground=self.colors['text'],
+            font=('Segoe UI', 10),
+            rowheight=35,
+            borderwidth=0
+        )
+        style.configure('Modern.Treeview.Heading',
+            background=self.colors['bg'],
+            foreground=self.colors['text_secondary'],
+            font=('Segoe UI', 10, 'bold'),
+            padding=(10, 5)
+        )
+        style.map('Modern.Treeview',
+            background=[('selected', self.colors['primary'])],
+            foreground=[('selected', 'white')]
+        )
 
-        style.configure('Modern.TEntry', background='white', foreground=self.colors['text'],
-                        fieldbackground='white', borderwidth=1, padding=5)
+        # 输入框样式
+        style.configure('Modern.TEntry',
+            background='white',
+            foreground=self.colors['text'],
+            fieldbackground='white',
+            borderwidth=1,
+            padding=5
+        )
 
-        style.configure('Modern.TLabel', background=self.colors['bg'], foreground=self.colors['text_secondary'],
-                        font=('Segoe UI', 10))
+        style.configure('Modern.TLabel',
+            background=self.colors['bg'],
+            foreground=self.colors['text_secondary'],
+            font=('Segoe UI', 10)
+        )
 
     def create_gui(self):
+        # 创建圆角样式类
+        class RoundedButton(ModernButton):
+            def __init__(self, master=None, **kwargs):
+                super().__init__(master, **kwargs)
+                self.configure(style=kwargs.get('style', 'Modern.TButton'))
+
+        class RoundedEntry(ttk.Entry):
+            def __init__(self, master=None, **kwargs):
+                super().__init__(master, **kwargs)
+                self.configure(style='Modern.TEntry')
+
+        self.RoundedButton = RoundedButton
+        self.RoundedEntry = RoundedEntry
+
+        # 创建自定义样式
+        style = ttk.Style()
+        
+        # 设置按钮圆角
+        style.layout('Modern.TButton', [
+            ('Button.border', {'children': [
+                ('Button.padding', {'children': [
+                    ('Button.label', {'sticky': 'nswe'})
+                ], 'sticky': 'nswe'})
+            ], 'sticky': 'nswe', 'border': '6'})
+        ])
+        
+        style.layout('Success.TButton', [
+            ('Button.border', {'children': [
+                ('Button.padding', {'children': [
+                    ('Button.label', {'sticky': 'nswe'})
+                ], 'sticky': 'nswe'})
+            ], 'sticky': 'nswe', 'border': '6'})
+        ])
+        
+        style.layout('Secondary.TButton', [
+            ('Button.border', {'children': [
+                ('Button.padding', {'children': [
+                    ('Button.label', {'sticky': 'nswe'})
+                ], 'sticky': 'nswe'})
+            ], 'sticky': 'nswe', 'border': '6'})
+        ])
+
+        # 设置输入框圆角
+        style.layout('Modern.TEntry', [
+            ('Entry.border', {'children': [
+                ('Entry.padding', {'children': [
+                    ('Entry.textarea', {'sticky': 'nswe'})
+                ], 'sticky': 'nswe'})
+            ], 'sticky': 'nswe', 'border': '6'})
+        ])
+
         self.main_container = ModernFrame(self.root)
         self.main_container.pack(fill="both", expand=True)
 
@@ -140,7 +237,7 @@ class MarkdownProcessorApp:
         folder_frame = ModernFrame(toolbar)
         folder_frame.grid(row=0, column=0, sticky="w")
 
-        self.folder_entry = ttk.Entry(folder_frame, 
+        self.folder_entry = self.RoundedEntry(folder_frame, 
             textvariable=self.folder_path,
             state="readonly",
             width=40,
@@ -148,7 +245,7 @@ class MarkdownProcessorApp:
         )
         self.folder_entry.pack(side="left", padx=(0, 10))
 
-        ModernButton(folder_frame, text="选择文件夹", command=self.browse_folder).pack(side="left")
+        self.RoundedButton(folder_frame, text="选择文件夹", command=self.browse_folder).pack(side="left")
 
         # Git 提交区域
         git_frame = ModernFrame(toolbar)
@@ -159,13 +256,13 @@ class MarkdownProcessorApp:
             style='Modern.TLabel'
         ).pack(side="left", padx=(0, 5))
 
-        ttk.Entry(git_frame,
+        self.RoundedEntry(git_frame,
             textvariable=self.commit_message,
             style='Modern.TEntry',
             width=30
         ).pack(side="left", padx=(0, 10))
 
-        ModernButton(git_frame,
+        self.RoundedButton(git_frame,
             text="Git 提交",
             style='Success.TButton',
             command=self.git_push
@@ -175,7 +272,7 @@ class MarkdownProcessorApp:
         btn_frame = ModernFrame(toolbar)
         btn_frame.grid(row=0, column=2, sticky="e")
 
-        ModernButton(btn_frame, text="刷新列表", 
+        self.RoundedButton(btn_frame, text="刷新列表", 
             style='Secondary.TButton',
             command=self.scan_files
         ).pack(side="left", padx=5)
@@ -250,7 +347,7 @@ class MarkdownProcessorApp:
                 style='Modern.TLabel'
             ).grid(row=i, column=0, sticky="e", padx=(0, 10), pady=8)
             
-            entry = ttk.Entry(form_frame, style='Modern.TEntry')
+            entry = self.RoundedEntry(form_frame, style='Modern.TEntry')
             entry.grid(row=i, column=1, sticky="ew", pady=8)
             setattr(self, field, entry)
 
@@ -275,7 +372,7 @@ class MarkdownProcessorApp:
         btn_frame = ModernFrame(form_frame)
         btn_frame.grid(row=4, column=1, sticky="e", pady=(20, 0))
 
-        ModernButton(
+        self.RoundedButton(
             btn_frame,
             text="保存更改",
             command=self.save_changes
