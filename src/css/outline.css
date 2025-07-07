@@ -34,10 +34,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
+    width: 16px;
     /* 固定宽度 */
-    max-width: 18px;
-    max-height: 18px;
+    max-width: 16px;
+    max-height: 16px;
     cursor: pointer;
     user-select: none;
     transition: all 0.3s ease;
@@ -62,9 +62,9 @@
 
 /* 嵌套列表样式 */
 .outline-list.nested {
-    margin-left: 20px;
+    margin-left: 8px;
     position: relative;
-    padding-left: 10px;
+    padding-left: 6px;
 }
 
 /* 垂直连接线 */
@@ -91,30 +91,29 @@
 .level-2 .outline-item-wrapper {
     font-size: 1em;
     font-weight: 500;
-    padding-left: 20px;
+    padding-left: 8px;
 }
 
 .level-3 .outline-item-wrapper {
     font-size: 0.95em;
-    padding-left: 35px;
+    padding-left: 16px;
 }
 
-.level-4 .outline-item-wrapper {
+.level-4 .outline-item-wrapper,
+.level-5 .outline-item-wrapper,
+.level-6 .outline-item-wrapper {
     font-size: 0.9em;
-    padding-left: 50px;
+    padding-left: 24px;
     color: var(--text-secondary);
 }
 
+/* 保持字体大小的区分 */
 .level-5 .outline-item-wrapper {
     font-size: 0.85em;
-    padding-left: 65px;
-    color: var(--text-secondary);
 }
 
 .level-6 .outline-item-wrapper {
     font-size: 0.8em;
-    padding-left: 80px;
-    color: var(--text-secondary);
 }
 
 /* 链接样式 */

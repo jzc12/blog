@@ -34,6 +34,28 @@
     font-weight: 600;
 }
 
+/* ========================== 光标动画效果 ============================== */
+.cursor {
+    display: inline-block;
+    font-size: 1.25rem;
+    margin-left: 4px;
+    animation: cursor-blink 2s step-end infinite;
+    color: var(--text-primary);
+    opacity: 0.8;
+}
+
+@keyframes cursor-blink {
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
 /* 导航菜单 */
 .nav {
     list-style: none;

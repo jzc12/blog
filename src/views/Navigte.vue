@@ -3,7 +3,7 @@
   <!-- 侧边栏主容器 -->
   <div class="Navigte">
     <!-- 博客标题 -->
-    <h2 v-show="showTitle">zc 的博客</h2>
+    <h2 v-show="showTitle">zc 的博客<span class="cursor">_</span></h2>
 
     <!-- 导航菜单 -->
     <div class="nav">

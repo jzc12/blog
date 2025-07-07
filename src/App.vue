@@ -57,6 +57,7 @@ export default {
     }
   },
   methods: {
+
     handleContentLoaded(content) {
       if (content) {
         const { html, outline } = renderMarkdown(content)
@@ -73,6 +74,57 @@ export default {
         this.renderedContent = '还没有内容哟~'
         this.articleOutline = []
       }
+    },
+
+    // ========================== 点击特效实现 ==============================
+    createClickEffect(event) {
+      // 创建特效容器
+      const container = document.createElement('div');
+      container.className = 'click-effect';
+      document.body.appendChild(container);
+
+      // 定义粒子颜色集
+      const colors = [
+        '#FF69B4', '#87CEEB', '#98FB98', '#DDA0DD', '#F0E68C',
+        '#FF7F50', '#00CED1', '#FF69B4', '#7B68EE', '#32CD32'
+      ];
+
+      // 生成粒子
+      for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'click-effect-particle';
+        
+        // 设置粒子位置为鼠标点击位置
+        particle.style.left = `${event.clientX}px`;
+        particle.style.top = `${event.clientY}px`;
+        
+        // 随机设置粒子颜色和发光效果
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.backgroundColor = color;
+        particle.style.boxShadow = `0 0 10px ${color}`;
+        
+        // 随机设置粒子大小
+        const size = Math.random() * 20 + 10;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // 计算粒子运动轨迹
+        const angle = (Math.PI * 2 * i) / 8;
+        const velocity = Math.random() * 100 + 50;
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+        
+        // 应用动画效果
+        particle.style.animation = 'particle-animation 0.6s ease-out forwards';
+        particle.style.transform = `translate(${vx}px, ${vy}px) scale(0)`;
+        
+        container.appendChild(particle);
+      }
+
+      // 动画结束后清理DOM
+      setTimeout(() => {
+        document.body.removeChild(container);
+      }, 1000);
     },
 
     processOutline(outline) {
@@ -176,6 +228,8 @@ export default {
       if (this.timeInterval) {
         clearInterval(this.timeInterval);
       }
+      // 移除点击事件监听
+      window.removeEventListener('click', this.createClickEffect);
     },
 
     getTarget() {
@@ -248,6 +302,8 @@ export default {
   mounted() {
     this.updateCurrentTime();
     this.timeInterval = setInterval(() => this.updateCurrentTime(), 1000);
+    // 绑定点击事件
+    window.addEventListener('click', this.createClickEffect);
   },
 }
 </script>
