@@ -10,8 +10,8 @@
 .outline-item-wrapper {
     display: flex;
     align-items: center;
-    margin: 4px 0;
-    padding: 6px 8px;
+    margin: 2px 0;
+    padding: 2px 2px;
     border-radius: 6px;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -56,7 +56,7 @@
 
 /* 大纲图标 */
 .icon-outline {
-    font-size: 0.9em;
+    font-size: 0.8em;
     transition: transform 0.3s ease;
 }
 
@@ -83,37 +83,37 @@
 
 /* 不同层级的缩进和样式 */
 .level-1 .outline-item-wrapper {
-    font-size: 1.1em;
+    font-size: 0.8em;
     font-weight: 600;
     color: var(--text-primary);
 }
 
 .level-2 .outline-item-wrapper {
-    font-size: 1em;
+    font-size: 0.8em;
     font-weight: 500;
     padding-left: 8px;
 }
 
 .level-3 .outline-item-wrapper {
-    font-size: 0.95em;
-    padding-left: 16px;
+    font-size: 0.8em;
+    padding-left: 12px;
 }
 
 .level-4 .outline-item-wrapper,
 .level-5 .outline-item-wrapper,
 .level-6 .outline-item-wrapper {
-    font-size: 0.9em;
-    padding-left: 24px;
+    font-size: 0.8em;
+    padding-left: 16px;
     color: var(--text-secondary);
 }
 
 /* 保持字体大小的区分 */
 .level-5 .outline-item-wrapper {
-    font-size: 0.85em;
+    font-size: 0.75em;
 }
 
 .level-6 .outline-item-wrapper {
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 
 /* 链接样式 */
