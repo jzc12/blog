@@ -122,7 +122,7 @@ export default {
               return {
                 id: fileName,
                 title: frontmatter.title || fileName,
-                date: dayjs(frontmatter.date).format('YYYY-MM-DD') || '未知日期',
+                date: dayjs(frontmatter.updated).format('YYYY-MM-DD') || '未知日期',
                 category: frontmatter.category || '未分类',
                 summary: frontmatter.summary || body.slice(0, 100) + '...'
               }
