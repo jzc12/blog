@@ -92,9 +92,9 @@ export default {
 .back-to-top {
   position: sticky;
   bottom: 2rem;
-  right: 1rem;
+  /* right: 1rem; */
   float: right;
-  margin-right: 1rem;
+  margin-right: 0.2rem;
   background-color: #93b9ea77;
   color: #ffffff77;
   width: 40px;

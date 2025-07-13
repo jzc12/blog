@@ -8,6 +8,7 @@
 
 /* 大纲项容器 */
 .outline-item-wrapper {
+    height: auto;
     display: flex;
     align-items: center;
     margin: 2px 0;

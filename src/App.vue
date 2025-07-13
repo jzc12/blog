@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <Navigte />
-    <div class="main-content-wrapper">
+    <div class="main-content-wrapper" :class="{'three-col': isMarkdownRoute, 'single-col': !isMarkdownRoute}">
       <div class="outline-container" v-if="isMarkdownRoute">
         <OutlineItem :outline="isMarkdownRoute ? articleOutline : []" v-for="heading in articleOutline" :key="heading.id" :heading="heading" @scroll-to="handleScrollToHeading" />
       </div>

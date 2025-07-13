@@ -108,13 +108,17 @@
 
 /* ========================== 数值显示样式 ============================== */
 .value-display {
-    width: 2rem;
+    width: 3rem;
     padding: 0.5rem;
     background: var(--value-display-bg);
     border-radius: 6px;
     color: var(--text-color);
     font-size: 0.9rem;
     text-align: center;
+    -webkit-user-select: none;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* ========================== 主题切换按钮样式 ============================== */
