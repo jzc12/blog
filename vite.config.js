@@ -17,24 +17,26 @@ const markdown = MarkdownIt({
   .use(MarkdownItAnchor)
   .use(MarkdownItPrism)
 
-export default defineConfig({
-  base: mode === 'github' ? '/blog/' : '/',
-  plugins: [
-    vue({
-      include: [/\.vue$/, /\.md$/]
-    }),
-    Markdown({
-      markdownIt: markdown,
-      wrapperClasses: 'markdown-body'
-    }),
-    svgLoader(),
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+export default defineConfig(({ mode }) => {
+  return {
+    base: mode === 'github' ? '/blog/' : '/',
+    plugins: [
+      vue({
+        include: [/\.vue$/, /\.md$/]
+      }),
+      Markdown({
+        markdownIt: markdown,
+        wrapperClasses: 'markdown-body'
+      }),
+      svgLoader(),
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      },
     },
-  },
-  server: {
-    historyApiFallback: true,
-  },
+    server: {
+      historyApiFallback: true,
+    },
+  }
 })
