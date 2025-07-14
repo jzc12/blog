@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:github": "vite build --mode=github",
+    "build": "VITE_ASSET_BASE=/assets/ vite build",
+    "build:github": "VITE_ASSET_BASE=/blog/assets/ vite build --mode=github",
     "preview": "vite preview"
   },
   "dependencies": {

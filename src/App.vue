@@ -323,7 +323,7 @@ export default {
 }
 
 :root {
-  font-size: var(--global-font-size, 18px) !important;
+  font-size: var(--global-font-size, 16px) !important;
 }
 
 </style>

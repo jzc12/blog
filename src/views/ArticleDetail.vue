@@ -80,7 +80,7 @@ export default {
 
         const convertedContent = content.replace(
           /\.\/\.\.\/\.\.\/public\/assets\//g, // 匹配 ../../public/assets/
-          process.env.NODE_ENV === 'production' ? '/blog/assets/' : '/assets/'
+          import.meta.env.BASE_URL + 'assets/'
         )
 
         return {
