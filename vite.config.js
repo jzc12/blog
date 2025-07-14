@@ -18,7 +18,7 @@ const markdown = MarkdownIt({
   .use(MarkdownItPrism)
 
 export default defineConfig({
-  base: '/',
+  base: mode === 'github' ? '/blog/' : '/',
   plugins: [
     vue({
       include: [/\.vue$/, /\.md$/]
