@@ -1,7 +1,7 @@
 /* 分类页面容器 */
 .category-container {
     justify-content: center;
-    margin: 0 5% 2rem;
+    margin: 0 1.5% 2rem;
     padding: 1rem;
 }
 
@@ -25,7 +25,7 @@
 
 /* 文章列表容器 */
 .category-content {
-    margin: 2rem auto;
+    margin: auto;
 }
 
 /* 文章列表 */

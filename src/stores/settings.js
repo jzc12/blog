@@ -3,8 +3,8 @@ import { defineStore } from 'pinia';
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
         fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '2'),
-        fontSizeSteps: ['14', '16', '18', '20', '22'],
-        contentOpacity: 85,
+        fontSizeSteps: ['14', '15', '16', '17', '18'],
+        contentOpacity: 90,
         theme: 'system', // 'light', 'dark', or 'system'
         systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light', // 初始化时就检测系统主题
     }),
@@ -71,7 +71,7 @@ export const useSettingsStore = defineStore('settings', {
 
         $reset() {
             this.fontSizeIndex = 2;
-            this.contentOpacity = 85;
+            this.contentOpacity = 90;
             this.theme = 'system';
             localStorage.setItem('fontSizeIndex', '2');
             this.detectSystemTheme();

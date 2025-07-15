@@ -193,12 +193,12 @@ body {
 
 /* 三列布局 (文章页面) */
 .main-content-wrapper.three-col {
-    grid-template-columns: 15% 70% 15%;
+    grid-template-columns: 20% 60% 20%;
 }
 
 /* 单列布局 (非文章页面) */
 .main-content-wrapper.single-col {
-    grid-template-columns: 1fr 70% 1fr;
+    grid-template-columns: 1fr 60% 1fr;
 }
 
 .outline-container {
@@ -269,7 +269,7 @@ body {
 
 .tip-button {
     display: inline-block;
-    padding: 10px 24px;
+    padding: 0.3rem 1rem;
     background-color: var(--primary-green);
     color: var(--text-green);
     font-size: 0.9375rem;
@@ -285,7 +285,7 @@ body {
 .tip-button-wrapper {
     display: flex;
     justify-content: center;
-    padding: 2rem 0;
+    padding: 1rem 0;
 }
 
 .tip-button:hover {
@@ -346,7 +346,7 @@ body {
 
     /* 保持单列布局居中 */
     .main-content-wrapper.single-col {
-        grid-template-columns: 1fr minmax(auto, 90%) 1fr;
+        grid-template-columns: 1fr minmax(auto, 60%) 1fr;
     }
 }
 
@@ -357,7 +357,7 @@ body {
 
     /* 中等屏幕缩小居中宽度 */
     .main-content-wrapper.single-col {
-        grid-template-columns: 1fr minmax(auto, 85%) 1fr;
+        grid-template-columns: 1fr minmax(auto, 60%) 1fr;
     }
 }
 

@@ -1,6 +1,4 @@
-# 关于
-
----
+## 关于
 
 **软件工程的本质——将现实需求转化为数字世界的精密系统**
 
@@ -22,4 +20,4 @@
 
 ---
 
-<img src="./../assets/cat.gif" alt="cat" style="zoom:33%;" />
+![Luck](./..//assets/Luck.png)

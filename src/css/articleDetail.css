@@ -28,8 +28,9 @@
 /* 返回按钮容器 */
 .back-button-container {
     width: 100%;
+    height: auto;
     max-width: 800px;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
 }
 
 /* 返回按钮 */
@@ -39,7 +40,7 @@
     gap: 0.5rem;
     text-decoration: none;
     width: fit-content;
-    padding: 0.625rem 1.5rem;
+    padding: 0.3rem 1rem;
     background-color: var(--primary-green);
     color: var(--text-green);
     font-size: 0.9375rem;

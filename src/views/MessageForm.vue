@@ -41,7 +41,7 @@
 
         <!-- 留言次数信息显示 -->
         <div class="message-info">
-          {{ isLoadingCount ? '加载中...' : `今日剩余留言次数：${remainingMessages}` }}
+          {{ isLoadingCount ? 'Loading...' : `Left:${remainingMessages}` }}
         </div>
       </div>
 

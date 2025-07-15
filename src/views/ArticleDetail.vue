@@ -75,6 +75,7 @@ export default {
     // @returns {Object} 解析后的文章对象
     const getArticle = async (id) => {
       try {
+        // 保持原始编码，不做 encodeURIComponent 处理
         const articleModule = await import(`../articles/${id}.md?raw`)
         const { attributes: frontmatter, body: content } = fm(articleModule.default)
 
@@ -91,7 +92,8 @@ export default {
           category: frontmatter.category || '未分类',
           content: convertedContent.trim()
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('解析文章失败:', error.message, error.stack)
         return {
           id,
