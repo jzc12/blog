@@ -109,13 +109,14 @@ export default {
         const hash = md5(lowerEmail);
         return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
       } else {
-        return '../assets/avatar.png'; 
+        const idx = Math.floor(Math.random() * 4);
+        return new URL(`../assets/avatar_${idx}.png`, import.meta.url).href;
       }
     },
 
     onAvatarError(event) {
-      // 兼容 Vite 静态资源路径
-      event.target.src = require('../assets/avatar.png');
+      const idx = Math.floor(Math.random() * 4);
+      event.target.src = require(`../assets/avatar_${idx}.png`);
     },
   },
   
