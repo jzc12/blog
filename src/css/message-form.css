@@ -23,8 +23,7 @@
 }
 
 .name-input {
-    width: 100%;
-    max-width: 120px;
+    width: 40px;
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--code-border);
     border-radius: 12px;
@@ -36,8 +35,7 @@
 }
 
 .email-input {
-    width: 100%;
-    width: auto;
+    width: 40px;
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--code-border);
     border-radius: 12px;
@@ -48,8 +46,9 @@
     height: 26px;
 }
 
-.email-input,
+.email-input:focus,
 .name-input:focus {
+    width: 160px;
     outline: none;
     border-color: var(--primary-green);
     box-shadow: 0 0 0 3px var(--primary-green-transparent);
