@@ -13,7 +13,7 @@
         <div class="message-content">
           <!-- 留言头部：用户名和时间 -->
           <div class="message-header">
-            <img :src="getAvatar(message.email)" class="avatar" />
+            <img :src="getAvatar(message.email)" class="avatar" @error="onAvatarError($event)" />
             <span class="user-name">{{ message.username }}</span>
             <span class="message-date">{{ formatDate(message.created_at) }}</span>
           </div>
@@ -111,6 +111,11 @@ export default {
       } else {
         return '../assets/avatar.png'; 
       }
+    },
+
+    onAvatarError(event) {
+      // 兼容 Vite 静态资源路径
+      event.target.src = require('../assets/avatar.png');
     },
   },
   
