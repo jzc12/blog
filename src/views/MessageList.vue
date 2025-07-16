@@ -13,7 +13,7 @@
         <div class="message-content">
           <!-- 留言头部：用户名和时间 -->
           <div class="message-header">
-            <img :src="getAvatar(message.email)" class="avatar" @error="onAvatarError($event)" />
+            <img :src="getAvatar(message.email, message.username)" class="avatar" @error="onAvatarError($event)" />
             <span class="user-name">{{ message.username }}</span>
             <span class="message-date">{{ formatDate(message.created_at) }}</span>
           </div>
@@ -87,7 +87,7 @@ export default {
     },
 
     // 获取用户头像，支持 QQ 邮箱、网易邮箱、Gravatar，其他用默认头像
-    getAvatar(email) {
+    getAvatar(email, username) {
       if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         const lowerEmail = email.trim().toLowerCase();
         // QQ 邮箱
@@ -99,8 +99,6 @@ export default {
         // 网易邮箱（163/126/yeah）
         const neteaseMatch = lowerEmail.match(/^([a-zA-Z0-9_.-]+)@(163|126|yeah)\.com$/);
         if (neteaseMatch) {
-          // 网易邮箱头像接口（部分用户有头像，未必都能显示）
-          // 参考：https://img1.cache.netease.com/f2e/mail/2016/img/163logo.png
           // 网易邮箱没有公开头像API，通常用 Gravatar
           const hash = md5(lowerEmail);
           return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
@@ -109,14 +107,13 @@ export default {
         const hash = md5(lowerEmail);
         return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
       } else {
-        const idx = Math.floor(Math.random() * 4);
+        const idx = username ? username.length % 4 : 0;
         return new URL(`../assets/avatar_${idx}.png`, import.meta.url).href;
       }
     },
 
     onAvatarError(event) {
-      const idx = Math.floor(Math.random() * 4);
-      event.target.src = require(`../assets/avatar_${idx}.png`);
+      event.target.src = require(`../assets/avatar_0.png`);
     },
   },
   
