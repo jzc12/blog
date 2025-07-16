@@ -132,7 +132,7 @@
 /* 代码样式 */
 .markdown-body code {
     font-family: 'Fira Code', 'JetBrains Mono', monospace;
-    font-size: 0.875rem;
+    font-size: 1.1rem;
     background: var(--bg-overlay);
     padding: 0.2em 0.4em;
     border-radius: 4px;
@@ -417,6 +417,7 @@
     display: table-cell;
     padding-left: 1em;
     white-space: pre;
+    font-size: 1rem;
 }
 
 /* 响应式优化 */

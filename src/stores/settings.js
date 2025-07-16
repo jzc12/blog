@@ -70,10 +70,10 @@ export const useSettingsStore = defineStore('settings', {
         },
 
         $reset() {
-            this.fontSizeIndex = 2;
+            this.fontSizeIndex = 1;
             this.contentOpacity = 90;
             this.theme = 'system';
-            localStorage.setItem('fontSizeIndex', '2');
+            localStorage.setItem('fontSizeIndex', '1');
             this.detectSystemTheme();
         }
     },

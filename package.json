@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.49.8",
     "@traptitech/markdown-it-katex": "^3.6.0",
+    "blueimp-md5": "^2.19.0",
     "dayjs": "^1.11.13",
     "front-matter": "^4.0.2",
     "highlight.js": "^11.11.1",

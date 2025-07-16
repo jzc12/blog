@@ -36,6 +36,7 @@ export const addMessage = async (message) => {
             .insert([{
                 username: message.username || '匿名',
                 content: message.content,
+                email: message.email,
                 private_message: message.private_message || false
             }])
 

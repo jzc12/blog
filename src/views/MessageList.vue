@@ -13,6 +13,7 @@
         <div class="message-content">
           <!-- 留言头部：用户名和时间 -->
           <div class="message-header">
+            <img :src="getAvatar(message.email)" class="avatar" />
             <span class="user-name">{{ message.username }}</span>
             <span class="message-date">{{ formatDate(message.created_at) }}</span>
           </div>
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+import md5 from 'blueimp-md5';
 export default {
   name: 'MessageList',
 
@@ -82,7 +84,34 @@ export default {
           container.scrollTop = container.scrollHeight;
         }
       });
-    }
+    },
+
+    // 获取用户头像，支持 QQ 邮箱、网易邮箱、Gravatar，其他用默认头像
+    getAvatar(email) {
+      if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        const lowerEmail = email.trim().toLowerCase();
+        // QQ 邮箱
+        const qqMatch = lowerEmail.match(/^(\d{5,11})@qq\.com$/);
+        if (qqMatch) {
+          const qqNumber = qqMatch[1];
+          return `https://q1.qlogo.cn/g?b=qq&nk=${qqNumber}&s=100`;
+        }
+        // 网易邮箱（163/126/yeah）
+        const neteaseMatch = lowerEmail.match(/^([a-zA-Z0-9_.-]+)@(163|126|yeah)\.com$/);
+        if (neteaseMatch) {
+          // 网易邮箱头像接口（部分用户有头像，未必都能显示）
+          // 参考：https://img1.cache.netease.com/f2e/mail/2016/img/163logo.png
+          // 网易邮箱没有公开头像API，通常用 Gravatar
+          const hash = md5(lowerEmail);
+          return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+        }
+        // 其他邮箱，使用 Gravatar
+        const hash = md5(lowerEmail);
+        return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
+      } else {
+        return '../assets/avatar.png'; 
+      }
+    },
   },
   
   // ========================== 侦听器 ==============================

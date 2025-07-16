@@ -35,6 +35,20 @@
     height: 26px;
 }
 
+.email-input {
+    width: 100%;
+    width: auto;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--code-border);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    height: 26px;
+}
+
+.email-input,
 .name-input:focus {
     outline: none;
     border-color: var(--primary-green);

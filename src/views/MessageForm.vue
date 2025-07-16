@@ -39,6 +39,8 @@
           <span class="toggle-label">私信</span>
         </label>
 
+        <input v-model="message.email" placeholder="邮箱（可选）" type="email" class="email-input"/>
+
         <!-- 留言次数信息显示 -->
         <div class="message-info">
           {{ isLoadingCount ? 'Loading...' : `Left:${remainingMessages}` }}
@@ -85,6 +87,7 @@ export default {
       message: {                     // 留言信息
         username: '',                // 用户名
         content: '',                 // 留言内容
+        email: '',                   // 用户邮箱
         private_message: false       // 是否私信
       },
       dailyLimit: 20,                // 每日留言限制
