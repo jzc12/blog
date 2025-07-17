@@ -103,7 +103,7 @@
 
     /* 字体系统 Typography */
     --font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
-    --font-size-base: var(--global-font-size, 16px);
+    --font-size-base: var(--global-font-size, 15px);
     --font-size-sm: 0.875rem;
     --font-size-md: 1rem;
     --font-size-lg: 1.125rem;

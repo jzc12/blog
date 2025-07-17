@@ -87,9 +87,15 @@
 }
 
 .nav-li:hover .icon {
+    width: 1.5rem;
+    height: 1.5rem;
     color: var(--primary-green);
 }
 
+.nav-li .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
 
 
 /* 导航项计数器 */
@@ -171,9 +177,10 @@ a:hover {
 @media (max-width: 768px) {
     .Navigte {
         height: auto !important;
-        padding: 10px;
+        padding: 5px 5%;
         flex-wrap: wrap;
         justify-content: center;
+        display: flex;
     }
 
     .Navigte h2 {
@@ -191,8 +198,9 @@ a:hover {
     }
 
     .nav-li {
+        display: flex;
         justify-content: center;
-        padding: 5px 10px;
+        padding: 5px 15px;
     }
 
     .font-size-controls {
