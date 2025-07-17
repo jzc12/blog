@@ -9,7 +9,7 @@
 .h1 {
     font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
     font-size: 1.5rem;
-    color: #2c3e50;
+    color: var(--text-primary);
     margin-bottom: 2rem;
     font-weight: 600;
     letter-spacing: -0.5px;
@@ -19,8 +19,7 @@
 }
 
 .h1 i {
-    font-size: 1.8rem;
-    color: #3498db;
+    font-size: var(--font-size-xl);
 }
 
 /* 文章列表容器 */
@@ -88,9 +87,9 @@
     align-items: center;
     padding: 0.3rem 0.8rem;
     background: var(--bg-tag);
-    color: var(--primary-green);
+    color: var(--secondary-green);
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     gap: 0.4rem;
     white-space: nowrap;
     justify-self: center;
@@ -166,7 +165,7 @@
 /* 进度条 */
 .progress-bar {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     height: 6px;
     background: #eee;
     border-radius: 3px;

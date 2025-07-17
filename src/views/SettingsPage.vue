@@ -10,40 +10,75 @@
     <!-- 主题设置 -->
     <div class="setting-section">
       <div class="setting-header">
-        <h2>
-          <i class="fas fa-moon"></i>
-          主题设置
-        </h2>
-        <span class="setting-description">选择您喜欢的主题模式</span>
+      <h2>
+        <i class="fas fa-moon"></i>
+        主题设置
+      </h2>
+      </div>
+      <div class="theme-buttons">
+      <button 
+        class="theme-button" 
+        :class="{ active: settingsStore.theme === 'light' }"
+        @click="settingsStore.setTheme('light')"
+      >
+        <i class="fas fa-sun"></i>
+        浅色模式
+      </button>
+      <button 
+        class="theme-button" 
+        :class="{ active: settingsStore.theme === 'dark' }"
+        @click="settingsStore.setTheme('dark')"
+      >
+        <i class="fas fa-moon"></i>
+        深色模式
+      </button>
+      <button 
+        class="theme-button" 
+        :class="{ active: settingsStore.theme === 'system' }"
+        @click="settingsStore.setTheme('system')"
+      >
+        <i class="fas fa-desktop"></i>
+        跟随系统
+      </button>
+      </div>
+    </div>
+
+    <!-- 背景图片设置 -->
+    <div class="setting-section">
+      <div class="setting-header">
+      <h2>
+        <i class="fas fa-image"></i>
+        背景设置
+      </h2>
       </div>
       <div class="theme-buttons">
         <button 
-          class="theme-button" 
-          :class="{ active: settingsStore.theme === 'light' }"
-          @click="settingsStore.setTheme('light')"
-        >
-          <i class="fas fa-sun"></i>
-          浅色模式
+        class="theme-button" 
+        :class="{ active: settingsStore.backgroundType === 'image' }"
+        @click="settingsStore.setBackgroundType('image')"
+      >
+        <i class="fas fa-image"></i>
+        图片模式
         </button>
+        
         <button 
           class="theme-button" 
-          :class="{ active: settingsStore.theme === 'dark' }"
-          @click="settingsStore.setTheme('dark')"
+          :class="{ active: settingsStore.backgroundType === 'color' }"
+          @click="settingsStore.setBackgroundType('color')"
         >
           <i class="fas fa-moon"></i>
-          深色模式
-        </button>
-        <button 
-          class="theme-button" 
-          :class="{ active: settingsStore.theme === 'system' }"
-          @click="settingsStore.setTheme('system')"
-        >
-          <i class="fas fa-desktop"></i>
-          跟随系统
+          纯色模式
         </button>
 
-        
+        <div v-if="settingsStore.backgroundType === 'color'" class="background-color-picker">
+          <input
+            type="color"
+            v-model="settingsStore.backgroundColor"
+          />
+        </div>
+
       </div>
+
     </div>
 
     <!-- 字体大小设置 -->
@@ -53,7 +88,6 @@
           <i class="fas fa-text-height"></i>
           字体大小
         </h2>
-        <span class="setting-description">调整字体大小 x 已经异常，之后再改吧</span>
       </div>
       <div class="control-group">
         <!-- 字体大小滑块 -->
@@ -77,7 +111,6 @@
           <i class="fas fa-adjust"></i>
           背景透明度
         </h2>
-        <span class="setting-description">调整背景透明度</span>
       </div>
       <div class="control-group">
         <!-- 透明度滑块 -->

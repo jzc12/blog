@@ -17,13 +17,14 @@
     backdrop-filter: var(--blur-md);
     overflow: hidden;
     border: 1px solid var(--code-border);
+    background: #ffffff00;
 }
 
 .controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--bg-secondary);
+    background: #ffffff00;
     backdrop-filter: var(--blur-md);
     border-bottom: 1px solid var(--code-border);
 }
@@ -58,15 +59,15 @@
 
 .control-btn {
     padding: 0.4rem;
-    width: 28px;
-    height: 28px;
-    background-color: var(--bg-secondary);
+    width: 20px;
+    height: 20px;
+    font-size: var(--font-size-sm);
+    background: var(--bg-secondary);
     border: 1px solid var(--code-border);
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s ease;
     color: var(--primary-green);
-    font-size: 0.9rem;
     margin: 0;
     display: flex;
     align-items: center;
@@ -74,14 +75,14 @@
 }
 
 .control-btn:hover:not(:disabled) {
-    background-color: var(--primary-green);
+    background: var(--primary-green);
     color: var(--text-light);
     transform: translateY(-1px);
     box-shadow: var(--shadow-sm);
 }
 
 .control-btn:disabled {
-    background-color: var(--bg-tertiary);
+    background: var(--bg-tertiary);
     color: var(--text-tertiary);
     cursor: not-allowed;
     transform: none;

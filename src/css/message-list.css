@@ -3,7 +3,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background: var(--bg-overlay);
+    background: #ffffff00;
     backdrop-filter: var(--blur-md);
 }
 
@@ -93,23 +93,25 @@
 }
 
 /* 滚动条美化 */
+.message-list::-webkit-scrollbar,
 .messages-container::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
 }
 
+.message-list::-webkit-scrollbar-track,
 .messages-container::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
-    border-radius: 3px;
+    background: transparent;
 }
 
+.message-list::-webkit-scrollbar-thumb,
 .messages-container::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
+    background-color: var(--primary-green);
     border-radius: 3px;
-    transition: all 0.2s ease;
 }
 
+.message-list::-webkit-scrollbar-thumb:hover,
 .messages-container::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
+    background-color: var(--accent-green);
 }
 
 /* 响应式布局 */

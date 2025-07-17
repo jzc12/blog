@@ -11,7 +11,7 @@
             <component :is="Component" @content-loaded="handleContentLoaded" ref="currentView" />
             <div class="markdown-body" ref="markdownContent" v-html="renderedContent"></div>
             <div class="tip-button-wrapper">
-              <button @click="goToTipPage" class="tip-button">打赏</button>
+              <button @click="goToTipPage" class="tip-button">￥ 打赏</button>
             </div>
           </template>
           <component v-else :is="Component" />
@@ -259,6 +259,7 @@ export default {
       }
     }
   },
+  
   setup() {
     const settingsStore = useSettingsStore()
     const mainContentRef = ref(null)
@@ -276,11 +277,17 @@ export default {
 
     watch(() => settingsStore.effectiveTheme, (newTheme) => {
       document.documentElement.setAttribute('data-theme', newTheme)
+      settingsStore.backgroundColor = newTheme === 'light' ? '#a1c2b8' : '#436273'
+      settingsStore.applyBackground()
     })
 
     watch(() => settingsStore.currentFontSize, applyFontSize)
 
     watch(() => settingsStore.contentOpacity, applyContentOpacity)
+
+    watch(() => settingsStore.backgroundType, () => settingsStore.applyBackground())
+
+    watch(() => settingsStore.backgroundColor, () => settingsStore.applyBackground())
 
     onMounted(() => {
       // 初始化主题
@@ -291,6 +298,10 @@ export default {
       
       // 初始化透明度
       applyContentOpacity(settingsStore.contentOpacity)
+
+      // 初始化背景
+      settingsStore.initTheme(); // 激活主题系统
+      settingsStore.applyBackground(); // 应用背景
     })
 
     return { 

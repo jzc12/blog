@@ -163,7 +163,7 @@
 
 body {
     font-family: 'Microsoft YaHei', sans-serif;
-    background-image: url('../assets/background1.png');
+    /* background-image: url('../assets/background1.png'); */
     background-size: cover;
     background-position: center fixed;
     height: 100vh;
@@ -272,7 +272,7 @@ body {
     padding: 0.3rem 1rem;
     background-color: var(--primary-green);
     color: var(--text-green);
-    font-size: 0.9375rem;
+    font-size: var(--font-size-sm);
     font-weight: 600;
     text-align: center;
     border: none;
@@ -316,7 +316,7 @@ body {
 
 html,
 body {
-    font-size: var(--global-font-size, 16px);
+    font-size: var(--global-font-size, 15px);
 }
 
 .content,
@@ -325,7 +325,7 @@ body {
 .article-container,
 .sidebar-container,
 .outline-container {
-    font-size: var(--global-font-size, 16px);
+    font-size: var(--global-font-size, 15px);
     line-height: 1.75;
 }
 

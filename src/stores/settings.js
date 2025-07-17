@@ -4,9 +4,12 @@ export const useSettingsStore = defineStore('settings', {
     state: () => ({
         fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '1'),
         fontSizeSteps: ['14', '15', '16', '17', '18'],
-        contentOpacity: 90,
+        contentOpacity: 70,
         theme: 'system', // 'light', 'dark', or 'system'
         systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light', // 初始化时就检测系统主题
+
+        backgroundType: localStorage.getItem('backgroundType') || 'color',
+        backgroundColor: localStorage.getItem('backgroundColor') || '#ffffff',
     }),
     getters: {
         currentFontSize: (state) => `${state.fontSizeSteps[state.fontSizeIndex]}px`,
@@ -30,11 +33,13 @@ export const useSettingsStore = defineStore('settings', {
 
             // 应用字体大小
             this.applyFontSize();
+            this.applyBackground();
         },
 
         detectSystemTheme() {
             this.systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             this.applyTheme();
+            this.applyBackground();
         },
 
         setTheme(newTheme) {
@@ -69,12 +74,42 @@ export const useSettingsStore = defineStore('settings', {
             document.documentElement.style.setProperty('--global-font-size', this.currentFontSize);
         },
 
+        applyBackground() {
+            const isDark = this.effectiveTheme === 'dark';
+
+            if (this.backgroundType === 'image') {
+                this.contentOpacity = 90;
+                document.body.style.backgroundImage = `url(../assets/background1.png)`;
+            } else if (this.backgroundType === 'color') {
+                document.body.style.backgroundImage = '';
+                document.body.style.backgroundColor = this.backgroundColor;
+            } else {
+                document.body.style.backgroundImage = '';
+                document.body.style.backgroundColor = isDark ? '#1c2022' : '#ffffff';
+            }
+        },
+
+        setBackgroundType(type) {
+            this.backgroundType = type
+            localStorage.setItem('backgroundType', type)
+            this.applyBackground()
+        },
+
+        setBackgroundColor(color) {
+            this.backgroundColor = color
+            localStorage.setItem('backgroundColor', color)
+            this.applyBackground()
+        },
+
+
         $reset() {
             this.fontSizeIndex = 1;
-            this.contentOpacity = 90;
+            this.contentOpacity = 70;
             this.theme = 'system';
             localStorage.setItem('fontSizeIndex', '1');
             this.detectSystemTheme();
+            this.setBackgroundType('color');
+
         }
     },
 

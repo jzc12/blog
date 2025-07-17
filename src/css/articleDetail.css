@@ -43,7 +43,7 @@
     padding: 0.3rem 1rem;
     background-color: var(--primary-green);
     color: var(--text-green);
-    font-size: 0.9375rem;
+    font-size: var(--font-size-sm);
     font-weight: 600;
     border: none;
     border-radius: 8px;

@@ -23,7 +23,7 @@
 }
 
 .name-input {
-    width: 40px;
+    width: auto;
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--code-border);
     border-radius: 12px;
@@ -35,7 +35,7 @@
 }
 
 .email-input {
-    width: 40px;
+    width: auto;
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--code-border);
     border-radius: 12px;
@@ -48,13 +48,13 @@
 
 .email-input:focus,
 .name-input:focus {
-    width: 160px;
     outline: none;
     border-color: var(--primary-green);
     box-shadow: 0 0 0 3px var(--primary-green-transparent);
 }
 
 .private-toggle {
+    width: auto;
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -90,7 +90,7 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     padding: 0;
     display: flex;
     align-items: center;
@@ -177,8 +177,9 @@
 }
 
 .message-info {
+    width: auto;
     color: var(--text-secondary);
-    font-size: 0.8rem;
+    font-size: var(--font-size-sm);
     margin-left: auto;
     padding: 0.25rem 0.6rem;
     background: var(--bg-secondary);
