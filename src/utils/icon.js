@@ -25,6 +25,11 @@ import {
     ArrowDownUp,
     Copy,
     CircleCheck,
+    Network,
+    Clock3,
+    Earth,
+    Building2,
+    LibraryBig
 } from 'lucide-vue-next';
 
 import GitHub from './../assets/github.svg';
@@ -57,4 +62,10 @@ export const icons = {
     sortDesc: ArrowDownUp,
     copy: Copy,
     circleCheck: CircleCheck,
+    network: Network,
+    clock: Clock3,
+    earth: Earth,
+    building: Building2,
+    library: LibraryBig
+
 };

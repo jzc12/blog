@@ -7,7 +7,7 @@
 
 .article-meta {
     max-width: 800px;
-    margin: 2rem auto 1rem;
+    margin: 0.2rem auto 0.1rem;
     padding: 0 2rem;
     position: relative;
     width: 100%;
@@ -70,7 +70,7 @@
 
 .article-header {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.1rem;
 }
 
 .article-title {
@@ -105,7 +105,7 @@
 }
 
 .article-divider {
-    margin: 1rem 0;
+    margin: 0.4rem 0;
     height: 1px;
     background: var(--code-border);
 }

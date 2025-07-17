@@ -56,8 +56,7 @@
 .info-content {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    gap: 1rem;
 }
 
 .info-item {
@@ -77,8 +76,19 @@
 }
 
 .info-label {
-    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     color: var(--secondary-text-color);
+}
+
+.info-label icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    color: var(--text-color);
 }
 
 .info-value {

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
-        fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '2'),
+        fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '1'),
         fontSizeSteps: ['14', '15', '16', '17', '18'],
         contentOpacity: 90,
         theme: 'system', // 'light', 'dark', or 'system'

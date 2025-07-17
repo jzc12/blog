@@ -7,7 +7,9 @@
           <!-- IP 地址 -->
           <div class="info-item">
             <div class="info-content">
-              <div class="info-label">当前访客 IP</div>
+              <div class="info-label">
+                <component :is="iconMap.earth" class="icon" />
+              </div>
               <div class="info-value">
                 <span v-if="loadingVisitorInfo">加载中...</span>
                 <span v-else>{{ visitorInfo.ip }}</span>
@@ -18,7 +20,9 @@
           <!-- 运营商 -->
           <div class="info-item">
             <div class="info-content">
-              <div class="info-label">运营商</div>
+              <div class="info-label">
+                <component :is="iconMap.network" class="icon" />
+              </div>
               <div class="info-value">
                 <span v-if="loadingVisitorInfo">加载中...</span>
                 <span v-else>{{ visitorInfo.owner }}</span>
@@ -29,7 +33,9 @@
           <!-- 城市 / 省份 -->
           <div class="info-item">
             <div class="info-content">
-              <div class="info-label">省份 / 城市</div>
+              <div class="info-label">
+                <component :is="iconMap.building" class="icon" />
+              </div>
               <div class="info-value">
                 <span v-if="loadingVisitorInfo">加载中...</span>
                 <span v-else>{{ visitorInfo.region }} / {{ visitorInfo.city }}</span>
@@ -42,14 +48,18 @@
         <h3>文章信息</h3>
         <div class="info-item">
           <div class="info-content">
-            <div class="info-label">字数</div>
+            <div class="info-label">
+              <component :is="iconMap.library" class="icon" />
+            </div>
             <div class="info-value">{{ wordCount }}字</div>
           </div>
         </div>
         <div class="info-item">
           <div class="info-content">
-            <div class="info-label">预计阅读</div>
-            <div class="info-value">{{ readingTime }}分钟</div>
+            <div class="info-label">
+              <component :is="iconMap.clock" class="icon" />
+            </div>
+            <div class="info-value">{{ readingTime }}min</div>
           </div>
         </div>
       </div>
@@ -57,7 +67,8 @@
     </div>
   </template>
   
-  <script>
+<script>
+  import { icons } from '../utils/icon.js'
   export default {
     name: 'Sidebar',
     props: {
@@ -129,7 +140,7 @@
           minute: '2-digit',
           second: '2-digit'
         });
-      }
+      },
     },
     mounted() {
       this.fetchVisitorInfo();
@@ -138,9 +149,15 @@
     },
     beforeUnmount() {
       clearInterval(this.timeInterval);
-    }
+    },
+    computed: {
+      // 图标映射
+      iconMap() {
+        return icons;
+      }
+    },
   }
-  </script>
+</script>
   
 
 <style scoped>

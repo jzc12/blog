@@ -108,8 +108,8 @@ const isArticleInCooldown = (articleName) => {
 
     if (!lastViewTime) return false;
 
-    // 检查是否在24小时冷却期内
-    const cooldownHours = 24;
+    // 检查是否在48小时冷却期内
+    const cooldownHours = 48;
     const cooldownMs = cooldownHours * 60 * 60 * 1000;
     return (Date.now() - lastViewTime) < cooldownMs;
 };

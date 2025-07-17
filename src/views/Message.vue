@@ -1,44 +1,42 @@
 // ========================== 留言页面组件 ==============================
 <template>
-  <div class="message-page">
-    <div class="message-container">
-      <!-- 控制区域 -->
-      <div class="controls">
-        <!-- 提示文本 -->
-        <div class="text">
-          <p>欢迎留言！私信不会显示，但是我会收到</p>
-        </div>
-        <!-- 控制按钮组 -->
-        <div class="control-group">
-          <!-- 排序切换按钮 -->
-          <button 
-            class="control-btn"
-            @click="toggleSort"
-            :title="isAscending ? '切换为最新消息在前' : '切换为最早消息在前'"
-          >
-            <component :is="isAscending ? iconMap.sortDesc : iconMap.sortAsc" class="icon" />
-          </button>
-          <!-- 刷新按钮 -->
-          <button 
-            class="control-btn"
-            @click="loadMessages"
-            :disabled="isLoading"
-            :title="'刷新留言'"
-          >
-            <component :is="isLoading ? iconMap.loading : iconMap.refresh" class="icon" />
-          </button>
-        </div>
+  <div class="message-container">
+    <!-- 控制区域 -->
+    <div class="controls">
+      <!-- 提示文本 -->
+      <div class="text">
+        <p>欢迎留言！私信不会显示，但是我会收到</p>
       </div>
-      <!-- 留言列表 -->
-      <MessageList :messages="sortedMessages" />
-      <!-- 留言输入区域 -->
-      <div class="input-area" :class="{ 'hidden': isInputHidden }">
-        <MessageForm 
-          v-if="!isInputHidden" 
-          ref="messageForm"
-          @message-submitted="addMessage" 
-        />
+      <!-- 控制按钮组 -->
+      <div class="control-group">
+        <!-- 排序切换按钮 -->
+        <button 
+          class="control-btn"
+          @click="toggleSort"
+          :title="isAscending ? '切换为最新消息在前' : '切换为最早消息在前'"
+        >
+          <component :is="isAscending ? iconMap.sortDesc : iconMap.sortAsc" class="icon" />
+        </button>
+        <!-- 刷新按钮 -->
+        <button 
+          class="control-btn"
+          @click="loadMessages"
+          :disabled="isLoading"
+          :title="'刷新留言'"
+        >
+          <component :is="isLoading ? iconMap.loading : iconMap.refresh" class="icon" />
+        </button>
       </div>
+    </div>
+    <!-- 留言列表 -->
+    <MessageList :messages="sortedMessages" />
+    <!-- 留言输入区域 -->
+    <div class="input-area" :class="{ 'hidden': isInputHidden }">
+      <MessageForm 
+        v-if="!isInputHidden" 
+        ref="messageForm"
+        @message-submitted="addMessage" 
+      />
     </div>
   </div>
 </template>
