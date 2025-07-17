@@ -9,7 +9,7 @@ export const useSettingsStore = defineStore('settings', {
         systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light', // 初始化时就检测系统主题
 
         backgroundType: localStorage.getItem('backgroundType') || 'color',
-        backgroundColor: localStorage.getItem('backgroundColor') || '#ffffff',
+        backgroundColor: localStorage.getItem('backgroundColor') || '#436273',
     }),
     getters: {
         currentFontSize: (state) => `${state.fontSizeSteps[state.fontSizeIndex]}px`,
