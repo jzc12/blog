@@ -62,13 +62,22 @@
 
 /* 导航菜单 */
 .nav {
-    list-style: none;
     display: flex;
-    gap: 20px;
+    list-style: none;
+    white-space: nowrap;
+    overflow-x: auto;
+    /* 启用水平滚动 */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* 使 iOS 上更顺滑 */
+    scrollbar-width: none;
+    /* Firefox 隐藏滚动条 */
 }
 
 /* 导航项样式 */
 .nav-li {
+    flex-shrink: 0;
+    /* 防止子元素被压缩换行 */
     display: flex;
     align-items: center;
     gap: 8px;
@@ -79,6 +88,7 @@
     transition: all 0.3s ease;
     color: #000000;
 }
+
 
 .nav-li:hover {
     background: var(--bg-hover);
@@ -178,7 +188,6 @@ a:hover {
     .Navigte {
         height: auto !important;
         padding: 5px 5%;
-        flex-wrap: wrap;
         justify-content: center;
         display: flex;
     }
@@ -191,7 +200,6 @@ a:hover {
 
     .Navigte .nav {
         flex-direction: row;
-        flex-wrap: wrap;
         justify-content: center;
         width: 100%;
         gap: 10px;
