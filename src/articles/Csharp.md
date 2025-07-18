@@ -1,15 +1,13 @@
 ---
 date: 2025-06-25
-updated: 2025-06-25
+updated: 2025-07-19
 category: c#
 summary: WPF 框架学习
 ---
 
 
 
-# record
-
-
+## 字段、属性
 
 
 
@@ -92,3 +90,34 @@ graph LR
     View -- 绑定 --> ViewModel.属性
     View -- 命令绑定 --> ViewModel.命令属性
 ```
+
+
+
+
+
+## 异步执行
+
+
+
+```c#
+// 同时执行多个异步任务
+var tasks = new Task[] { task1, task2, task3 };
+
+// 所有任务完成后执行回调
+Task.Factory.ContinueWhenAll(tasks, t => 
+{
+    Application.Current.Dispatcher.Invoke(() => 
+    {
+        Refresh();
+    });
+});
+```
+
+> 意思是，多线程异步执行 tasks ，都执行结束后会执行  Refresh()， 没有 Dispatcher的话还是其他的线程
+>
+> 有 Dispatcher 的话会用主线程执行，这样就避免的非 UI 线程 修改绑定到 UI 控件的 `ObservableCollection` 的问题
+
+> ```c#
+> Invoke() 		同步阻塞调用，等待UI线程完成操作
+> BeginInvoke() 	异步非阻塞调用，将操作加入UI消息队列
+> ```
