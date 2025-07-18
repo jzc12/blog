@@ -1,55 +1,63 @@
 import { defineStore } from 'pinia';
 
 export const useSettingsStore = defineStore('settings', {
-    state: () => ({
-        fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '1'),
-        fontSizeSteps: ['14', '15', '16', '17'],
-        contentOpacity: 70,
-        theme: 'system', // 'light', 'dark', or 'system'
-        systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light', // 初始化时就检测系统主题
 
+    state: () => ({
+        // 字体大小索引（从 localStorage 中读取，默认为 1）
+        fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '0'),
+        // 可选的字体大小（px）
+        fontSizeSteps: ['13', '14', '15', '16'],
+
+        // 内容透明度（默认 70）
+        contentOpacity: parseInt(localStorage.getItem('contentOpacity') || '70'),
+
+        // 主题设置：'light' | 'dark' | 'system'
+        theme: localStorage.getItem('theme') || 'system',
+        // 当前系统主题
+        systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+
+        // 背景类型：'image' | 'color'
         backgroundType: localStorage.getItem('backgroundType') || 'color',
+        // 背景颜色（用于 color 模式）
         backgroundColor: localStorage.getItem('backgroundColor') || '#436273',
     }),
+
     getters: {
-        currentFontSize: (state) => `${state.fontSizeSteps[state.fontSizeIndex]}px`,
+        // 当前字体大小（带 px 单位）
+        currentFontSize() { return `${this.fontSizeSteps[this.fontSizeIndex]}px`; },
+
+        // 实际应用的主题（考虑系统设置）
         effectiveTheme() {
             return this.theme === 'system' ? this.systemTheme : this.theme;
         },
     },
+
     actions: {
+        /**
+         * 初始化主题相关设置
+         */
         initTheme() {
-            // 检查本地存储的主题设置
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                this.theme = savedTheme;
-            }
-
-            // 初始化系统主题检测
             this.detectSystemTheme();
-
-            // 监听系统主题变化
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', this.detectSystemTheme);
-
-            // 应用字体大小
+            window.matchMedia('(prefers-color-scheme: dark)')
+                .addEventListener('change', this.detectSystemTheme);
             this.applyFontSize();
-            this.applyBackground();
         },
 
+        /**
+         * 检测系统主题并更新
+         */
         detectSystemTheme() {
             this.systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             this.applyTheme();
             this.applyBackground();
         },
 
-        setTheme(newTheme) {
-            this.theme = newTheme;
-            localStorage.setItem('theme', newTheme);
-            this.applyTheme();
-        },
-
+        /**
+         * 应用当前主题样式变量
+         */
         applyTheme() {
             const isDark = this.effectiveTheme === 'dark';
+
             document.documentElement.style.setProperty('--bg-opacity', isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)');
             document.documentElement.style.setProperty('--text-color', isDark ? '#ffffff' : '#2c3e50');
             document.documentElement.style.setProperty('--text-secondary', isDark ? '#aaaaaa' : '#666666');
@@ -65,53 +73,93 @@ export const useSettingsStore = defineStore('settings', {
             document.documentElement.style.setProperty('--danger-hover-color', '#c0392b');
         },
 
-        setFontSize(index) {
-            if (index >= 0 && index < this.fontSizeSteps.length) {
-                this.fontSizeIndex = index;
-            }
-        },
+        /**
+         * 应用字体大小样式
+         */
         applyFontSize() {
             document.documentElement.style.setProperty('--global-font-size', this.currentFontSize);
         },
 
+        /**
+         * 应用背景设置
+         */
         applyBackground() {
-            const isDark = this.effectiveTheme === 'dark';
-
             if (this.backgroundType === 'image') {
-                this.contentOpacity = 90;
+                this.contentOpacity = 80;
                 document.body.style.backgroundImage = `url(../assets/background1.png)`;
             } else if (this.backgroundType === 'color') {
                 document.body.style.backgroundImage = '';
                 document.body.style.backgroundColor = this.backgroundColor;
             } else {
                 document.body.style.backgroundImage = '';
-                document.body.style.backgroundColor = isDark ? '#1c2022' : '#ffffff';
+                document.body.style.backgroundColor = '#436273';
             }
         },
 
+        /**
+         * 设置主题并保存
+         * @param {string} newTheme - 'light' | 'dark' | 'system'
+         */
+        setTheme(newTheme) {
+            this.theme = newTheme;
+            localStorage.setItem('theme', newTheme);
+            this.applyTheme();
+        },
+
+        /**
+         * 设置字体大小
+         * @param {number} index - 字体大小索引
+         */
+        setFontSize(index) {
+            this.fontSizeIndex = (index >= 0 && index < this.fontSizeSteps.length) ? index : this.fontSizeSteps.length - 1;
+            localStorage.setItem('fontSizeIndex', this.fontSizeIndex);
+            this.applyFontSize();
+        },
+
+        /**
+         * 设置背景类型
+         * @param {string} type - 'image' | 'color'
+         */
         setBackgroundType(type) {
-            this.backgroundType = type
-            localStorage.setItem('backgroundType', type)
-            this.applyBackground()
+            this.backgroundType = type;
+            localStorage.setItem('backgroundType', type);
+            this.applyBackground();
         },
 
+        /**
+         * 设置背景颜色
+         * @param {string} color - HEX颜色值
+         */
         setBackgroundColor(color) {
-            this.backgroundColor = color
-            localStorage.setItem('backgroundColor', color)
-            this.applyBackground()
+            this.backgroundColor = color;
+            localStorage.setItem('backgroundColor', color);
+            this.applyBackground();
         },
 
+        /**
+         * 保存设置到本地存储
+         */
+        saveSettings() {
+            localStorage.setItem('fontSizeIndex', this.fontSizeIndex);
+            localStorage.setItem('contentOpacity', this.contentOpacity);
+            localStorage.setItem('theme', this.theme);
+            localStorage.setItem('backgroundType', this.backgroundType);
+            localStorage.setItem('backgroundColor', this.backgroundColor);
+        },
 
+        /**
+         * 重置为默认设置
+         */
         $reset() {
-            this.fontSizeIndex = 1;
+            this.fontSizeIndex = 0;
             this.contentOpacity = 70;
+            this.backgroundType = 'color';
             this.theme = 'system';
-            localStorage.setItem('fontSizeIndex', '1');
-            this.detectSystemTheme();
-            this.setBackgroundType('color');
-
+            this.saveSettings();
+            this.applyTheme();
         }
     },
 
+    // 开启持久化
     persist: true
-}); 
+});

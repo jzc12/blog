@@ -18,24 +18,24 @@
       <div class="theme-buttons">
       <button 
         class="theme-button" 
-        :class="{ active: settingsStore.theme === 'light' }"
-        @click="settingsStore.setTheme('light')"
+        :class="{ active: settings.theme === 'light' }"
+        @click="settings.setTheme('light')"
       >
         <i class="fas fa-sun"></i>
         浅色模式
       </button>
       <button 
         class="theme-button" 
-        :class="{ active: settingsStore.theme === 'dark' }"
-        @click="settingsStore.setTheme('dark')"
+        :class="{ active: settings.theme === 'dark' }"
+        @click="settings.setTheme('dark')"
       >
         <i class="fas fa-moon"></i>
         深色模式
       </button>
       <button 
         class="theme-button" 
-        :class="{ active: settingsStore.theme === 'system' }"
-        @click="settingsStore.setTheme('system')"
+        :class="{ active: settings.theme === 'system' }"
+        @click="settings.setTheme('system')"
       >
         <i class="fas fa-desktop"></i>
         跟随系统
@@ -54,8 +54,8 @@
       <div class="theme-buttons">
         <button 
         class="theme-button" 
-        :class="{ active: settingsStore.backgroundType === 'image' }"
-        @click="settingsStore.setBackgroundType('image')"
+        :class="{ active: settings.backgroundType === 'image' }"
+        @click="settings.setBackgroundType('image')"
       >
         <i class="fas fa-image"></i>
         图片模式
@@ -63,17 +63,17 @@
         
         <button 
           class="theme-button" 
-          :class="{ active: settingsStore.backgroundType === 'color' }"
-          @click="settingsStore.setBackgroundType('color')"
+          :class="{ active: settings.backgroundType === 'color' }"
+          @click="settings.setBackgroundType('color')"
         >
           <i class="fas fa-moon"></i>
           纯色模式
         </button>
 
-        <div v-if="settingsStore.backgroundType === 'color'" class="background-color-picker">
+        <div v-if="settings.backgroundType === 'color'" class="background-color-picker">
           <input
             type="color"
-            v-model="settingsStore.backgroundColor"
+            v-model="settings.backgroundColor"
           />
         </div>
 
@@ -94,13 +94,13 @@
         <input
           type="range"
           min="0"
-          :max="settingsStore.fontSizeSteps.length - 1"
+          :max="3"
           step="1"
-          v-model="fontSizeIndex"
+          v-model="settings.fontSizeIndex"
           class="slider"
         />
         <!-- 当前字体大小显示 -->
-        <span class="value-display">{{ settingsStore.currentFontSize }}</span>
+        <span class="value-display">{{ settings.currentFontSize }}</span>
       </div>
     </div>
 
@@ -119,11 +119,11 @@
           min="0"
           max="100"
           step="1"
-          v-model="settingsStore.contentOpacity"
+          v-model="settings.contentOpacity"
           class="slider"
         />
         <!-- 当前透明度显示 -->
-        <span class="value-display">{{ settingsStore.contentOpacity }}%</span>
+        <span class="value-display">{{ settings.contentOpacity }}%</span>
       </div>
     </div>
 
@@ -147,28 +147,28 @@ export default {
 
   // ========================== 组件逻辑 ==============================
   setup() {
-    const settingsStore = useSettingsStore();
+    const settings = useSettingsStore();
     
     const fontSizeIndex = computed({
-      get: () => settingsStore.fontSizeIndex,
+      get: () => settings.fontSizeIndex,
       set: (value) => {
-        settingsStore.setFontSize(parseInt(value));
+        settings.setFontSize(parseInt(value));
       }
     });
 
     // 组件挂载时初始化主题
     onMounted(() => {
-      settingsStore.initTheme();
+      settings.initTheme();
     });
 
     // 重置所有设置到默认值
     const resetSettings = () => {
-      settingsStore.$reset();
+      settings.$reset();
     };
 
     // ========================== 返回数据 ==============================
     return { 
-      settingsStore,    // 设置状态管理
+      settings,         // 设置状态管理
       resetSettings,    // 重置设置方法
       fontSizeIndex     // 字体大小索引
     };

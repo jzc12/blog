@@ -35,6 +35,7 @@ import mermaid from 'mermaid'
 
 export default {
   components: { Navigte, BackToTopButton, OutlineItem, Sidebar },
+  
   data() {
     return {
       renderedContent: '',
@@ -51,11 +52,13 @@ export default {
       timeInterval: null
     }
   },
+  
   computed: {
     isMarkdownRoute() {
       return this.$route.name === 'article'
     }
   },
+
   methods: {
 
     handleContentLoaded(content) {
@@ -315,7 +318,7 @@ export default {
     this.timeInterval = setInterval(() => this.updateCurrentTime(), 1000);
     // 绑定点击事件
     window.addEventListener('click', this.createClickEffect);
-  },
+  }
 }
 </script>
 
@@ -334,7 +337,7 @@ export default {
 }
 
 :root {
-  font-size: var(--global-font-size, 15px) !important;
+  font-size: var(--global-font-size);
 }
 
 </style>
