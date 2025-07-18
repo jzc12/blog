@@ -264,56 +264,50 @@ export default {
   },
   
   setup() {
-    const settingsStore = useSettingsStore()
+    const settings = useSettingsStore()
     const mainContentRef = ref(null)
-
-    const applyFontSize = (newSize) => {
-      if (document.documentElement) {
-        document.documentElement.style.setProperty('--global-font-size', newSize)
-      }
-    }
 
     const applyContentOpacity = (opacity) => {
       const opacityValue = opacity / 100
       document.documentElement.style.setProperty('--content-opacity', opacityValue.toString())
     }
 
-    watch(() => settingsStore.effectiveTheme, (newTheme) => {
+    watch(() => settings.effectiveTheme, (newTheme) => {
       document.documentElement.setAttribute('data-theme', newTheme)
-      settingsStore.backgroundColor = newTheme === 'light' ? '#a1c2b8' : '#436273'
-      settingsStore.applyBackground()
+      settings.backgroundColor = newTheme === 'light' ? '#a1c2b8' : '#436273'
+      settings.applyBackground()
     })
 
-    watch(() => settingsStore.currentFontSize, applyFontSize)
+    watch(() => settings.fontSizeIndex, () => {
+      settings.applyFontSize()
+    })
 
-    watch(() => settingsStore.contentOpacity, applyContentOpacity)
+    watch(() => settings.contentOpacity, applyContentOpacity)
 
-    watch(() => settingsStore.backgroundType, () => settingsStore.applyBackground())
+    watch(() => settings.backgroundType, () => settings.applyBackground())
 
-    watch(() => settingsStore.backgroundColor, () => settingsStore.applyBackground())
+    watch(() => settings.backgroundColor, () => settings.applyBackground())
 
     onMounted(() => {
       // 初始化主题
-      document.documentElement.setAttribute('data-theme', settingsStore.effectiveTheme)
-      
-      // 初始化字体大小
-      settingsStore.applyFontSize()
+      document.documentElement.setAttribute('data-theme', settings.effectiveTheme)
       
       // 初始化透明度
-      applyContentOpacity(settingsStore.contentOpacity)
+      applyContentOpacity(settings.contentOpacity)
 
       // 初始化背景
-      settingsStore.initTheme(); // 激活主题系统
-      settingsStore.applyBackground(); // 应用背景
+      settings.initTheme(); // 激活主题系统
+      settings.applyBackground(); // 应用背景
     })
 
     return { 
-      settingsStore, 
+      settings, 
       mainContentRef
     }
   },
 
   mounted() {
+    
     this.updateCurrentTime();
     this.timeInterval = setInterval(() => this.updateCurrentTime(), 1000);
     // 绑定点击事件

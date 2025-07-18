@@ -140,7 +140,7 @@
 <script>
 // ========================== 依赖导入 ==============================
 import { useSettingsStore } from '../stores/settings';
-import { onMounted, computed } from 'vue';
+import { onMounted } from 'vue';
 
 export default {
   name: 'SettingsPage',
@@ -148,13 +148,6 @@ export default {
   // ========================== 组件逻辑 ==============================
   setup() {
     const settings = useSettingsStore();
-    
-    const fontSizeIndex = computed({
-      get: () => settings.fontSizeIndex,
-      set: (value) => {
-        settings.setFontSize(parseInt(value));
-      }
-    });
 
     // 组件挂载时初始化主题
     onMounted(() => {
@@ -170,7 +163,6 @@ export default {
     return { 
       settings,         // 设置状态管理
       resetSettings,    // 重置设置方法
-      fontSizeIndex     // 字体大小索引
     };
   }
 }

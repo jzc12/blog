@@ -4,9 +4,7 @@ export const useSettingsStore = defineStore('settings', {
 
     state: () => ({
         // 字体大小索引（从 localStorage 中读取，默认为 1）
-        fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '0'),
-        // 可选的字体大小（px）
-        fontSizeSteps: ['13', '14', '15', '16'],
+        fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '1'),
 
         // 内容透明度（默认 70）
         contentOpacity: parseInt(localStorage.getItem('contentOpacity') || '70'),
@@ -24,7 +22,7 @@ export const useSettingsStore = defineStore('settings', {
 
     getters: {
         // 当前字体大小（带 px 单位）
-        currentFontSize() { return `${this.fontSizeSteps[this.fontSizeIndex]}px`; },
+        currentFontSize() { return `${12 + this.fontSizeIndex * 1}px`; },
 
         // 实际应用的主题（考虑系统设置）
         effectiveTheme() {
@@ -77,7 +75,10 @@ export const useSettingsStore = defineStore('settings', {
          * 应用字体大小样式
          */
         applyFontSize() {
+            console.log(`设置字体大小索引: ${this.fontSizeIndex}`);
             document.documentElement.style.setProperty('--global-font-size', this.currentFontSize);
+            console.log(`应用字体大小: ${this.currentFontSize}`);
+            localStorage.setItem('fontSizeIndex', this.fontSizeIndex);
         },
 
         /**
@@ -104,16 +105,6 @@ export const useSettingsStore = defineStore('settings', {
             this.theme = newTheme;
             localStorage.setItem('theme', newTheme);
             this.applyTheme();
-        },
-
-        /**
-         * 设置字体大小
-         * @param {number} index - 字体大小索引
-         */
-        setFontSize(index) {
-            this.fontSizeIndex = (index >= 0 && index < this.fontSizeSteps.length) ? index : this.fontSizeSteps.length - 1;
-            localStorage.setItem('fontSizeIndex', this.fontSizeIndex);
-            this.applyFontSize();
         },
 
         /**
@@ -151,7 +142,7 @@ export const useSettingsStore = defineStore('settings', {
          * 重置为默认设置
          */
         $reset() {
-            this.fontSizeIndex = 0;
+            this.fontSizeIndex = 1;
             this.contentOpacity = 70;
             this.backgroundType = 'color';
             this.theme = 'system';
