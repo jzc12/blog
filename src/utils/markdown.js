@@ -77,7 +77,7 @@ const md = new MarkdownIt({
                 }).join('');
 
                 return `
-                <div class="code-block-wrapper">
+                <div class="code-block-wrapper" data-language="${lang}">
                     <button class="copy-button" data-copied="false">
                         <span class="icon"></span>
                     </button>
@@ -119,8 +119,15 @@ md.renderer.rules.fence = function (tokens, idx, options) {
         return options.highlight(content, lang);
     }
 
-    // 否则手动 escape
-    return `<pre class="hljs"><code>${md.utils.escapeHtml(content)}</code></pre>`;
+    // 否则手动 escape，也添加语言标识
+    const langAttr = lang ? ` data-language="${lang}"` : '';
+    return `
+    <div class="code-block-wrapper"${langAttr}>
+        <button class="copy-button" data-copied="false">
+            <span class="icon"></span>
+        </button>
+        <pre class="hljs"><code>${md.utils.escapeHtml(content)}</code></pre>
+    </div>`;
 };
 
 // ================ 使用 KaTeX 渲染数学公式 ==================

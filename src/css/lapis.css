@@ -143,17 +143,49 @@
 .code-block-wrapper {
     position: relative;
     margin: 1.5em 0;
+    border-radius: 16px;
+    overflow: visible;
+    /* 改为 visible 以确保提示框不被裁剪 */
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    z-index: 1;
+    /* 确保代码块有基础层级 */
 }
 
 /* ========================== Markdown 代码块样式 ============================== */
 .markdown-body pre {
     margin: 1.5em 0;
     overflow-x: auto;
+    overflow-y: visible;
+    /* 确保垂直方向不裁剪提示框 */
     background: var(--code-bg);
-    padding: 1.25em;
-    border-radius: 12px;
+    padding: 0;
+    border-radius: 16px;
     border: 1px solid var(--code-border);
-    box-shadow: var(--shadow-sm);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* 代码块顶部装饰条 */
+.markdown-body pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            var(--primary-green) 0%,
+            var(--secondary-green) 50%,
+            var(--accent-green) 100%);
+    border-radius: 16px 16px 0 0;
 }
 
 .markdown-body pre mermaid {
@@ -166,24 +198,31 @@
     top: 12px;
     right: 12px;
     padding: 6px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
+    background: var(--code-button-bg);
+    border: 1px solid var(--code-button-border);
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    z-index: 2;
-    width: 32px;
-    height: 32px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    width: 30px;
+    height: 30px;
+    backdrop-filter: blur(8px);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 /* 复制按钮悬停效果 */
 .copy-button:hover {
-    background: rgba(255, 255, 255, 1);
-    border-color: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background: var(--code-button-hover-bg);
+    border-color: var(--code-button-hover-border);
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
 }
 
 /* 复制按钮图标样式 */
@@ -191,14 +230,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
-    color: #666;
+    width: 18px;
+    height: 18px;
+    color: var(--code-button-text);
+    transition: color 0.3s ease;
 }
 
 /* 复制成功状态图标样式 */
 .copy-button[data-copied="true"] .icon {
-    color: #22c55e;
+    color: var(--success-color);
+}
+
+.copy-button[data-copied="true"] {
+    background: var(--success-bg);
+    border-color: var(--success-border);
 }
 
 .copy-button::after {
@@ -207,22 +252,36 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 4px 8px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    border-radius: 4px;
+    padding: 6px 12px;
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border-radius: 6px;
     font-size: 12px;
+    font-weight: 500;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     white-space: nowrap;
     margin-top: 8px;
     pointer-events: none;
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+}
+
+.copy-button[data-copied="true"]::after {
+    content: "复制成功!";
+    background: var(--success-bg);
+    color: var(--success-text);
+    z-index: 10000;
 }
 
 .copy-button:hover::after {
     opacity: 1;
     visibility: visible;
+    transform: translateX(-50%) translateY(-2px);
 }
 
 .markdown-body pre code {
@@ -300,67 +359,130 @@
     color: var(--code-text) !important;
 }
 
-/* 深色模式代码高亮颜色 */
+/* 深色模式代码高亮颜色 - 更加鲜艳和对比度高 */
 [data-theme="dark"] .hljs {
-    --hljs-comment: #7a8b9c;
-    --hljs-keyword: #c792ea;
-    --hljs-string: #effed8;
-    --hljs-number: #f78c6c;
-    --hljs-function: #a7c3ff;
-    --hljs-class: #ffcb6b;
-    --hljs-variable: #f07178;
-    --hljs-operator: #89ddff;
+    --hljs-comment: #7c8b9c;
+    --hljs-keyword: #ff79c6;
+    --hljs-string: #50fa7b;
+    --hljs-number: #ffb86c;
+    --hljs-function: #8be9fd;
+    --hljs-class: #f1fa8c;
+    --hljs-variable: #ff5555;
+    --hljs-operator: #ff79c6;
+    --hljs-built-in: #bd93f9;
+    --hljs-type: #8be9fd;
+    --hljs-literal: #ffb86c;
+    --hljs-title: #50fa7b;
+    --hljs-attr: #f1fa8c;
+    --hljs-meta: #a6e4aa;
 }
 
-/* 浅色模式代码高亮颜色 */
+/* 浅色模式代码高亮颜色 - GitHub 风格优化 */
 .hljs {
     --hljs-comment: #6a737d;
     --hljs-keyword: #d73a49;
-    --hljs-string: #1b77e0;
+    --hljs-string: #50fa7b;
     --hljs-number: #005cc5;
     --hljs-function: #6f42c1;
     --hljs-class: #22863a;
     --hljs-variable: #e36209;
     --hljs-operator: #d73a49;
+    --hljs-built-in: #005cc5;
+    --hljs-type: #6f42c1;
+    --hljs-literal: #005cc5;
+    --hljs-title: #22863a;
+    --hljs-attr: #6f42c1;
+    --hljs-meta: #6a737d;
+}
+
+.hljs-meta .hljs-string {
+    color: var(--hljs-meta);
 }
 
 /* 代码高亮具体语法颜色 */
-.hljs-comment {
+.hljs-comment,
+.hljs-quote {
     color: var(--hljs-comment);
+    font-style: italic;
 }
 
-.hljs-keyword {
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
     color: var(--hljs-keyword);
 }
 
-.hljs-string {
+.hljs-string,
+.hljs-doctag {
     color: var(--hljs-string);
 }
 
-.hljs-number {
+.hljs-number,
+.hljs-literal {
     color: var(--hljs-number);
 }
 
-.hljs-function {
+.hljs-function,
+.hljs-title {
     color: var(--hljs-function);
 }
 
-.hljs-class .hljs-title {
+.hljs-class .hljs-title,
+.hljs-type {
     color: var(--hljs-class);
 }
 
-.hljs-variable {
+.hljs-variable,
+.hljs-template-variable {
     color: var(--hljs-variable);
 }
 
-.hljs-operator {
+.hljs-operator,
+.hljs-punctuation {
     color: var(--hljs-operator);
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+    color: var(--hljs-built-in);
+}
+
+.hljs-attr,
+.hljs-attribute {
+    color: var(--hljs-attr);
+}
+
+.hljs-meta,
+.hljs-meta-keyword {
+    color: var(--hljs-meta);
+}
+
+.hljs-tag {
+    color: var(--hljs-keyword);
+}
+
+.hljs-name {
+    color: var(--hljs-function);
+}
+
+.hljs-selector-id,
+.hljs-selector-class {
+    color: var(--hljs-class);
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
 }
 
 /* 代码行号样式 */
 .hljs.with-line-numbers {
     display: flex !important;
-    padding: 1em 0 !important;
+    padding: 1.5em 0 !important;
+    margin-bottom: 0;
     overflow-x: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb) transparent;
@@ -368,56 +490,70 @@
 
 /* Webkit 浏览器的滚动条样式 */
 .hljs.with-line-numbers::-webkit-scrollbar {
-    height: 6px;
+    height: 8px;
 }
 
 .hljs.with-line-numbers::-webkit-scrollbar-track {
     background: transparent;
+    border-radius: 4px;
 }
 
 .hljs.with-line-numbers::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
+    background-color: var(--scrollbar-thumb);
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 .hljs.with-line-numbers::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--scrollbar-thumb-hover);
 }
 
 .hljs.with-line-numbers code {
     display: table;
     min-width: 100%;
-    padding-left: 3.5em;
+    padding-left: 4em;
+    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
 .hljs.with-line-numbers .line-number {
     display: block;
     position: absolute;
     left: 0;
-    width: 3em;
+    width: 3.5em;
     text-align: right;
     padding: 0 1em;
-    color: var(--text-tertiary);
-    opacity: 0.6;
+    color: var(--line-number-color);
+    opacity: 0.7;
     user-select: none;
-    background: var(--code-bg);
-    border-right: 1px solid var(--code-border);
+    background: var(--line-number-bg);
+    border-right: 2px solid var(--line-number-border);
+    font-size: var(--font-size-sm);
+    transition: all 0.3s ease;
 }
 
 .hljs.with-line-numbers .code-line {
     display: table-row;
     min-height: 1.6em;
+    transition: background-color 0.2s ease;
 }
 
 .hljs.with-line-numbers .code-line:hover {
-    background-color: var(--hover-bg);
+    background-color: var(--code-line-hover);
+}
+
+.hljs.with-line-numbers .code-line:hover .line-number {
+    opacity: 1;
+    color: var(--line-number-hover);
 }
 
 .hljs.with-line-numbers .code-content {
     display: table-cell;
-    padding-left: 1em;
+    padding: 0.1em 1.5em 0.1em 1em;
     white-space: pre;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
 /* 响应式优化 */

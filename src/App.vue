@@ -319,6 +319,7 @@ export default {
 <style>
 @import "./css/style.css";
 @import "./css/lapis.css";
+@import "./css/code-blocks.css";
 @import "./css/prism-theme.css";
 @import "./css/animations.css";
 @import "./css/layout.css";

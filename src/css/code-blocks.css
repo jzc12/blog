@@ -1,0 +1,277 @@
+/* ========================== 代码块增强样式 ============================== */
+
+/* 代码块语言标签 */
+.code-block-wrapper::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    background: var(--code-language-bg);
+    color: var(--code-language-text);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: var(--font-size-ssm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.code-block-wrapper:hover::before {
+    opacity: 1;
+}
+
+/* 特定语言的颜色标识 */
+.code-block-wrapper[data-language="javascript"]::before,
+.code-block-wrapper[data-language="js"]::before {
+    background: #f7df1e;
+    color: #000;
+}
+
+.code-block-wrapper[data-language="typescript"]::before,
+.code-block-wrapper[data-language="ts"]::before {
+    background: #3178c6;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="python"]::before {
+    background: #3776ab;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="java"]::before {
+    background: #ed8b00;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="csharp"]::before,
+.code-block-wrapper[data-language="c#"]::before {
+    background: #239120;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="cpp"]::before,
+.code-block-wrapper[data-language="c++"]::before {
+    background: #00599c;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="html"]::before {
+    background: #e34f26;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="css"]::before {
+    background: #1572b6;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="bash"]::before,
+.code-block-wrapper[data-language="shell"]::before {
+    background: #4eaa25;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="json"]::before {
+    background: #000;
+    color: #fff;
+}
+
+.code-block-wrapper[data-language="sql"]::before {
+    background: #336791;
+    color: #fff;
+}
+
+/* 代码块行高亮 */
+.hljs.with-line-numbers .code-line.highlighted {
+    background-color: var(--code-line-highlight);
+    position: relative;
+}
+
+.hljs.with-line-numbers .code-line.highlighted::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary-green);
+}
+
+/* 代码块折叠功能 */
+.code-block-wrapper.collapsible {
+    max-height: 400px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.code-block-wrapper.collapsible.expanded {
+    max-height: none;
+}
+
+.code-block-wrapper.collapsible::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(transparent, var(--code-bg));
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.code-block-wrapper.collapsible.expanded::after {
+    opacity: 0;
+}
+
+.expand-button {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--code-button-bg);
+    border: 1px solid var(--code-button-border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--code-button-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.expand-button:hover {
+    background: var(--code-button-hover-bg);
+    border-color: var(--code-button-hover-border);
+}
+
+/* 代码块搜索高亮 */
+.hljs .search-highlight {
+    background: rgba(255, 235, 59, 0.3);
+    border-radius: 2px;
+    padding: 1px 2px;
+    animation: highlight-pulse 2s ease-in-out;
+}
+
+@keyframes highlight-pulse {
+
+    0%,
+    100% {
+        background: rgba(255, 235, 59, 0.3);
+    }
+
+    50% {
+        background: rgba(255, 235, 59, 0.6);
+    }
+}
+
+/* 代码块性能优化 */
+.hljs.with-line-numbers {
+    contain: layout style paint;
+    will-change: scroll-position;
+}
+
+/* 代码块无障碍访问 */
+.hljs.with-line-numbers:focus-within {
+    outline: 2px solid var(--primary-green);
+    outline-offset: 2px;
+}
+
+.hljs.with-line-numbers .code-line:focus {
+    background-color: var(--code-line-focus);
+    outline: none;
+}
+
+/* 代码块打印样式 */
+@media print {
+    .code-block-wrapper {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .copy-button,
+    .expand-button {
+        display: none;
+    }
+
+    .hljs.with-line-numbers {
+        overflow: visible;
+    }
+
+    .hljs.with-line-numbers .line-number {
+        background: transparent;
+        border-right: 1px solid #ccc;
+    }
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .code-block-wrapper::before {
+        font-size: 10px;
+        padding: 3px 6px;
+        top: 8px;
+        left: 12px;
+    }
+
+    .copy-button {
+        width: 32px;
+        height: 32px;
+        top: 8px;
+        right: 12px;
+    }
+
+    .copy-button .icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .hljs.with-line-numbers code {
+        padding-left: 3em;
+        font-size: 0.8rem;
+    }
+
+    .hljs.with-line-numbers .line-number {
+        width: 2.5em;
+        font-size: 0.75rem;
+    }
+
+    .hljs.with-line-numbers .code-content {
+        padding-left: 0.8em;
+        font-size: 0.8rem;
+    }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+    .code-block-wrapper {
+        border-width: 2px;
+    }
+
+    .hljs.with-line-numbers .line-number {
+        border-right-width: 2px;
+        opacity: 1;
+    }
+
+    .copy-button {
+        border-width: 2px;
+    }
+}
+
+/* 减少动画模式支持 */
+@media (prefers-reduced-motion: reduce) {
+
+    .code-block-wrapper,
+    .markdown-body pre,
+    .copy-button,
+    .hljs.with-line-numbers .code-line {
+        transition: none;
+    }
+
+    .code-block-wrapper:hover,
+    .markdown-body pre:hover {
+        transform: none;
+    }
+}
