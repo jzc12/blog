@@ -2,10 +2,10 @@
 <template>
   <div class="app-container">
     <!-- 导航栏 -->
-    <Navigte :class="{ 'nav-hidden': isNavHidden && !isMarkdownRoute }" />
+    <Navigte />
 
     <!-- 主内容区域 -->
-    <div class="main-content-wrapper" :class="{'three-col': isMarkdownRoute, 'single-col': !isMarkdownRoute, 'nav-hidden': isNavHidden && !isMarkdownRoute }">
+    <div class="main-content-wrapper" :class="{'three-col': isMarkdownRoute, 'single-col': !isMarkdownRoute}">
       <!-- 左侧大纲容器 -->
       <div class="outline-container" v-if="isMarkdownRoute">
         <OutlineItem :outline="isMarkdownRoute ? articleOutline : []" v-for="heading in articleOutline" :key="heading.id" :heading="heading" @scroll-to="handleScrollToHeading" />
@@ -224,48 +224,6 @@ export default {
           this.updateOutlineExpansion(this.articleOutline, currentHeading.id);
         }
       }, 150);
-    },
-
-    //  导航栏隐藏相关 
-    // 处理导航栏显示/隐藏逻辑
-    handleNavVisibility(contentElement) {
-      const currentScrollTop = contentElement.scrollTop;
-      const scrollThreshold = 100; // 滚动阈值
-
-      // 向下滚动且超过阈值时隐藏导航栏
-      if (currentScrollTop > this.lastScrollTop && currentScrollTop > scrollThreshold) {
-        this.isNavHidden = true;
-      }
-      // 滚动到顶部附近时显示导航栏
-      else if (currentScrollTop <= scrollThreshold) {
-        this.isNavHidden = false;
-      }
-
-      this.lastScrollTop = currentScrollTop;
-    },
-
-    // 处理window滚动事件（备用方案）
-    handleWindowScroll() {
-      if (!this.isMarkdownRoute) return;
-      if (this.scrollTimeout) {
-        clearTimeout(this.scrollTimeout);
-      }
-
-      this.scrollTimeout = setTimeout(() => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollThreshold = 100;
-
-        // 向下滚动且超过阈值时隐藏导航栏
-        if (scrollTop > this.lastScrollTop && scrollTop > scrollThreshold) {
-          this.isNavHidden = true;
-        }
-        // 滚动到顶部附近时显示导航栏
-        else if (scrollTop <= scrollThreshold) {
-          this.isNavHidden = false;
-        }
-
-        this.lastScrollTop = scrollTop;
-      }, 50);
     },
 
     //  大纲展开控制 
