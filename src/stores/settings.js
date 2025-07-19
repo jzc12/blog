@@ -75,9 +75,7 @@ export const useSettingsStore = defineStore('settings', {
          * 应用字体大小样式
          */
         applyFontSize() {
-            console.log(`设置字体大小索引: ${this.fontSizeIndex}`);
             document.documentElement.style.setProperty('--global-font-size', this.currentFontSize);
-            console.log(`应用字体大小: ${this.currentFontSize}`);
             localStorage.setItem('fontSizeIndex', this.fontSizeIndex);
         },
 

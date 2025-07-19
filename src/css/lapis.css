@@ -162,7 +162,6 @@
     overflow-x: auto;
     overflow-y: visible;
     /* 确保垂直方向不裁剪提示框 */
-    background: var(--code-bg);
     padding: 0;
     border-radius: 16px;
     border: 1px solid var(--code-border);
@@ -180,7 +179,6 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
     background: linear-gradient(90deg,
             var(--primary-green) 0%,
             var(--secondary-green) 50%,
@@ -188,8 +186,28 @@
     border-radius: 16px 16px 0 0;
 }
 
-.markdown-body pre mermaid {
+/* ========================== Mermaid 图表样式 ============================== */
+
+.mermaid {
+    background-color: #c3d0df;
+    border-radius: 12px;
+    padding: 1.5em;
+    margin: 1.5em 0;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    border: 1px solid var(--mermaid-border);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+}
+
+.mermaid:hover {
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
 }
 
 /* ========================== 复制按钮样式 ============================== */
@@ -359,40 +377,42 @@
     color: var(--code-text) !important;
 }
 
-/* 深色模式代码高亮颜色 - 更加鲜艳和对比度高 */
+/* 深色模式代码高亮颜色 - 简洁优雅风格 */
 [data-theme="dark"] .hljs {
-    --hljs-comment: #7c8b9c;
-    --hljs-keyword: #ff79c6;
-    --hljs-string: #50fa7b;
-    --hljs-number: #ffb86c;
-    --hljs-function: #8be9fd;
-    --hljs-class: #f1fa8c;
-    --hljs-variable: #ff5555;
-    --hljs-operator: #ff79c6;
-    --hljs-built-in: #bd93f9;
-    --hljs-type: #8be9fd;
-    --hljs-literal: #ffb86c;
-    --hljs-title: #50fa7b;
-    --hljs-attr: #f1fa8c;
-    --hljs-meta: #a6e4aa;
+    --hljs-comment: #8b949e;
+    --hljs-keyword: #79c0ff;
+    --hljs-string: #a5d6ff;
+    --hljs-number: #79c0ff;
+    --hljs-function: #f8f1ff;
+    --hljs-class: #7ee787;
+    --hljs-variable: #ffa657;
+    --hljs-operator: #79c0ff;
+    --hljs-built-in: #d8c1f1;
+    --hljs-type: #7ee787;
+    --hljs-literal: #79c0ff;
+    --hljs-title: #7ee787;
+    --hljs-attr: #7ee787;
+    --hljs-meta: #8b949e;
+    --mermaid-color: #8b949e;
 }
 
-/* 浅色模式代码高亮颜色 - GitHub 风格优化 */
+/* 浅色模式代码高亮颜色 - 简洁专业风格 */
 .hljs {
     --hljs-comment: #6a737d;
-    --hljs-keyword: #d73a49;
-    --hljs-string: #50fa7b;
-    --hljs-number: #005cc5;
-    --hljs-function: #6f42c1;
-    --hljs-class: #22863a;
-    --hljs-variable: #e36209;
-    --hljs-operator: #d73a49;
-    --hljs-built-in: #005cc5;
-    --hljs-type: #6f42c1;
-    --hljs-literal: #005cc5;
-    --hljs-title: #22863a;
-    --hljs-attr: #6f42c1;
+    --hljs-keyword: #0969da;
+    --hljs-string: #0a3069;
+    --hljs-number: #0550ae;
+    --hljs-function: #b18cf4;
+    --hljs-class: #116329;
+    --hljs-variable: #953800;
+    --hljs-operator: #0969da;
+    --hljs-built-in: #8250df;
+    --hljs-type: #116329;
+    --hljs-literal: #0550ae;
+    --hljs-title: #116329;
+    --hljs-attr: #116329;
     --hljs-meta: #6a737d;
+    --mermaid-color: #6a737d;
 }
 
 .hljs-meta .hljs-string {
@@ -422,6 +442,7 @@
     color: var(--hljs-number);
 }
 
+.hljs-title .function_,
 .hljs-function,
 .hljs-title {
     color: var(--hljs-function);

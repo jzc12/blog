@@ -175,7 +175,7 @@
     --text-light: #ffffff;
 
     /* 代码块颜色 */
-    --code-bg: rgba(15, 23, 42, 0.95);
+    --code-bg: rgba(18, 18, 20, 0.95);
     --code-text: #e2e8f0;
     --code-border: rgba(71, 85, 105, 0.4);
     --scrollbar-thumb: rgba(71, 85, 105, 0.6);

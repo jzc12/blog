@@ -5,43 +5,47 @@
     content: attr(data-language);
     position: absolute;
     top: 12px;
-    left: 10px;
+    left: 16px;
     background: var(--code-language-bg);
     color: var(--code-language-text);
-    padding: 4px 8px;
+    padding: 4px 4px;
     border-radius: 4px;
-    font-size: var(--font-size-ssm);
+    font-size: 6px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    z-index: 2;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    z-index: 5;
+    opacity: 1;
+    pointer-events: none;
 }
 
+
+/* 悬停时显示 */
 .code-block-wrapper:hover::before {
     opacity: 1;
 }
 
+
+
 /* 特定语言的颜色标识 */
 .code-block-wrapper[data-language="javascript"]::before,
 .code-block-wrapper[data-language="js"]::before {
-    background: #f7df1e;
-    color: #000;
+    background: #4eaa25;
+    color: #fff;
 }
 
 .code-block-wrapper[data-language="typescript"]::before,
 .code-block-wrapper[data-language="ts"]::before {
-    background: #3178c6;
+    background: #4eaa25;
     color: #fff;
 }
 
 .code-block-wrapper[data-language="python"]::before {
-    background: #3776ab;
+    background: #4eaa25;
     color: #fff;
 }
 
 .code-block-wrapper[data-language="java"]::before {
-    background: #ed8b00;
+    background: #4eaa25;
     color: #fff;
 }
 
@@ -53,17 +57,17 @@
 
 .code-block-wrapper[data-language="cpp"]::before,
 .code-block-wrapper[data-language="c++"]::before {
-    background: #00599c;
+    background: #4eaa25;
     color: #fff;
 }
 
 .code-block-wrapper[data-language="html"]::before {
-    background: #e34f26;
+    background: #4eaa25;
     color: #fff;
 }
 
 .code-block-wrapper[data-language="css"]::before {
-    background: #1572b6;
+    background: #4eaa25;
     color: #fff;
 }
 
@@ -74,12 +78,12 @@
 }
 
 .code-block-wrapper[data-language="json"]::before {
-    background: #000;
+    background: #4eaa25;
     color: #fff;
 }
 
 .code-block-wrapper[data-language="sql"]::before {
-    background: #336791;
+    background: #4eaa25;
     color: #fff;
 }
 
