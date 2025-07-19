@@ -458,6 +458,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    :root {
+        --header-height: 40px;
+    }
+
     .main-content-wrapper.three-col {
         display: flex;
         padding: 0.5rem;

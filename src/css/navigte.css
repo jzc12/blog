@@ -196,6 +196,7 @@ a:hover {
 /* 响应式布局 */
 @media (max-width: 768px) {
     .Navigte {
+        padding: 5px 5%;
         justify-content: center;
         display: flex;
     }
