@@ -3,11 +3,11 @@
 /* 侧边栏主容器 */
 .Navigte {
     width: 100%;
-    min-height: 60px;
+    min-height: 5vh;
     background: var(--bg-overlay);
     border-right: none;
     border-bottom: 1px solid var(--code-border);
-    padding: 20px 20%;
+    padding: 12px 20%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -15,13 +15,23 @@
     overflow-y: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     backdrop-filter: var(--blur-md);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     -webkit-user-select: none;
     user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+/* 导航栏隐藏状态 */
+.Navigte.nav-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
 }
 
 /* 隐藏滚动条 */
@@ -186,8 +196,6 @@ a:hover {
 /* 响应式布局 */
 @media (max-width: 768px) {
     .Navigte {
-        height: auto !important;
-        padding: 5px 5%;
         justify-content: center;
         display: flex;
     }

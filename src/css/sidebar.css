@@ -1,12 +1,11 @@
 .sidebar-container {
     min-width: 200px;
+    height: auto;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
     position: sticky;
-    top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -14,6 +13,7 @@
 }
 
 .info-card {
+    margin-top: 0;
     background-color: var(--content-bg);
     border-radius: 12px;
     padding: 1rem;

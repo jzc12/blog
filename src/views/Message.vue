@@ -103,7 +103,6 @@ export default {
           alert('发送消息失败，请稍后重试')
         }
       } catch (error) {
-        console.error('发送消息失败：', error)
         alert('发送消息失败，请稍后重试')
       }
     },
@@ -119,7 +118,6 @@ export default {
           await this.$refs.messageForm.fetchTodayCount()
         }
       } catch (error) {
-        console.error('加载消息失败：', error)
         alert('加载消息失败，请稍后重试')
       } finally {
         this.isLoading = false

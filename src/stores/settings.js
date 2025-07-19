@@ -22,7 +22,7 @@ export const useSettingsStore = defineStore('settings', {
 
     getters: {
         // 当前字体大小（带 px 单位）
-        currentFontSize() { return `${12 + this.fontSizeIndex * 1}px`; },
+        currentFontSize() { return `${13 + this.fontSizeIndex * 1}px`; },
 
         // 实际应用的主题（考虑系统设置）
         effectiveTheme() {

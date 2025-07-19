@@ -46,6 +46,8 @@ export default {
         if (newVal) {
           this.scrollElement = newVal;
           newVal.addEventListener('scroll', this.handleScroll);
+          // 立即检查一次滚动状态
+          this.handleScroll();
         } else {
           // 如果没有指定容器，则监听窗口滚动
           this.scrollElement = window;
@@ -57,10 +59,20 @@ export default {
   },
 
   // ========================== 生命周期钩子 ==============================
+  mounted() {
+    if (this.targetRef) {
+      this.scrollElement = this.targetRef;
+      this.targetRef.addEventListener('scroll', this.handleScroll);
+      this.handleScroll(); // 立即检查一次
+    }
+  },
+
   beforeUnmount() {
     // 组件卸载前移除滚动监听
-    if (this.scrollElement) {
+    if (this.scrollElement && this.scrollElement !== window) {
       this.scrollElement.removeEventListener('scroll', this.handleScroll);
+    } else if (this.scrollElement === window) {
+      window.removeEventListener('scroll', this.handleScroll);
     }
   },
 
@@ -68,12 +80,24 @@ export default {
   methods: {
     // 处理滚动事件，控制按钮显示
     handleScroll() {
-      this.isVisible = this.scrollElement.scrollTop > 400;
+      if (this.scrollElement === window) {
+        // 如果是窗口滚动
+        this.isVisible = window.pageYOffset > 400;
+      } else {
+        // 如果是容器滚动
+        this.isVisible = this.scrollElement.scrollTop > 400;
+      }
     },
 
     // 滚动到顶部
     scrollToTop() {
-      this.scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+      if (this.scrollElement === window) {
+        // 如果是窗口滚动
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // 如果是容器滚动
+        this.scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   },
 

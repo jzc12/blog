@@ -227,8 +227,9 @@ body {
     /* background-image: url('../assets/background1.png'); */
     background-size: cover;
     background-position: center fixed;
-    height: 100vh;
-    overflow: hidden;
+    background-attachment: fixed;
+    /* 确保背景固定 */
+    min-height: 100vh;
     color: var(--text-primary);
     transition: color var(--transition-normal);
 }
@@ -238,18 +239,33 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 100vh;
-    overflow: hidden;
+    /* 改为最小高度，允许内容超出 */
+    /* overflow: hidden; */
+    /* 移除overflow限制，允许footer显示 */
 }
 
 .main-content-wrapper {
     display: grid;
     /* grid-template-columns: 1fr 70% 1fr; */
     width: 100%;
-    height: calc(100vh - var(--header-height));
+    min-height: calc(100vh - var(--header-height));
+    /* 改为最小高度 */
     /* align-self: center; */
     align-items: start;
     padding: 0.25rem;
+    margin-top: var(--header-height);
+    /* 为固定导航栏腾出空间 */
+    transition: margin-top 0.3s ease;
+}
+
+/* 导航栏隐藏时，减少顶部边距 */
+.main-content-wrapper.nav-hidden {
+    margin-top: 0;
+}
+
+/* 确保内容区域也有平滑过渡 */
+.content {
+    transition: all 0.3s ease;
 }
 
 /* 三列布局 (文章页面) */
@@ -277,23 +293,35 @@ body {
     top: var(--header-height);
     scrollbar-width: thin;
     scrollbar-color: var(--primary-green) transparent;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    transition: top 0.3s ease, max-height 0.3s ease;
+}
+
+/* 导航栏隐藏时，大纲容器滑动到顶部 */
+.nav-hidden .outline-container {
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
 }
 
 .content {
     /* grid-column: 2; */
     width: 100%;
-    height: calc(100vh - var(--header-height) - 1rem);
+    min-height: calc(100vh - var(--header-height) - 1rem);
     overflow-y: auto;
     background-color: var(--content-bg);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     backdrop-filter: var(--blur-md);
     border: 1px solid var(--code-border);
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 2rem;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-green) transparent;
     transition: background-color var(--transition-normal);
+
+    /* 优化阅读体验 */
+    line-height: 1.8;
+    letter-spacing: 0.02em;
 }
 
 /* 三列布局时中间位置 */
@@ -372,6 +400,13 @@ body {
     top: var(--header-height);
     scrollbar-width: thin;
     scrollbar-color: var(--primary-green) transparent;
+    transition: top 0.3s ease, height 0.3s ease;
+}
+
+/* 导航栏隐藏时，侧边栏滑动到顶部 */
+.nav-hidden .sidebar-container {
+    top: 1rem;
+    height: calc(100vh - 2rem);
 }
 
 
@@ -418,7 +453,7 @@ body {
 
     /* 中等屏幕缩小居中宽度 */
     .main-content-wrapper.single-col {
-        grid-template-columns: 1fr minmax(auto, 60%) 1fr;
+        grid-template-columns: 1fr minmax(auto, 768px) 1fr;
     }
 }
 
@@ -426,6 +461,13 @@ body {
     .main-content-wrapper.three-col {
         display: flex;
         padding: 0.5rem;
+        margin-top: var(--header-height);
+        /* 移动端保持导航栏空间 */
+    }
+
+    .main-content-wrapper.three-col.nav-hidden {
+        margin-top: 0;
+        /* 导航栏隐藏时移除顶部边距 */
     }
 
     .three-col .outline-container {
@@ -442,6 +484,11 @@ body {
     /* 小屏幕单列布局改为全宽 */
     .main-content-wrapper.single-col {
         grid-template-columns: 1fr;
+        margin-top: var(--header-height);
+    }
+
+    .main-content-wrapper.single-col.nav-hidden {
+        margin-top: 0;
     }
 
     .single-col .content {

@@ -1,7 +1,7 @@
 // ========================== 导航栏组件 ==============================
 <template>
   <!-- 侧边栏主容器 -->
-  <div class="Navigte">
+  <div class="Navigte" :class="$attrs.class">
     <!-- 博客标题 -->
     <h2 v-show="showTitle">zc 的博客<span class="cursor">_</span></h2>
 
@@ -28,6 +28,7 @@ import { getAllPublicMessageCount } from '../utils/supabase.js';
 
 export default {
   name: 'Navigte',
+  inheritAttrs: false,
 
   // ========================== 组件属性定义 ==============================
   props: {
