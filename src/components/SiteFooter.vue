@@ -4,7 +4,7 @@
       <div class="footer-section">
         <h4>网站信息</h4>
         <p>© 2025 zc's Blog. All rights reserved.</p>
-        <p>备案号：待备案</p>
+        <p>备案号：管局审核中</p>
       </div>
       <div class="footer-section">
         <h4>访问统计</h4>

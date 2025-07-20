@@ -1,5 +1,4 @@
 .outline-container:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     border-color: var(--primary-color);
 }
@@ -34,8 +33,7 @@
 
 /* 悬停效果 */
 .outline-item-wrapper:hover {
-    background: var(--bg-hover);
-    transform: translateX(4px);
+    background-color: var(--hover-bg);
 }
 
 /* 展开/折叠图标 */
@@ -56,11 +54,6 @@
 .toggle-icon.placeholder {
     /* 占位但不显示内容 */
     visibility: hidden;
-}
-
-.toggle-icon:hover {
-    background: var(--primary-green-transparent);
-    transform: scale(1.1);
 }
 
 /* 大纲图标 */
@@ -138,10 +131,6 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-}
-
-.outline-item-wrapper:hover a {
-    color: var(--primary-green);
 }
 
 /* 活动状态 */

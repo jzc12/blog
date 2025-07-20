@@ -103,6 +103,7 @@ graph LR
 // 同时执行多个异步任务
 var tasks = new Task[] { task1, task2, task3 };
 
+// 任务工厂，感觉像线程池
 // 所有任务完成后执行回调
 Task.Factory.ContinueWhenAll(tasks, t => 
 {
