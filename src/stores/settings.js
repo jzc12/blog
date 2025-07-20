@@ -7,7 +7,7 @@ export const useSettingsStore = defineStore('settings', {
         fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '1'),
 
         // 内容透明度（默认 70）
-        contentOpacity: parseInt(localStorage.getItem('contentOpacity') || '5'),
+        contentOpacity: parseInt(localStorage.getItem('contentOpacity') || '56'),
 
         // 主题设置：'light' | 'dark' | 'system'
         theme: localStorage.getItem('theme') || 'system',
@@ -84,10 +84,8 @@ export const useSettingsStore = defineStore('settings', {
          */
         applyBackground() {
             if (this.backgroundType === 'image') {
-                this.contentOpacity = 80;
                 document.body.style.backgroundImage = `url(../assets/background1.png)`;
             } else if (this.backgroundType === 'color') {
-                this.contentOpacity = 5;
                 document.body.style.backgroundImage = '';
                 document.body.style.backgroundColor = this.backgroundColor;
             } else {
@@ -142,7 +140,7 @@ export const useSettingsStore = defineStore('settings', {
          */
         $reset() {
             this.fontSizeIndex = 1;
-            this.contentOpacity = 5;
+            this.contentOpacity = 56;
             this.backgroundType = 'color';
             this.theme = 'system';
             this.saveSettings();

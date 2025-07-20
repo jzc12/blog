@@ -372,7 +372,14 @@ export default {
     watch(() => settings.contentOpacity, applyContentOpacity)
 
     // 监听背景类型变化
-    watch(() => settings.backgroundType, () => settings.applyBackground())
+    watch(() => settings.backgroundType, (newType) =>{ 
+      if (newType === 'image') {
+        settings.contentOpacity = 80
+      } else if (newType === 'color') {
+        settings.contentOpacity = 56
+      }
+      settings.applyBackground()
+    })
 
     // 监听背景颜色变化
     watch(() => settings.backgroundColor, () => settings.applyBackground())
