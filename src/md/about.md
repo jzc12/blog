@@ -20,6 +20,8 @@
 
 之后备案通过后： [jzc12.site](https://jzc12.site) (备案流程中))(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
 
+
+
 大部分代码都是 借助 Cursor 、chatGpt 、agument 、deepseek， 然后再此基础上更改的，特别是 UI 
 
 并不是用AI，就代表不会什么，能用现在的AI 写出成果也是一种能力呢(◕‿◕✿)
