@@ -19,7 +19,5 @@ summary: 高级算法作业3
 
 Simple Contention Resolution via Multiplicative Weight Updates
 
-https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.SOSA.2019.16
-
-
+[论文](https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.SOSA.2019.16)
 
