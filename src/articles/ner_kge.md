@@ -101,8 +101,8 @@ output\model-last
 
 ## 关系抽取
 
-| 关系类型                   | 实体类型组合 | 示例                                                                                                   |
-| -------------------------- | ------------ | ------------------------------------------------------------------------------------------------------ |
+| 关系类型         | 实体类型组合 | 示例                                                                                                   |
+| ---------------- | ------------ | ------------------------------------------------------------------------------------------------------ |
 | affiliated\_with | PER - ORG    | John works at Google.                                      ("John", "works\_for", "Google")            |
 | located\_in      | ORG - LOC    | UN headquarters is in New York.                   ("UN headquarters", "located\_in", "New York")       |
 | travels\_to      | PER - LOC    | Ekeus heads for Baghdad.                               ("Ekeus", "travels\_to", "Baghdad")             |
@@ -114,20 +114,18 @@ output\model-last
 
 ## 评估
 
-| 指标名                                    | 含义        | 用途          |
-| -------------------------------------- | --------- | ------------- |
-| `hits_at_1`                            | Top-1 命中率 | 模型精度指标（可视化首选） |
-| `hits_at_3`, `hits_at_5`, `hits_at_10` | Top-k 命中率 | 趋势展示，用于横向比较   |
-| `geometric_mean_rank`                  | 几何平均排名    | 替代 MR，排名越小越好  |
-| `harmonic_mean_rank`                   | 调和平均排名    | 更强调低 rank     |
-| `median_rank`                          | 中位排名      | 稳健性评估（抗极端值）   |
-
-
+| 指标名                                       | 含义         | 用途                       |
+| -------------------------------------------- | ------------ | -------------------------- |
+| `hits_at_1`                                | Top-1 命中率 | 模型精度指标（可视化首选） |
+| `hits_at_3`, `hits_at_5`, `hits_at_10` | Top-k 命中率 | 趋势展示，用于横向比较     |
+| `geometric_mean_rank`                      | 几何平均排名 | 替代 MR，排名越小越好      |
+| `harmonic_mean_rank`                       | 调和平均排名 | 更强调低 rank              |
+| `median_rank`                              | 中位排名     | 稳健性评估（抗极端值）     |
 
 ## 架构图
 
 ```mermaid
-graph TD
+graph LR
     A[原始文本数据\n data/test/test.txt  ]
     B[数据预处理\n data_preprocess  ]
     C[NER模型训练\n SpaCy train  ]
@@ -166,9 +164,5 @@ graph TD
 ```
 
 ## 基础功能
-
-
-
-
 
 ## 进阶功能

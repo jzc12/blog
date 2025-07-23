@@ -1,6 +1,6 @@
 ---
 date: 2025-07-20
-updated: 2025-07-21
+updated: 2025-07-23
 category: hw
 summary: 高级算法作业3
 ---
@@ -15,9 +15,6 @@ summary: 高级算法作业3
 5. 该技术背后的直觉是什么，该技术有什么非凡之处厉害之处，
 6. 最后尽可能详细地（以一个挑剔严谨的、没有读过该论文的同学可以通过阅读你的 review 来轻松地弄明白、来轻松地验证为标准）解释该技术是如何实现的，如何证明该技术的正确性和优越性。
 
-
-
 Simple Contention Resolution via Multiplicative Weight Updates
 
 [论文](https://drops.dagstuhl.de/entities/document/10.4230/OASIcs.SOSA.2019.16)
-
