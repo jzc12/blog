@@ -44,6 +44,7 @@
 :root {
     /* 主题色系 Theme Colors */
     --primary-green: #a8e6cf;
+    --primary-green-rgb: 168, 230, 207;
     --secondary-green: #8ed1c6;
     --accent-green: #75bba7;
     --text-green: #4a7b62;
@@ -157,6 +158,7 @@
 [data-theme="dark"] {
     /* 主题色系 */
     --primary-green: #75bba7;
+    --primary-green-rgb: 117, 187, 167;
     --secondary-green: #5a9b8a;
     --accent-green: #4a7b62;
     --text-green: #a8e6cf;

@@ -8,19 +8,5 @@ summary: nginx学习
 
 #  nginx学习
 
-## 初步认识
-
-
-
-
-
-## 功能
-
-
-
-
-
-## reference
-
 
 

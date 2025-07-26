@@ -166,7 +166,164 @@ export const incrementArticleViewCount = async (articleName) => {
     }
 };
 
+// ========================== 网站访问统计相关 ==============================
+
+// 获取网站总访问量
+export const getTotalVisits = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('site_stats')
+            .select('total_visits')
+            .eq('id', 1)
+            .single();
+
+        if (error && error.code !== 'PGRST116') {
+            throw error;
+        }
+
+        return data ? data.total_visits : 0;
+    } catch (error) {
+        console.error('获取总访问量失败:', error);
+        return 0;
+    }
+};
+
+
+
+// 获取独立访客数
+export const getUniqueVisitors = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('site_stats')
+            .select('unique_visitors')
+            .eq('id', 1)
+            .single();
+
+        if (error && error.code !== 'PGRST116') {
+            throw error;
+        }
+
+        return data ? data.unique_visitors : 0;
+    } catch (error) {
+        console.error('获取独立访客数失败:', error);
+        return 0;
+    }
+};
+
+// 检查访客是否在冷却期内
+const isVisitorInCooldown = () => {
+    const lastVisitTime = localStorage.getItem('last_visit_time');
+    if (!lastVisitTime) return false;
+
+    // 30分钟冷却期
+    const cooldownMs = 30 * 60 * 1000;
+    return (Date.now() - parseInt(lastVisitTime)) < cooldownMs;
+};
+
+// 检查是否是新的独立访客
+const isNewUniqueVisitor = () => {
+    const visitorId = localStorage.getItem('visitor_id');
+    return !visitorId;
+};
+
+// 生成访客ID
+const generateVisitorId = () => {
+    const visitorId = 'visitor_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+    localStorage.setItem('visitor_id', visitorId);
+    return visitorId;
+};
+
+// 增加网站访问量
+export const incrementSiteVisits = async () => {
+    try {
+        // 检查会话是否已计数
+        const sessionCounted = sessionStorage.getItem('session_visit_counted');
+        if (sessionCounted === 'true') {
+            // 已计数，只返回当前数据
+            const [totalVisits, uniqueVisitors] = await Promise.all([
+                getTotalVisits(),
+                getUniqueVisitors()
+            ]);
+            return { totalVisits, uniqueVisitors, counted: false };
+        }
+
+        // 检查是否在冷却期内
+        if (isVisitorInCooldown()) {
+            const [totalVisits, uniqueVisitors] = await Promise.all([
+                getTotalVisits(),
+                getUniqueVisitors()
+            ]);
+            return { totalVisits, uniqueVisitors, counted: false };
+        }
+
+        const isNewVisitor = isNewUniqueVisitor();
+
+        if (isNewVisitor) {
+            generateVisitorId();
+        }
+
+        // 增加总访问量
+        await supabase.rpc('increment_total_visits');
+
+        // 如果是新访客，增加独立访客数
+        if (isNewVisitor) {
+            await supabase.rpc('increment_unique_visitors');
+        }
+
+        // 记录访问时间
+        localStorage.setItem('last_visit_time', Date.now().toString());
+        sessionStorage.setItem('session_visit_counted', 'true');
+
+        // 获取更新后的数据
+        const [totalVisits, uniqueVisitors] = await Promise.all([
+            getTotalVisits(),
+            getUniqueVisitors()
+        ]);
+
+        return { totalVisits, uniqueVisitors, counted: true, isNewVisitor };
+    } catch (error) {
+        console.error('增加网站访问量失败:', error);
+        // 返回默认值
+        return { totalVisits: 0, uniqueVisitors: 0, counted: false };
+    }
+};
+
 export default supabase
 
-// 新的表， 记录文章的浏览量， 主键是文章名， 字段是浏览量
+// ========================== 数据库表结构说明 ==============================
+/*
+需要创建以下表和函数：
+
+1. site_stats 表 (网站统计)
+CREATE TABLE site_stats (
+    id INTEGER PRIMARY KEY DEFAULT 1,
+    total_visits BIGINT DEFAULT 0,
+    unique_visitors BIGINT DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+2. 数据库函数 (用于原子性更新)
+-- 增加总访问量
+CREATE OR REPLACE FUNCTION increment_total_visits()
+RETURNS void AS $$
+BEGIN
+    INSERT INTO site_stats (id, total_visits) VALUES (1, 1)
+    ON CONFLICT (id) DO UPDATE SET
+        total_visits = site_stats.total_visits + 1,
+        updated_at = NOW();
+END;
+$$ LANGUAGE plpgsql;
+
+-- 增加独立访客数
+CREATE OR REPLACE FUNCTION increment_unique_visitors()
+RETURNS void AS $$
+BEGIN
+    INSERT INTO site_stats (id, unique_visitors) VALUES (1, 1)
+    ON CONFLICT (id) DO UPDATE SET
+        unique_visitors = site_stats.unique_visitors + 1,
+        updated_at = NOW();
+END;
+$$ LANGUAGE plpgsql;
+*/
 

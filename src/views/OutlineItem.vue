@@ -33,19 +33,9 @@ import { icons } from '../utils/icon.js';
 
 export default {
   name: 'OutlineItem',
-
-  // ========================== 组件属性定义 ==============================
   props: {
-    // 大纲标题项数据
-    heading: {
-      type: Object,
-      required: true
-    },
-    // 当前激活的标题ID
-    activeId: {
-      type: String,
-      default: ''
-    }
+    heading: { type: Object, required: true },
+    activeId: { type: String, default: '' }
   },
 
   setup(props, { emit }) {

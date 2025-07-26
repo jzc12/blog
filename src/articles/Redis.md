@@ -6,9 +6,3 @@ summary: Redis 学习记录
 ---
 # Redis
 
-## 基础学习
-
-
-
-## 记录
-

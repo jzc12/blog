@@ -176,7 +176,7 @@ export default {
       return outline.map(processNode);
     },
 
-    //  滚动处理相关 
+    //  滚动处理相关
     // 设置滚动事件监听器
     setupScrollHandler() {
       const content = this.$refs.mainContentRef;
@@ -227,7 +227,7 @@ export default {
       }, 150);
     },
 
-    //  大纲展开控制 
+    //  大纲展开控制
     // 更新大纲展开状态
     updateOutlineExpansion(outline, targetId, isParentOfTarget = false) {
       let found = false;

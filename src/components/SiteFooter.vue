@@ -1,35 +1,34 @@
 <template>
   <footer class="site-footer" :class="{ 'visible': showFooter }">
     <div class="footer-content">
-      <div class="footer-section">
-        <h4>网站信息</h4>
-        <p>© 2025 zc's Blog. All rights reserved.</p>
-        <p>备案号：管局审核中</p>
-      </div>
-      <div class="footer-section">
-        <h4>访问统计</h4>
-        <p>总访问量：{{ totalVisits }} 次</p>
-        <p>今日访问：{{ todayVisits }} 次</p>
-      </div>
-      <div class="footer-section">
-        <h4>技术栈</h4>
-        <p>Vue 3 + Vite + Supabase</p>
-        <p>Powered by GitHub Pages + Cloudflare</p>
-      </div>
+      <p>
+        <component :is="iconMap.about" />{{ uniqueVisitors }}
+        <component :is="iconMap.eye" />{{ totalVisits }}
+      </p>
+      <p>Vue 3 + Vite + Supabase + GitHub Pages + Cloudflare</p>
     </div>
   </footer>
 </template>
 
 <script>
+import { incrementSiteVisits } from '../utils/supabase'
+import { icons } from '../utils/icon.js'
 export default {
   name: 'SiteFooter',
-  
+
   data() {
     return {
       showFooter: false,
       totalVisits: 0,
-      todayVisits: 0,
-      isNewVisitor: false
+      uniqueVisitors: 0,
+      isNewVisitor: false,
+      loading: true
+    }
+  },
+
+  computed: {
+    iconMap() {
+      return icons
     }
   },
 
@@ -63,16 +62,51 @@ export default {
       }, 1000);
     },
 
-    initVisitStats() {
+    // 初始化访问统计（使用Supabase）
+    async initVisitStats() {
+      try {
+        this.loading = true;
+
+        // 调用Supabase函数增加访问量
+        const result = await incrementSiteVisits();
+
+        // 更新数据
+        this.totalVisits = result.totalVisits;
+        this.uniqueVisitors = result.uniqueVisitors;
+        this.isNewVisitor = result.isNewVisitor || false;
+
+        // 如果是新访客，输出欢迎信息
+        if (result.isNewVisitor) {
+          console.log('🎉 欢迎首次访问 ZC\'s Blog!');
+        }
+
+        // 如果计数成功，输出统计信息
+        if (result.counted) {
+          console.log('📊 访问统计已更新:', {
+            totalVisits: this.totalVisits,
+            uniqueVisitors: this.uniqueVisitors
+          });
+        }
+
+      } catch (error) {
+        console.error('初始化访问统计失败:', error);
+        // 降级到本地存储
+        this.initLocalVisitStats();
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    // 降级方案：使用本地存储
+    initLocalVisitStats() {
       const today = new Date().toDateString();
       const todayKey = `visits_${today}`;
       const totalKey = 'total_visits';
       const lastVisitKey = 'last_visit_time';
       const sessionKey = 'session_visit_counted';
 
-      // 从localStorage获取数据
-      this.todayVisits = parseInt(localStorage.getItem(todayKey) || '0');
       this.totalVisits = parseInt(localStorage.getItem(totalKey) || '0');
+      this.uniqueVisitors = parseInt(localStorage.getItem('unique_visitors') || '0');
 
       // 检查是否应该增加访问量
       const shouldCount = this.shouldCountVisit(lastVisitKey, sessionKey);
@@ -80,14 +114,13 @@ export default {
       if (shouldCount) {
         // 检查是否是新访客
         this.isNewVisitor = parseInt(localStorage.getItem(totalKey) || '0') === 0;
-
-        // 增加访问量
-        this.todayVisits++;
         this.totalVisits++;
+        if (this.isNewVisitor) {
+          this.uniqueVisitors++;
+        }
 
-        // 保存到localStorage
-        localStorage.setItem(todayKey, this.todayVisits.toString());
         localStorage.setItem(totalKey, this.totalVisits.toString());
+        localStorage.setItem('unique_visitors', this.uniqueVisitors.toString());
         localStorage.setItem(lastVisitKey, Date.now().toString());
 
         // 标记本次会话已计数
@@ -95,7 +128,7 @@ export default {
 
         // 如果是新访客，可以在控制台输出欢迎信息
         if (this.isNewVisitor) {
-          console.log('🎉 欢迎首次访问 ZC\'s Blog!');
+          console.log('🎉 欢迎首次访问 ZC\'s Blog! (本地模式)');
         }
       }
 
@@ -151,25 +184,32 @@ export default {
 
       return {
         totalVisits: this.totalVisits,
-        todayVisits: this.todayVisits,
+        uniqueVisitors: this.uniqueVisitors,
         lastVisitTime: lastVisitDate,
         isNewVisitor: this.isNewVisitor,
-        sessionCounted: sessionStorage.getItem('session_visit_counted') === 'true'
+        sessionCounted: sessionStorage.getItem('session_visit_counted') === 'true',
+        loading: this.loading
       };
     },
 
     // 重置访问统计（仅用于测试，生产环境不建议使用）
     resetVisitStats() {
       if (process.env.NODE_ENV === 'development') {
+        // 清理本地存储
         localStorage.removeItem('total_visits');
+        localStorage.removeItem('unique_visitors');
+        localStorage.removeItem('visitor_id');
         const today = new Date().toDateString();
         localStorage.removeItem(`visits_${today}`);
         localStorage.removeItem('last_visit_time');
         sessionStorage.removeItem('session_visit_counted');
 
+        // 重置组件数据
         this.totalVisits = 0;
-        this.todayVisits = 0;
+        this.uniqueVisitors = 0;
         this.isNewVisitor = false;
+
+        console.log('访问统计已重置（注意：这只会重置本地数据，不会影响数据库）');
       }
     }
   },
