@@ -88,10 +88,10 @@ export default {
   // ========================== 生命周期钩子 ==============================
   mounted() {
     // 初始化组件
-    this.checkScreenSize();                                     // 检查屏幕尺寸
+    this.checkScreenSize();                                      // 检查屏幕尺寸
     window.addEventListener('resize', this.checkScreenSize);     // 监听窗口大小变化
-    this.countArticles();                                       // 统计文章数量
-    this.countMessages();                                       // 获取留言数量
+    this.countArticles();                                        // 统计文章数量
+    this.countMessages();                                        // 获取留言数量
   },
 
   beforeDestroy() {

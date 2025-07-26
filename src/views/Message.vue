@@ -10,20 +10,11 @@
       <!-- 控制按钮组 -->
       <div class="control-group">
         <!-- 排序切换按钮 -->
-        <button 
-          class="control-btn"
-          @click="toggleSort"
-          :title="isAscending ? '切换为最新消息在前' : '切换为最早消息在前'"
-        >
+        <button class="control-btn" @click="toggleSort" :title="isAscending ? '切换为最新消息在前' : '切换为最早消息在前'">
           <component :is="isAscending ? iconMap.sortDesc : iconMap.sortAsc" class="icon" />
         </button>
         <!-- 刷新按钮 -->
-        <button 
-          class="control-btn"
-          @click="loadMessages"
-          :disabled="isLoading"
-          :title="'刷新留言'"
-        >
+        <button class="control-btn" @click="loadMessages" :disabled="isLoading" :title="'刷新留言'">
           <component :is="isLoading ? iconMap.loading : iconMap.refresh" class="icon" />
         </button>
       </div>
@@ -32,19 +23,15 @@
     <MessageList :messages="sortedMessages" />
     <!-- 留言输入区域 -->
     <div class="input-area" :class="{ 'hidden': isInputHidden }">
-      <MessageForm 
-        v-if="!isInputHidden" 
-        ref="messageForm"
-        @message-submitted="addMessage" 
-      />
+      <MessageForm v-if="!isInputHidden" ref="messageForm" @message-submitted="addMessage" />
     </div>
   </div>
 </template>
 
 <script>
 // ========================== 依赖导入 ==============================
-import MessageForm from './MessageForm.vue'
-import MessageList from './MessageList.vue'
+import MessageForm from '../components/MessageForm.vue'
+import MessageList from '../components/MessageList.vue'
 import { addMessage, getAllMessages } from '../utils/supabase'
 import { icons } from '../utils/icon.js';
 
@@ -143,4 +130,3 @@ export default {
 @import '../css/message.css';
 @import '../css/icons.css';
 </style>
-

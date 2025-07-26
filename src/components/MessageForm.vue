@@ -12,26 +12,19 @@
       <div class="form-header">
         <!-- 展开/收起输入区域按钮 -->
         <button type="button" class="toggle-input-btn" @click="showInputs = !showInputs">
-          <component :is="showInputs ? iconMap.squareChevronDown : iconMap.squareChevronUp"/>
+          <component :is="showInputs ? iconMap.squareChevronDown : iconMap.squareChevronUp" />
         </button>
-        
+
         <!-- 随机昵称生成按钮 -->
         <button type="button" class="toggle-input-btn" @click="generateRandomName" v-if="showInputs" title="随机昵称">
           <component :is="iconMap.shuffle" />
         </button>
 
-        
+
         <!-- 用户名输入框 -->
-        <input 
-        v-if="showInputs"
-        type="text" 
-        v-model="message.username" 
-        required 
-        placeholder="昵称"
-        class="name-input"
-        >
-        
-        <input v-if="showInputs" v-model="message.email" placeholder="邮箱（可选）" type="email" class="email-input"/>
+        <input v-if="showInputs" type="text" v-model="message.username" required placeholder="昵称" class="name-input">
+
+        <input v-if="showInputs" v-model="message.email" placeholder="邮箱（可选）" type="email" class="email-input" />
 
         <!-- 留言次数信息显示 -->
         <div class="message-info">
@@ -42,24 +35,14 @@
       <!-- 留言内容输入区域 -->
       <div v-if="showInputs" class="input-group">
 
-          <!-- 私信开关 -->
-          <label class="private-toggle" v-if="showInputs">
-          <input 
-            type="checkbox" 
-            v-model="message.private_message"
-          >
+        <!-- 私信开关 -->
+        <label class="private-toggle" v-if="showInputs">
+          <input type="checkbox" v-model="message.private_message">
           <span class="toggle-label">私信</span>
         </label>
 
-        <textarea 
-          v-model="message.content" 
-          required 
-          rows="1"
-          placeholder="输入留言内容..."
-          class="content-input"
-          @keydown.enter.prevent="handleEnter"
-          ref="contentInput"
-        ></textarea>
+        <textarea v-model="message.content" required rows="1" placeholder="输入留言内容..." class="content-input"
+          @keydown.enter.prevent="handleEnter" ref="contentInput"></textarea>
 
         <!-- 提交按钮 -->
         <button type="submit" class="submit-btn" title="发送">
@@ -72,7 +55,7 @@
 
 <script>
 // ========================== 依赖导入 ==============================
-import { getTodayMessageCount } from '../utils/supabase'
+import { getTodayMessageCount } from '../utils/supabase.js'
 import { icons } from '../utils/icon.js'
 
 // ========================== 随机昵称生成数据 ==============================

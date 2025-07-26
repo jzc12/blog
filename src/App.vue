@@ -5,10 +5,11 @@
     <Navigte />
 
     <!-- 主内容区域 -->
-    <div class="main-content-wrapper" :class="{'three-col': isMarkdownRoute, 'single-col': !isMarkdownRoute}">
+    <div class="main-content-wrapper" :class="{ 'three-col': isMarkdownRoute, 'single-col': !isMarkdownRoute }">
       <!-- 左侧大纲容器 -->
       <div class="outline-container" v-if="isMarkdownRoute">
-        <OutlineItem :outline="isMarkdownRoute ? articleOutline : []" v-for="heading in articleOutline" :key="heading.id" :heading="heading" @scroll-to="handleScrollToHeading" />
+        <OutlineItem :outline="isMarkdownRoute ? articleOutline : []" v-for="heading in articleOutline"
+          :key="heading.id" :heading="heading" @scroll-to="handleScrollToHeading" />
       </div>
 
       <!-- 中间内容区域 -->
@@ -44,7 +45,7 @@ import Navigte from './views/Navigte.vue'
 import { renderMarkdown } from './utils/markdown'
 import { useSettingsStore } from './stores/settings'
 import { watch, nextTick, ref, onMounted } from 'vue'
-import BackToTopButton from './views/BackToTopButton.vue'
+import BackToTopButton from './components/BackToTopButton.vue'
 import OutlineItem from './views/OutlineItem.vue';
 import Sidebar from './views/Sidebar.vue'
 import SiteFooter from './components/SiteFooter.vue'
@@ -76,7 +77,7 @@ export default {
       lastScrollTop: 0          // 上次滚动位置
     }
   },
-  
+
   // ========================== 计算属性 ==============================
   computed: {
     // 判断是否为文章路由
@@ -128,31 +129,31 @@ export default {
       for (let i = 0; i < 8; i++) {
         const particle = document.createElement('div');
         particle.className = 'click-effect-particle';
-        
+
         // 设置粒子位置为鼠标点击位置
         particle.style.left = `${event.clientX}px`;
         particle.style.top = `${event.clientY}px`;
-        
+
         // 随机设置粒子颜色和发光效果
         const color = colors[Math.floor(Math.random() * colors.length)];
         particle.style.backgroundColor = color;
         particle.style.boxShadow = `0 0 10px ${color}`;
-        
+
         // 随机设置粒子大小
         const size = Math.random() * 20 + 10;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
-        
+
         // 计算粒子运动轨迹
         const angle = (Math.PI * 2 * i) / 8;
         const velocity = Math.random() * 100 + 50;
         const vx = Math.cos(angle) * velocity;
         const vy = Math.sin(angle) * velocity;
-        
+
         // 应用动画效果
         particle.style.animation = 'particle-animation 0.6s ease-out forwards';
         particle.style.transform = `translate(${vx}px, ${vy}px) scale(0)`;
-        
+
         container.appendChild(particle);
       }
 
@@ -288,7 +289,7 @@ export default {
           } catch (manualError) {
           }
         }
-      } 
+      }
     },
 
     //  生命周期钩子 
@@ -372,7 +373,7 @@ export default {
     watch(() => settings.contentOpacity, applyContentOpacity)
 
     // 监听背景类型变化
-    watch(() => settings.backgroundType, (newType) =>{ 
+    watch(() => settings.backgroundType, (newType) => {
       if (newType === 'image') {
         settings.contentOpacity = 80
       } else if (newType === 'color') {
@@ -424,14 +425,22 @@ export default {
 <!-- ========================== 样式定义 ============================== -->
 <style>
 /* 导入基础样式文件 */
-@import "./css/style.css";        /* 主要样式 */
-@import "./css/lapis.css";        /* Lapis主题样式 */
-@import "./css/code-blocks.css";  /* 代码块样式 */
-@import "./css/prism-theme.css";  /* 代码高亮主题 */
-@import "./css/animations.css";   /* 动画效果 */
-@import "./css/layout.css";       /* 布局样式 */
-@import "./css/outline.css";      /* 大纲样式 */
-@import "./css/icons.css";        /* 图标样式 */
+@import "./css/style.css";
+/* 主要样式 */
+@import "./css/lapis.css";
+/* Lapis主题样式 */
+@import "./css/code-blocks.css";
+/* 代码块样式 */
+@import "./css/prism-theme.css";
+/* 代码高亮主题 */
+@import "./css/animations.css";
+/* 动画效果 */
+@import "./css/layout.css";
+/* 布局样式 */
+@import "./css/outline.css";
+/* 大纲样式 */
+@import "./css/icons.css";
+/* 图标样式 */
 
 /* 内容区域自定义样式 */
 
@@ -443,5 +452,4 @@ export default {
 :root {
   font-size: var(--global-font-size);
 }
-
 </style>

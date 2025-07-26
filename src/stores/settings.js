@@ -6,8 +6,8 @@ export const useSettingsStore = defineStore('settings', {
         // 字体大小索引（从 localStorage 中读取，默认为 1）
         fontSizeIndex: parseInt(localStorage.getItem('fontSizeIndex') || '1'),
 
-        // 内容透明度（默认 70）
-        contentOpacity: parseInt(localStorage.getItem('contentOpacity') || '21'),
+        // 内容透明度（默认 56）
+        contentOpacity: parseInt(localStorage.getItem('contentOpacity') || '56'),
 
         // 主题设置：'light' | 'dark' | 'system'
         theme: localStorage.getItem('theme') || 'system',
@@ -140,7 +140,7 @@ export const useSettingsStore = defineStore('settings', {
          */
         $reset() {
             this.fontSizeIndex = 1;
-            this.contentOpacity = 21;
+            this.contentOpacity = 56;
             this.backgroundType = 'color';
             this.theme = 'system';
             this.saveSettings();
