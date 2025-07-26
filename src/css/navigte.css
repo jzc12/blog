@@ -4,7 +4,7 @@
 .Navigte {
     width: 100%;
     min-height: 5vh;
-    background: var(--bg-overlay);
+    background-color: transparent;
     border-right: none;
     border-bottom: 1px solid var(--code-border);
     padding: 10px 20%;
