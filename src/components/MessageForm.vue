@@ -26,10 +26,6 @@
 
         <input v-if="showInputs" v-model="message.email" placeholder="邮箱（可选）" type="email" class="email-input" />
 
-        <!-- 留言次数信息显示 -->
-        <div class="message-info">
-          {{ isLoadingCount ? 'Loading...' : `Left:${remainingMessages}` }}
-        </div>
       </div>
 
       <!-- 留言内容输入区域 -->

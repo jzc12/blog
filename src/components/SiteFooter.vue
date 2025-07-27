@@ -192,7 +192,7 @@ export default {
       };
     },
 
-    // 重置访问统计（仅用于测试，生产环境不建议使用）
+    // 重置访问统计
     resetVisitStats() {
       if (process.env.NODE_ENV === 'development') {
         // 清理本地存储
@@ -204,12 +204,10 @@ export default {
         localStorage.removeItem('last_visit_time');
         sessionStorage.removeItem('session_visit_counted');
 
-        // 重置组件数据
         this.totalVisits = 0;
         this.uniqueVisitors = 0;
         this.isNewVisitor = false;
 
-        console.log('访问统计已重置（注意：这只会重置本地数据，不会影响数据库）');
       }
     }
   },
