@@ -48,7 +48,7 @@
     cursor: pointer;
     user-select: none;
     transition: all 0.3s ease;
-    color: var(--primary-green);
+    color: var(--text-primary);
 }
 
 .toggle-icon.placeholder {

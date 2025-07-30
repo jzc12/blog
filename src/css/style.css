@@ -52,9 +52,9 @@
 
     /* 背景色系 Background Colors */
     --bg-primary: rgba(255, 255, 255, 1);
-    --bg-secondary: rgba(255, 255, 255, 0.8);
+    --bg-secondary: rgba(193, 218, 245, 0.8);
     --bg-tertiary: rgba(255, 255, 255, 0.6);
-    --bg-overlay: rgba(255, 255, 255, 0.15);
+    --bg-overlay: rgba(234, 250, 255, 0.799);
     --content-bg: rgba(255, 255, 255, var(--content-opacity, 0.95));
 
     /* 文本色系 Text Colors */
@@ -64,7 +64,7 @@
     --text-light: #ffffff;
 
     /* 代码块颜色 Code Colors */
-    --code-bg: rgba(248, 250, 252, 0.95);
+    --code-bg: rgba(0, 0, 0, 0.95);
     --code-text: #1a365d;
     --code-border: rgba(148, 163, 184, 0.3);
     --scrollbar-thumb: rgba(148, 163, 184, 0.4);
@@ -165,9 +165,9 @@
 
     /* 背景色系 */
     --bg-primary: rgba(28, 32, 34, 1);
-    --bg-secondary: rgba(28, 32, 34, 0.8);
+    --bg-secondary: rgba(183, 213, 228, 0.8);
     --bg-tertiary: rgba(28, 32, 34, 0.6);
-    --bg-overlay: rgba(68, 73, 71, 0.05);
+    --bg-overlay: rgba(105, 123, 132, 0.792);
     --content-bg: rgba(28, 32, 34, var(--content-opacity, 0.95));
 
     /* 文本色系 */

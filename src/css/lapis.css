@@ -56,14 +56,6 @@
     transition: all 0.3s ease;
 }
 
-.markdown-body img:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 4px 8px rgba(0, 0, 0, 0.1),
-        0 8px 16px rgba(0, 0, 0, 0.1),
-        0 16px 32px rgba(0, 0, 0, 0.1);
-}
-
 /* 列表样式 */
 .markdown-body ul,
 .markdown-body ol {
@@ -107,14 +99,11 @@
     box-shadow: var(--shadow-sm);
 }
 
-.markdown-body th,
-.markdown-body td {
+.markdown-body td,
+.markdown-body th {
     border: 1px solid var(--code-border);
     padding: 12px 16px;
     text-align: left;
-}
-
-.markdown-body th {
     background-color: var(--bg-overlay);
     font-weight: 600;
     color: var(--text-primary);
@@ -131,7 +120,6 @@
 
 /* 代码样式 */
 .markdown-body code {
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
     font-size: 1.1rem;
     background: var(--bg-overlay);
     padding: 0.2em 0.4em;
@@ -146,8 +134,8 @@
     border-radius: 16px;
     overflow: visible;
     /* 改为 visible 以确保提示框不被裁剪 */
-    background: var(--code-bg);
-    border: 1px solid var(--code-border);
+    background: transparent;
+    border: 1px;
     box-shadow:
         0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -161,7 +149,6 @@
     margin: 1.5em 0;
     overflow-x: auto;
     overflow-y: visible;
-    /* 确保垂直方向不裁剪提示框 */
     padding: 0;
     border-radius: 16px;
     border: 1px solid var(--code-border);
@@ -315,7 +302,7 @@
 /* 引用块样式 */
 .markdown-body blockquote {
     border-left: 4px solid var(--primary-green);
-    background: var(--bg-secondary);
+    background: transparent;
     padding: 1em 1.5em;
     margin: 1.5em 0;
     color: var(--text-secondary);
@@ -371,134 +358,6 @@
     }
 }
 
-/* 代码高亮 */
-.hljs {
-    background: var(--code-bg) !important;
-    color: var(--code-text) !important;
-}
-
-/* 深色模式代码高亮颜色 - 简洁优雅风格 */
-[data-theme="dark"] .hljs {
-    --hljs-comment: #8b949e;
-    --hljs-keyword: #79c0ff;
-    --hljs-string: #a5d6ff;
-    --hljs-number: #79c0ff;
-    --hljs-function: #f8f1ff;
-    --hljs-class: #7ee787;
-    --hljs-variable: #ffa657;
-    --hljs-operator: #79c0ff;
-    --hljs-built-in: #d8c1f1;
-    --hljs-type: #7ee787;
-    --hljs-literal: #79c0ff;
-    --hljs-title: #7ee787;
-    --hljs-attr: #7ee787;
-    --hljs-meta: #8b949e;
-    --mermaid-color: #8b949e;
-}
-
-/* 浅色模式代码高亮颜色 - 简洁专业风格 */
-.hljs {
-    --hljs-comment: #6a737d;
-    --hljs-keyword: #0969da;
-    --hljs-string: #0a3069;
-    --hljs-number: #0550ae;
-    --hljs-function: #b18cf4;
-    --hljs-class: #116329;
-    --hljs-variable: #953800;
-    --hljs-operator: #0969da;
-    --hljs-built-in: #8250df;
-    --hljs-type: #116329;
-    --hljs-literal: #0550ae;
-    --hljs-title: #116329;
-    --hljs-attr: #116329;
-    --hljs-meta: #6a737d;
-    --mermaid-color: #6a737d;
-}
-
-.hljs-meta .hljs-string {
-    color: var(--hljs-meta);
-}
-
-/* 代码高亮具体语法颜色 */
-.hljs-comment,
-.hljs-quote {
-    color: var(--hljs-comment);
-    font-style: italic;
-}
-
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-subst {
-    color: var(--hljs-keyword);
-}
-
-.hljs-string,
-.hljs-doctag {
-    color: var(--hljs-string);
-}
-
-.hljs-number,
-.hljs-literal {
-    color: var(--hljs-number);
-}
-
-.hljs-title .function_,
-.hljs-function,
-.hljs-title {
-    color: var(--hljs-function);
-}
-
-.hljs-class .hljs-title,
-.hljs-type {
-    color: var(--hljs-class);
-}
-
-.hljs-variable,
-.hljs-template-variable {
-    color: var(--hljs-variable);
-}
-
-.hljs-operator,
-.hljs-punctuation {
-    color: var(--hljs-operator);
-}
-
-.hljs-built_in,
-.hljs-builtin-name {
-    color: var(--hljs-built-in);
-}
-
-.hljs-attr,
-.hljs-attribute {
-    color: var(--hljs-attr);
-}
-
-.hljs-meta,
-.hljs-meta-keyword {
-    color: var(--hljs-meta);
-}
-
-.hljs-tag {
-    color: var(--hljs-keyword);
-}
-
-.hljs-name {
-    color: var(--hljs-function);
-}
-
-.hljs-selector-id,
-.hljs-selector-class {
-    color: var(--hljs-class);
-}
-
-.hljs-emphasis {
-    font-style: italic;
-}
-
-.hljs-strong {
-    font-weight: bold;
-}
-
 /* 代码行号样式 */
 .hljs.with-line-numbers {
     display: flex !important;
@@ -532,9 +391,8 @@
 .hljs.with-line-numbers code {
     display: table;
     min-width: 100%;
-    padding-left: 4em;
-    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-    font-size: 0.9rem;
+    padding-left: 3em;
+    font-size: var(--font-size-sm);
     line-height: 1.6;
 }
 
@@ -542,13 +400,11 @@
     display: block;
     position: absolute;
     left: 0;
-    width: 3.5em;
+    width: 2.5em;
     text-align: right;
     padding: 0 1em;
-    color: var(--line-number-color);
     opacity: 0.7;
     user-select: none;
-    background: var(--line-number-bg);
     border-right: 2px solid var(--line-number-border);
     font-size: var(--font-size-sm);
     transition: all 0.3s ease;

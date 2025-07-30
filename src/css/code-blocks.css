@@ -4,7 +4,7 @@
 .code-block-wrapper::before {
     content: attr(data-language);
     position: absolute;
-    top: 12px;
+    top: 0;
     left: 16px;
     background: var(--code-language-bg);
     color: var(--code-language-text);
@@ -25,63 +25,22 @@
 }
 
 
-
 /* 特定语言的颜色标识 */
 .code-block-wrapper[data-language="javascript"]::before,
-.code-block-wrapper[data-language="js"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
+.code-block-wrapper[data-language="js"]::before,
 .code-block-wrapper[data-language="typescript"]::before,
-.code-block-wrapper[data-language="ts"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
-.code-block-wrapper[data-language="python"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
-.code-block-wrapper[data-language="java"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
+.code-block-wrapper[data-language="ts"]::before,
+.code-block-wrapper[data-language="python"]::before,
+.code-block-wrapper[data-language="java"]::before,
 .code-block-wrapper[data-language="csharp"]::before,
-.code-block-wrapper[data-language="c#"]::before {
-    background: #239120;
-    color: #fff;
-}
-
+.code-block-wrapper[data-language="c#"]::before,
 .code-block-wrapper[data-language="cpp"]::before,
-.code-block-wrapper[data-language="c++"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
-.code-block-wrapper[data-language="html"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
-.code-block-wrapper[data-language="css"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
+.code-block-wrapper[data-language="c++"]::before,
+.code-block-wrapper[data-language="html"]::before,
+.code-block-wrapper[data-language="css"]::before,
 .code-block-wrapper[data-language="bash"]::before,
-.code-block-wrapper[data-language="shell"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
-.code-block-wrapper[data-language="json"]::before {
-    background: #4eaa25;
-    color: #fff;
-}
-
+.code-block-wrapper[data-language="shell"]::before,
+.code-block-wrapper[data-language="json"]::before,
 .code-block-wrapper[data-language="sql"]::before {
     background: #4eaa25;
     color: #fff;
@@ -103,61 +62,6 @@
     background: var(--primary-green);
 }
 
-/* 代码块折叠功能 */
-.code-block-wrapper.collapsible {
-    max-height: 400px;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.code-block-wrapper.collapsible.expanded {
-    max-height: none;
-}
-
-.code-block-wrapper.collapsible::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(transparent, var(--code-bg));
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.code-block-wrapper.collapsible.expanded::after {
-    opacity: 0;
-}
-
-.expand-button {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--code-button-bg);
-    border: 1px solid var(--code-button-border);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 12px;
-    color: var(--code-button-text);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.expand-button:hover {
-    background: var(--code-button-hover-bg);
-    border-color: var(--code-button-hover-border);
-}
-
-/* 代码块搜索高亮 */
-.hljs .search-highlight {
-    background: rgba(255, 235, 59, 0.3);
-    border-radius: 2px;
-    padding: 1px 2px;
-    animation: highlight-pulse 2s ease-in-out;
-}
 
 @keyframes highlight-pulse {
 
@@ -188,94 +92,107 @@
     outline: none;
 }
 
-/* 代码块打印样式 */
-@media print {
-    .code-block-wrapper {
-        break-inside: avoid;
-        box-shadow: none;
-        border: 1px solid #ccc;
-    }
+/* ========================== 代码颜色 ============================== */
 
-    .copy-button,
-    .expand-button {
-        display: none;
-    }
+.hljs {
+    background: #dae1ef;
+    color: #f0f4fc;
 
-    .hljs.with-line-numbers {
-        overflow: visible;
-    }
-
-    .hljs.with-line-numbers .line-number {
-        background: transparent;
-        border-right: 1px solid #ccc;
-    }
+    --hljs-comment: #1d1f24;
+    --hljs-keyword: #ff7ee5;
+    --hljs-string: #233224;
+    --hljs-number: #d1a5ff;
+    --hljs-function: #5cb5c7;
+    --hljs-class: #222e20;
+    --hljs-variable: #5b1e1e;
+    --hljs-operator: #6cff80;
+    --hljs-built-in: #ff7777;
+    --hljs-type: #67d0e5;
+    --hljs-literal: #293632;
+    --hljs-title: #1b3a41;
+    --hljs-attr: #777b25;
+    --hljs-meta: #c0c6dc;
 }
 
-/* 移动端优化 */
-@media (max-width: 768px) {
-    .code-block-wrapper::before {
-        font-size: 10px;
-        padding: 3px 6px;
-        top: 8px;
-        left: 12px;
-    }
+[data-theme="dark"] .hljs {
+    background: #4e586b;
+    color: #f0f4fc;
 
-    .copy-button {
-        width: 32px;
-        height: 32px;
-        top: 8px;
-        right: 12px;
-    }
-
-    .copy-button .icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .hljs.with-line-numbers code {
-        padding-left: 3em;
-        font-size: 0.8rem;
-    }
-
-    .hljs.with-line-numbers .line-number {
-        width: 2.5em;
-        font-size: 0.75rem;
-    }
-
-    .hljs.with-line-numbers .code-content {
-        padding-left: 0.8em;
-        font-size: 0.8rem;
-    }
+    --hljs-comment: #4889d3;
+    --hljs-keyword: #79c0ff;
+    --hljs-string: #a5d6ff;
+    --hljs-number: #ebd9fe;
+    --hljs-function: #f8f1ff;
+    --hljs-class: #7ee787;
+    --hljs-variable: #ffa657;
+    --hljs-operator: #79c0ff;
+    --hljs-built-in: #d8c1f1;
+    --hljs-type: #7ee787;
+    --hljs-literal: #79c0ff;
+    --hljs-title: #7ee787;
+    --hljs-attr: #7ee787;
+    --hljs-meta: #bacfe6;
+    --mermaid-color: #8b949e;
 }
 
-/* 高对比度模式支持 */
-@media (prefers-contrast: high) {
-    .code-block-wrapper {
-        border-width: 2px;
-    }
-
-    .hljs.with-line-numbers .line-number {
-        border-right-width: 2px;
-        opacity: 1;
-    }
-
-    .copy-button {
-        border-width: 2px;
-    }
+/* 公共样式映射 */
+.hljs-comment {
+    color: var(--hljs-comment);
 }
 
-/* 减少动画模式支持 */
-@media (prefers-reduced-motion: reduce) {
+.hljs-keyword {
+    color: var(--hljs-keyword);
+    font-weight: bold;
+}
 
-    .code-block-wrapper,
-    .markdown-body pre,
-    .copy-button,
-    .hljs.with-line-numbers .code-line {
-        transition: none;
-    }
+.hljs-string {
+    color: var(--hljs-string);
+}
 
-    .code-block-wrapper:hover,
-    .markdown-body pre:hover {
-        transform: none;
-    }
+.hljs-number {
+    color: var(--hljs-number);
+}
+
+.hljs-title.function_,
+.hljs-function {
+    color: var(--hljs-function);
+}
+
+.hljs-class {
+    color: var(--hljs-class);
+    text-decoration: underline dashed;
+}
+
+.hljs-operator {
+    color: var(--hljs-operator);
+}
+
+.hljs-variable {
+    color: var(--hljs-variable);
+}
+
+.hljs-built_in {
+    color: var(--hljs-built-in);
+}
+
+.hljs-type {
+    color: var(--hljs-type);
+}
+
+.hljs-literal {
+    color: var(--hljs-literal);
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_ {
+    color: var(--hljs-title);
+}
+
+.hljs-attr {
+    color: var(--hljs-attr);
+}
+
+.hljs-meta {
+    color: var(--hljs-meta);
 }
