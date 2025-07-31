@@ -92,8 +92,8 @@
     border-collapse: separate;
     border-spacing: 0;
     margin: 2em 0;
-    font-size: 0.9375rem;
-    background: var(--code-bg);
+    font-size: 0.9rem;
+    background: transparent;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -104,14 +104,9 @@
     border: 1px solid var(--code-border);
     padding: 12px 16px;
     text-align: left;
-    background-color: var(--bg-overlay);
     font-weight: 600;
-    color: var(--text-primary);
     white-space: nowrap;
-}
-
-.markdown-body tr:nth-child(even) {
-    background-color: var(--bg-secondary);
+    background-color: transparent;
 }
 
 .markdown-body tr:hover {
@@ -120,7 +115,7 @@
 
 /* 代码样式 */
 .markdown-body code {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     background: var(--bg-overlay);
     padding: 0.2em 0.4em;
     border-radius: 4px;
@@ -261,7 +256,7 @@
     background: var(--tooltip-bg);
     color: var(--tooltip-text);
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 0.8rem;
     font-weight: 500;
     opacity: 0;
     visibility: hidden;
@@ -291,7 +286,7 @@
 
 .markdown-body pre code {
     font-family: 'Fira Code', 'JetBrains Mono', monospace;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     background: none;
     padding: 0;
     color: var(--code-text);
@@ -355,107 +350,5 @@
 
     .markdown-body code {
         font-size: 0.8125rem;
-    }
-}
-
-/* 代码行号样式 */
-.hljs.with-line-numbers {
-    display: flex !important;
-    padding: 1.5em 0 !important;
-    margin-bottom: 0;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--scrollbar-thumb) transparent;
-}
-
-/* Webkit 浏览器的滚动条样式 */
-.hljs.with-line-numbers::-webkit-scrollbar {
-    height: 8px;
-}
-
-.hljs.with-line-numbers::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 4px;
-}
-
-.hljs.with-line-numbers::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb);
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.hljs.with-line-numbers::-webkit-scrollbar-thumb:hover {
-    background-color: var(--scrollbar-thumb-hover);
-}
-
-.hljs.with-line-numbers code {
-    display: table;
-    min-width: 100%;
-    padding-left: 3em;
-    font-size: var(--font-size-sm);
-    line-height: 1.6;
-}
-
-.hljs.with-line-numbers .line-number {
-    display: block;
-    position: absolute;
-    left: 0;
-    width: 2.5em;
-    text-align: right;
-    padding: 0 1em;
-    opacity: 0.7;
-    user-select: none;
-    border-right: 2px solid var(--line-number-border);
-    font-size: var(--font-size-sm);
-    transition: all 0.3s ease;
-}
-
-.hljs.with-line-numbers .code-line {
-    display: table-row;
-    min-height: 1.6em;
-    transition: background-color 0.2s ease;
-}
-
-.hljs.with-line-numbers .code-line:hover {
-    background-color: var(--code-line-hover);
-}
-
-.hljs.with-line-numbers .code-line:hover .line-number {
-    opacity: 1;
-    color: var(--line-number-hover);
-}
-
-.hljs.with-line-numbers .code-content {
-    display: table-cell;
-    padding: 0.1em 1.5em 0.1em 1em;
-    white-space: pre;
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
-
-/* 响应式优化 */
-@media (max-width: 768px) {
-    .markdown-body pre {
-        padding: 0.75em 0;
-    }
-
-    .hljs.with-line-numbers code {
-        padding-left: 1.7em;
-    }
-
-    .hljs.with-line-numbers .line-number {
-        width: 2.5em;
-        font-size: 0.8125rem;
-    }
-}
-
-/* 添加打印样式优化 */
-@media print {
-    .markdown-body {
-        padding: 0;
-    }
-
-    .markdown-body pre {
-        white-space: pre-wrap;
     }
 }

@@ -1,9 +1,8 @@
 // markdown-it 配置及工具函数封装
 import MarkdownIt from 'markdown-it';
+import 'katex/dist/katex.min.css';
 import mk from '@traptitech/markdown-it-katex';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';
-import 'katex/dist/katex.min.css';
 
 // 注册语言支持
 import python from 'highlight.js/lib/languages/python';

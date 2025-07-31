@@ -92,107 +92,166 @@
     outline: none;
 }
 
-/* ========================== 代码颜色 ============================== */
 
-.hljs {
-    background: #dae1ef;
-    color: #f0f4fc;
-
-    --hljs-comment: #1d1f24;
-    --hljs-keyword: #ff7ee5;
-    --hljs-string: #233224;
-    --hljs-number: #d1a5ff;
-    --hljs-function: #5cb5c7;
-    --hljs-class: #222e20;
-    --hljs-variable: #5b1e1e;
-    --hljs-operator: #6cff80;
-    --hljs-built-in: #ff7777;
-    --hljs-type: #67d0e5;
-    --hljs-literal: #293632;
-    --hljs-title: #1b3a41;
-    --hljs-attr: #777b25;
-    --hljs-meta: #c0c6dc;
+/* 代码行号样式 */
+.hljs.with-line-numbers {
+    display: flex !important;
+    padding: 1.5em 0 !important;
+    margin-bottom: 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
-[data-theme="dark"] .hljs {
-    background: #4e586b;
-    color: #f0f4fc;
+/* Webkit 浏览器的滚动条样式 */
+.hljs.with-line-numbers::-webkit-scrollbar {
+    height: 8px;
+}
 
-    --hljs-comment: #4889d3;
-    --hljs-keyword: #79c0ff;
+.hljs.with-line-numbers::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.hljs.with-line-numbers::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.hljs.with-line-numbers::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover);
+}
+
+.hljs.with-line-numbers code {
+    display: table;
+    min-width: 100%;
+    padding-left: 3em;
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.hljs.with-line-numbers .line-number {
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 2.5em;
+    text-align: right;
+    padding: 0 1em;
+    opacity: 0.7;
+    user-select: none;
+    border-right: 2px solid var(--line-number-border);
+    font-size: var(--font-size-sm);
+    transition: all 0.3s ease;
+}
+
+.hljs.with-line-numbers .code-line {
+    display: table-row;
+    min-height: 1.6em;
+    transition: background-color 0.2s ease;
+}
+
+.hljs.with-line-numbers .code-line:hover {
+    background-color: var(--code-line-hover);
+}
+
+.hljs.with-line-numbers .code-line:hover .line-number {
+    opacity: 1;
+    color: var(--line-number-hover);
+}
+
+.hljs.with-line-numbers .code-content {
+    display: table-cell;
+    padding: 0.1em 1.5em 0.1em 1em;
+    white-space: pre;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+
+    .hljs.with-line-numbers code {
+        padding-left: 1.7em;
+    }
+
+    .hljs.with-line-numbers .line-number {
+        width: 2.5em;
+        font-size: 0.8125rem;
+    }
+}
+
+
+:root {
+    --hljs-bg: #ffffff;
+    --hljs-fg: #000000;
+    --hljs-comment: #008000;
+    --hljs-keyword: #00f;
+    --hljs-string: #a31515;
+    --hljs-number: #2b91af;
+    --hljs-type: #00f;
+    --hljs-literal: #a31515;
+}
+
+[data-theme="dark"] {
+    --hljs-bg: #0d1117;
+    --hljs-fg: #c9d1d9;
+    --hljs-comment: #8b949e;
+    --hljs-keyword: #ff7b72;
     --hljs-string: #a5d6ff;
-    --hljs-number: #ebd9fe;
-    --hljs-function: #f8f1ff;
-    --hljs-class: #7ee787;
-    --hljs-variable: #ffa657;
-    --hljs-operator: #79c0ff;
-    --hljs-built-in: #d8c1f1;
-    --hljs-type: #7ee787;
-    --hljs-literal: #79c0ff;
-    --hljs-title: #7ee787;
-    --hljs-attr: #7ee787;
-    --hljs-meta: #bacfe6;
-    --mermaid-color: #8b949e;
+    --hljs-number: #79c0ff;
+    --hljs-type: #d2a8ff;
+    --hljs-literal: #ffa657;
 }
 
-/* 公共样式映射 */
-.hljs-comment {
+/* ========================== Highlight.js 样式应用 ========================== */
+.hljs {
+    background: var(--hljs-bg);
+    color: var(--hljs-fg);
+}
+
+.hljs-comment,
+.hljs-quote {
     color: var(--hljs-comment);
 }
 
-.hljs-keyword {
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
     color: var(--hljs-keyword);
-    font-weight: bold;
 }
 
-.hljs-string {
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type {
     color: var(--hljs-string);
 }
 
-.hljs-number {
+.hljs-number,
+.hljs-meta,
+.hljs-operator,
+.hljs-deletion,
+.hljs-selector-attr {
     color: var(--hljs-number);
 }
 
-.hljs-title.function_,
-.hljs-function {
-    color: var(--hljs-function);
-}
-
-.hljs-class {
-    color: var(--hljs-class);
-    text-decoration: underline dashed;
-}
-
-.hljs-operator {
-    color: var(--hljs-operator);
-}
-
-.hljs-variable {
-    color: var(--hljs-variable);
-}
-
-.hljs-built_in {
-    color: var(--hljs-built-in);
-}
-
-.hljs-type {
-    color: var(--hljs-type);
-}
-
-.hljs-literal {
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
     color: var(--hljs-literal);
 }
 
-.hljs-title,
-.hljs-title.class_,
-.hljs-title.function_ {
-    color: var(--hljs-title);
+.hljs-emphasis {
+    font-style: italic;
 }
 
-.hljs-attr {
-    color: var(--hljs-attr);
-}
-
-.hljs-meta {
-    color: var(--hljs-meta);
+.hljs-strong {
+    font-weight: bold;
 }

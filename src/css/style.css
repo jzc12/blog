@@ -52,9 +52,9 @@
 
     /* 背景色系 Background Colors */
     --bg-primary: rgba(255, 255, 255, 1);
-    --bg-secondary: rgba(193, 218, 245, 0.8);
+    --bg-secondary: rgba(255, 255, 255, 0.8);
     --bg-tertiary: rgba(255, 255, 255, 0.6);
-    --bg-overlay: rgba(234, 250, 255, 0.799);
+    --bg-overlay: rgba(203, 192, 192, 0.15);
     --content-bg: rgba(255, 255, 255, var(--content-opacity, 0.95));
 
     /* 文本色系 Text Colors */
@@ -165,9 +165,9 @@
 
     /* 背景色系 */
     --bg-primary: rgba(28, 32, 34, 1);
-    --bg-secondary: rgba(183, 213, 228, 0.8);
+    --bg-secondary: rgba(28, 32, 34, 0.8);
     --bg-tertiary: rgba(28, 32, 34, 0.6);
-    --bg-overlay: rgba(105, 123, 132, 0.792);
+    --bg-overlay: rgba(180, 211, 225, 0.05);
     --content-bg: rgba(28, 32, 34, var(--content-opacity, 0.95));
 
     /* 文本色系 */
@@ -390,7 +390,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1rem;
     margin-left: 1rem;
     backdrop-filter: var(--blur-md);
     background-color: #ffffff00;
