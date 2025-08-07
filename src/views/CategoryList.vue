@@ -1,11 +1,6 @@
 // ========================== 文章分类列表组件 ==============================
 <template>
   <div class="category-container">
-    <!-- 页面标题 -->
-    <div class="h1">
-      <i class="fas fa-folder-open"></i>
-      文章目录
-    </div>
 
     <!-- 加载状态显示 -->
     <div v-if="loading" class="loading-box">
@@ -23,12 +18,8 @@
     <div v-else-if="articles.length" class="category-content">
       <TransitionGroup name="list" tag="div" class="article-list">
         <!-- 单篇文章项 -->
-        <router-link
-          v-for="article in sortedArticles"
-          :key="article.id"
-          :to="{ name: 'article', params: { articleId: article.id }}"
-          class="article-item"
-        >
+        <router-link v-for="article in sortedArticles" :key="article.id"
+          :to="{ name: 'article', params: { articleId: article.id } }" class="article-item">
           <!-- 文章头部信息 -->
           <div class="article-header">
             <h3 class="article-title">{{ article.title || article.id }}</h3>
@@ -65,7 +56,7 @@ import dayjs from 'dayjs'
 
 export default {
   name: 'CategoryList',
-  
+
   // ========================== 组件逻辑 ==============================
   setup() {
     // ========================== 响应式状态 ==============================
@@ -90,7 +81,7 @@ export default {
     const getArticles = async () => {
       loading.value = true
       progress.value = 0
-      
+
       try {
         // 获取所有 Markdown 文件
         const articleFiles = import.meta.glob('@/articles/*.md', { as: 'raw' })
@@ -106,7 +97,7 @@ export default {
               const raw = await articleFiles[path]()
               const { attributes: frontmatter, body } = fm(raw)
               const fileName = path.split('/').pop().replace('.md', '')
-              
+
               // 处理无 frontmatter 的文章
               if (!raw.trim().startsWith('---')) {
                 return {
