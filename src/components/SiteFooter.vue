@@ -5,6 +5,10 @@
         <component :is="iconMap.about" />{{ uniqueVisitors }}
         <component :is="iconMap.eye" />{{ totalVisits }}
       </p>
+      <p class="beian-info">
+        <img src="https://qcloudimg.tencent-cloud.cn/raw/eed02831a0e201b8d794c8282c40cf2e.png" alt="备案图标">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">黔ICP备2025055086号</a>
+      </p>
       <p>Vue 3 + Vite + Supabase + GitHub Pages + Cloudflare</p>
     </div>
   </footer>
