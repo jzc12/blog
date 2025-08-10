@@ -31,7 +31,7 @@
     </div>
 
     <!-- 回到顶部按钮 -->
-    <BackToTopButton v-if="isMarkdownRoute" :target-ref="getMainContentRef" />
+    <BackToTopButton v-if="isMarkdownRoute" :ref="mainContentRef" />
 
     <!-- 网站信息footer -->
     <SiteFooter />

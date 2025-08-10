@@ -18,7 +18,6 @@ export default {
 
   // ========================== 组件属性定义 ==============================
   props: {
-    // 目标滚动容器引用
     targetRef: {
       type: Object,
       required: false
@@ -35,28 +34,22 @@ export default {
 
   // ========================== 侦听器 ==============================
   watch: {
-    // 监听目标容器变化，更新滚动事件监听
     targetRef: {
-      handler(newVal, oldVal) {
-        // 移除旧容器的滚动监听
-        if (oldVal) {
-          oldVal.removeEventListener('scroll', this.handleScroll);
+      handler(newVal) {
+        // 解绑旧事件
+        if (this.scrollElement) {
+          this.scrollElement.removeEventListener('scroll', this.handleScroll)
         }
-        // 添加新容器的滚动监听
-        if (newVal) {
-          this.scrollElement = newVal;
-          newVal.addEventListener('scroll', this.handleScroll);
-          // 立即检查一次滚动状态
-          this.handleScroll();
-        } else {
-          // 如果没有指定容器，则监听窗口滚动
-          this.scrollElement = window;
-          window.addEventListener('scroll', this.handleScroll);
-        }
+
+        const el = newVal?.value || newVal || window
+        this.scrollElement = el
+        this.scrollElement.addEventListener('scroll', this.handleScroll)
+        this.handleScroll()
       },
       immediate: true
     }
   },
+
 
   // ========================== 生命周期钩子 ==============================
   mounted() {
@@ -81,18 +74,13 @@ export default {
     // 处理滚动事件，控制按钮显示
     handleScroll() {
       if (this.scrollElement === window) {
-        // 如果是窗口滚动
         this.isVisible = window.pageYOffset > 400;
-      } else {
-        // 如果是容器滚动
-        this.isVisible = this.scrollElement.scrollTop > 400;
       }
     },
 
     // 滚动到顶部
     scrollToTop() {
       if (this.scrollElement === window) {
-        // 如果是窗口滚动
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         // 如果是容器滚动
@@ -114,9 +102,9 @@ export default {
 <style scoped>
 /* ========================== 按钮基础样式 ============================== */
 .back-to-top {
-  position: sticky;
+  position: fixed;
   bottom: 2rem;
-  /* right: 1rem; */
+  right: 1rem;
   float: right;
   margin-right: 0.2rem;
   background-color: #93b9ea77;
