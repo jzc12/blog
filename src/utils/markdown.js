@@ -150,19 +150,18 @@ md.use(mk, {
     ]
 });
 
-// ============ 插件：抽取标题并构建大纲结构 ================
-
+// ============ 插件：抽取标题并构建大纲结构（带调试输出） ================
 function markdownItOutlinePlugin(md) {
     md.core.ruler.after('inline', 'extract_headings', (state) => {
         let headingIdMap = new Map();
         let currentHeadings = [];
-        const MAX_HEADING_LENGTH = 30;
+        const MAX_HEADING_LENGTH = 20;
 
         for (let i = 0; i < state.tokens.length; i++) {
             const token = state.tokens[i];
 
             if (token.type === 'heading_open') {
-                const level = parseInt(token.tag.substr(1));
+                const level = parseInt(token.tag.slice(1), 10); // 更安全的写法
                 const nextToken = state.tokens[i + 1];
 
                 if (nextToken && nextToken.type === 'inline') {
@@ -177,7 +176,6 @@ function markdownItOutlinePlugin(md) {
                     let counter = 1;
                     let originalId = id;
 
-                    // 保证 ID 唯一
                     while (headingIdMap.has(id)) {
                         id = `${originalId}-${counter++}`;
                     }
@@ -190,32 +188,42 @@ function markdownItOutlinePlugin(md) {
                         text: headingText,
                         id,
                         children: [],
-                        expanded: false // 默认收起
+                        expanded: level <= 2
                     });
                 }
             }
         }
 
         // 构建层级结构
-        md._headings = buildHierarchy(currentHeadings);
+        const hierarchy = buildHierarchy(currentHeadings);
+        md._headings = hierarchy;
     });
 }
 
-// 将平面结构转为嵌套层级结构
 function buildHierarchy(flatHeadings) {
     const root = { level: 0, children: [] };
     const stack = [root];
 
     for (const heading of flatHeadings) {
-        while (stack.length > 0 && heading.level <= stack[stack.length - 1].level) {
+        while (stack.length > 1 && heading.level <= stack[stack.length - 1].level) {
             stack.pop();
         }
-        stack[stack.length - 1].children.push(heading);
-        stack.push(heading);
+
+        const headingCopy = {
+            level: heading.level,
+            text: heading.text,
+            id: heading.id,
+            expanded: heading.expanded,
+            children: []
+        };
+
+        stack[stack.length - 1].children.push(headingCopy);
+        stack.push(headingCopy);
     }
 
     return root.children;
 }
+
 
 md.use(markdownItOutlinePlugin);
 
@@ -230,7 +238,7 @@ export function renderMarkdown(content) {
     if (!content) return { html: '', outline: [] };
 
     const processedContent = preprocessMathDelimiters(content);
-    md._headings = []; // 清空上次大纲
+    md._headings = [];
     const html = md.render(processedContent);
     return {
         html,

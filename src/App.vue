@@ -44,7 +44,7 @@
 import Navigte from './views/Navigte.vue'
 import { renderMarkdown } from './utils/markdown'
 import { useSettingsStore } from './stores/settings'
-import { watch, nextTick, ref, onMounted } from 'vue'
+import { watch, nextTick, ref, onMounted, reactive } from 'vue'
 import BackToTopButton from './components/BackToTopButton.vue'
 import OutlineItem from './views/OutlineItem.vue';
 import Sidebar from './views/Sidebar.vue'
@@ -167,7 +167,6 @@ export default {
     // 处理大纲数据，设置初始展开状态
     processOutline(outline) {
       const processNode = (node) => {
-        node.expanded = false;
         if (node.children) {
           node.children = node.children.map(processNode);
         }
