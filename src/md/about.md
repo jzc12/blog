@@ -15,13 +15,9 @@
 
 ---
 
-在 gitee 、vercel、github 平台都有部署，还是感觉github 习惯一些
+在 gitee 、vercel、github 平台都有部署
 
-
-
-大部分代码都是 借助 Cursor 、chatGpt 、agument 、deepseek， 然后再此基础上更改的，特别是 UI 
-
-并不是用AI，就代表不会什么，能用现在的AI 写出成果也是一种能力呢(◕‿◕✿)
+大部分代码都是 借助 Cursor 、chatGpt 、agument 、deepseek， 然后再此基础上更改的，特别是 UI (◕‿◕✿)
 
 ---
 
