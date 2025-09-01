@@ -16,7 +16,7 @@
       <main class="content" :class="{ 'with-outline': isMarkdownRoute }" ref="mainContentRef">
         <router-view v-slot="{ Component }">
           <template v-if="isMarkdownRoute">
-            <component :is="Component" @content-loaded="handleContentLoaded" ref="currentView" />
+            <component :is="Component" @content-loaded="handleContentLoaded" :ref="el => currentView = el" />
             <div class="markdown-body" ref="markdownContent" v-html="renderedContent"></div>
             <div class="tip-button-wrapper">
               <button @click="goToTipPage" class="tip-button">￥ 打赏</button>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- 回到顶部按钮 -->
-    <BackToTopButton v-if="isMarkdownRoute" :ref="mainContentRef" />
+    <BackToTopButton v-if="isMarkdownRoute" />
 
     <!-- 网站信息footer -->
     <SiteFooter />
@@ -87,8 +87,9 @@ export default {
 
     // 获取主内容容器引用
     getMainContentRef() {
-      return this.$refs.mainContentRef
+      return this.mainContentRef?.value || null
     }
+
   },
 
   // ========================== 方法定义 ==============================
@@ -103,7 +104,7 @@ export default {
         this.articleDate = new Date().toLocaleDateString();
         this.articleCategory = '技术博客';
         nextTick(() => {
-          mermaid.init(undefined, this.$refs.mainContentRef.querySelectorAll('.mermaid'));
+          mermaid.init(undefined, this.mainContentRef.value?.querySelectorAll('.mermaid') || []);
           this.setupScrollHandler();
         });
       } else {
@@ -178,7 +179,7 @@ export default {
     //  滚动处理相关
     // 设置滚动事件监听器
     setupScrollHandler() {
-      const content = this.$refs.mainContentRef;
+      const content = this.mainContentRef?.value;
       if (content) {
         content.addEventListener('scroll', this.handleScroll);
       }
@@ -192,7 +193,7 @@ export default {
       }
 
       this.scrollTimeout = setTimeout(() => {
-        const contentElement = this.$refs.mainContentRef;
+        const contentElement = this.mainContentRef?.value;
         if (!contentElement) return;
 
         // 处理导航栏隐藏逻辑
@@ -260,7 +261,7 @@ export default {
     // 处理大纲点击跳转到指定标题
     handleScrollToHeading(id) {
       const element = document.getElementById(id);
-      const mainContent = this.$refs.mainContentRef;
+      const mainContent = this.mainContentRef?.value;
 
       if (element && mainContent) {
         // 更新当前标题ID和大纲展开状态
@@ -294,9 +295,10 @@ export default {
     //  生命周期钩子 
     // 组件销毁前清理事件监听器
     beforeDestroy() {
-      if (this.$refs.mainContentRef) {
-        this.$refs.mainContentRef.removeEventListener('scroll', this.handleScroll);
+      if (this.mainContentRef?.value) {
+        this.mainContentRef.value.removeEventListener('scroll', this.handleScroll);
       }
+
       if (this.scrollTimeout) {
         clearTimeout(this.scrollTimeout);
       }
@@ -350,6 +352,9 @@ export default {
     const settings = useSettingsStore()
     const mainContentRef = ref(null)
 
+    const currentView = ref(null)
+    const markdownContent = ref(null)
+
     // 应用内容透明度
     const applyContentOpacity = (opacity) => {
       const opacityValue = opacity / 100
@@ -400,7 +405,9 @@ export default {
     // 返回给模板使用的数据
     return {
       settings,
-      mainContentRef
+      mainContentRef,
+      currentView,
+      markdownContent
     }
   },
 
