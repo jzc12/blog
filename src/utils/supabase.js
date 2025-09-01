@@ -91,7 +91,7 @@ export const getArticleViewCount = async (articleName) => {
             .single(); // 使用 single() 因为 article_name 是主键，应该只有一条记录
 
         if (error && error.code !== 'PGRST116') { // PGRST116 表示没有找到记录
-            throw error;
+            return 0;
         }
 
         return data ? data.view_count : 0;

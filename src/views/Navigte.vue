@@ -10,7 +10,7 @@
       <router-link v-for="item in navItems" :key="item.name" :to="{ name: item.name }" :title="item.text">
         <div class="nav-li">
           <component :is="item.icon" class="icon" />
-          <span>{{ item.text }}</span>
+          <span></span>
           <!-- <div class="nav-span" v-if="item.count">
             <span>{{ item.count }}</span>
           </div> -->
@@ -47,11 +47,11 @@ export default {
       showTitle: true,          // 是否显示标题
       // 导航菜单配置项
       navItems: [
-        { name: 'home', icon: icons.home, count: '' },           // 首页
-        { name: 'about', icon: icons.about, count: '' },         // 关于
-        { name: 'category', icon: icons.category, count: '0' },  // 分类
-        { name: 'message', icon: icons.message, count: '0' },    // 留言
-        { name: 'settings', icon: icons.settings, count: '' }    // 设置
+        { name: 'home', icon: icons.home, count: '', text: "首页" },           // 首页
+        { name: 'about', icon: icons.about, count: '', text: "关于" },         // 关于
+        { name: 'category', icon: icons.category, count: '0', text: "分类" },  // 分类
+        { name: 'message', icon: icons.message, count: '0', text: "留言" },    // 留言
+        { name: 'settings', icon: icons.settings, count: '', text: "设置" }    // 设置
       ]
     };
   },
