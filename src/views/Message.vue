@@ -10,11 +10,11 @@
       <!-- 控制按钮组 -->
       <div class="control-group">
         <!-- 排序切换按钮 -->
-        <button class="control-btn" @click="toggleSort" :title="isAscending ? '切换为最新消息在前' : '切换为最早消息在前'">
+        <button class="control-btn" @click="toggleSort" v-tooltip="isAscending ? '切换为最新消息在前' : '切换为最早消息在前'">
           <component :is="isAscending ? iconMap.sortDesc : iconMap.sortAsc" class="icon" />
         </button>
         <!-- 刷新按钮 -->
-        <button class="control-btn" @click="loadMessages" :disabled="isLoading" :title="'刷新留言'">
+        <button class="control-btn" @click="loadMessages" :disabled="isLoading" v-tooltip="'刷新留言'">
           <component :is="isLoading ? iconMap.loading : iconMap.refresh" class="icon" />
         </button>
       </div>

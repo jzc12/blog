@@ -41,7 +41,7 @@
           @keydown.enter.prevent="handleEnter" ref="contentInput"></textarea>
 
         <!-- 提交按钮 -->
-        <button type="submit" class="submit-btn" title="发送">
+        <button type="submit" class="submit-btn" v-tooltip="'发送'">
           发送
         </button>
       </div>

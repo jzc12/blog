@@ -7,13 +7,14 @@
       { active: isActive }
     ]" @click="handleClick" @dblclick.stop="toggleExpand">
       <!-- 展开/折叠图标或占位 -->
-      <span class="toggle-icon" v-if="hasChildren" @click.stop="toggleExpand" :title="heading.expanded ? '收起' : '展开'">
+      <span class="toggle-icon" v-if="hasChildren" @click.stop="toggleExpand"
+        v-tooltip="heading.expanded ? '收起' : '展开'">
         <component :is="heading.expanded ? iconMap.minus : iconMap.chevronDown" class="icon-outline"
           :style="{ transform: heading.expanded ? 'rotate(0deg)' : 'rotate(-90deg)' }" />
       </span>
       <span v-else class="toggle-icon placeholder" aria-hidden="true"></span>
       <!-- 标题文本 -->
-      <a :title="heading.text">{{ heading.text }}</a>
+      <a v-tooltip="heading.text">{{ heading.text }}</a>
     </div>
 
     <!-- 子项列表 -->

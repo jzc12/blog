@@ -3,11 +3,11 @@
   <!-- 侧边栏主容器 -->
   <div class="Navigte" :class="$attrs.class">
     <!-- 博客标题 -->
-    <h2 v-show="showTitle">zc 的博客<span class="cursor">_</span></h2>
+    <h2 v-tooltip="'你好 (◕‿◕✿) '">zc 的博客<span class="cursor">_</span></h2>
 
     <!-- 导航菜单 -->
     <div class="nav">
-      <router-link v-for="item in navItems" :key="item.name" :to="{ name: item.name }" :title="item.text">
+      <router-link v-for="item in navItems" :key="item.name" :to="{ name: item.name }" v-tooltip="item.text">
         <div class="nav-li">
           <component :is="item.icon" class="icon" />
           <span></span>
