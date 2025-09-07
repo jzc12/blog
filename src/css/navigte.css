@@ -197,14 +197,12 @@ a:hover {
 @media (max-width: 768px) {
     .Navigte {
         padding: 5px 5%;
-        justify-content: center;
+        width: 100%;
         display: flex;
     }
 
     .Navigte h2 {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 10px;
+        display: none;
     }
 
     .Navigte .nav {
