@@ -56,6 +56,24 @@
     transition: all 0.3s ease;
 }
 
+/* 全屏样式 */
+.markdown-body img.fullscreen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    max-width: 95vw;
+    max-height: 95vh;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    z-index: 9999;
+    cursor: zoom-out;
+    border-radius: 0;
+    /* 可选 */
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
 /* 列表样式 */
 .markdown-body ul,
 .markdown-body ol {

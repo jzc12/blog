@@ -6,17 +6,17 @@
       <div class="article-header">
         <div class="meta-info">
           <!-- 创建日期 -->
-          <div class="meta-item" v-tooltip="'创建日期'">
+          <div class="meta-item" title="创建日期">
             <component :is="iconMap.calendar" class="icon" />
             <span class="date">{{ article.date }}</span>
           </div>
           <!-- 分类 -->
-          <div class="meta-item" v-tooltip="'文章分类'">
+          <div class="meta-item" title="文章分类">
             <component :is="iconMap.kanban" class="icon" />
             <span class="date">{{ article.category }}</span>
           </div>
           <!-- 阅读次数 -->
-          <div class="meta-item" v-tooltip="'阅读次数'">
+          <div class="meta-item" title="阅读次数">
             <component :is="iconMap.eye" class="icon" />
             <span class="date">{{ viewCount }}</span>
           </div>

@@ -96,7 +96,7 @@
 /* 滚动条美化 */
 .message-list::-webkit-scrollbar,
 .messages-container::-webkit-scrollbar {
-    width: 6px;
+    width: 3px;
 }
 
 .message-list::-webkit-scrollbar-track,

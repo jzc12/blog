@@ -35,7 +35,15 @@
 
     <!-- 网站信息footer -->
     <SiteFooter />
+
   </div>
+
+  <div v-if="previewSrc" class="image-overlay" @click="closePreview">
+    <img :src="previewSrc" class="preview-img" />
+  </div>
+
+  <!-- 全局 toast 提示 -->
+  <div v-if="toastVisible" class="toast">{{ toastMessage }}</div>
 </template>
 
 <!-- ========================== 脚本逻辑 ============================== -->
@@ -74,7 +82,15 @@ export default {
       // 滚动相关
       scrollTimeout: null,      // 滚动防抖定时器
       isNavHidden: false,       // 导航栏是否隐藏
-      lastScrollTop: 0          // 上次滚动位置
+
+
+      previewSrc: null,
+      images: [],        // 当前页面所有图片 src
+      currentIndex: -1,   // 当前预览的图片索引
+
+      toastMessage: '',
+      toastVisible: false,
+      toastTimer: null
     }
   },
 
@@ -242,7 +258,7 @@ export default {
             item.expanded = true;
             found = true;
           } else if (!isParentOfTarget) {
-            item.expanded = false;
+            // item.expanded = false;
           }
         }
       }
@@ -341,6 +357,45 @@ export default {
       }
     },
 
+    showToast(msg) {
+      this.toastMessage = msg;
+      this.toastVisible = true;
+
+      clearTimeout(this.toastTimer);
+      this.toastTimer = setTimeout(() => {
+        this.toastVisible = false;
+      }, 3000);
+    },
+
+    closePreview() {
+      this.previewSrc = null;
+      this.images = [];
+      this.currentIndex = -1;
+    },
+
+    showNext() {
+      if (this.currentIndex < this.images.length - 1) {
+        this.currentIndex++;
+        this.previewSrc = this.images[this.currentIndex];
+      } else {
+        this.showToast("已经是最后一张了");
+      }
+    },
+
+    showPrev() {
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+        this.previewSrc = this.images[this.currentIndex];
+      } else {
+        this.showToast("已经是第一张了");
+      }
+    },
+
+    openPreview(index) {
+      this.currentIndex = index;
+      this.previewSrc = this.images[index];
+      this.showToast("可用键盘 ← → 切换图片");
+    }
 
   },
 
@@ -421,6 +476,27 @@ export default {
     // 确保滚动监听在所有页面都生效
     this.$nextTick(() => {
       this.setupScrollHandler();
+    });
+
+    document.addEventListener('dblclick', (e) => {
+      if (e.target.tagName === 'IMG' && e.target.closest('.markdown-body')) {
+        const imgs = Array.from(document.querySelectorAll('.markdown-body img'));
+        this.images = imgs.map(img => img.src);
+        this.currentIndex = this.images.indexOf(e.target.src);
+        this.previewSrc = e.target.src;
+      }
+    });
+
+    // 键盘左右切换 / ESC 关闭
+    document.addEventListener('keydown', (e) => {
+      if (!this.previewSrc) return;
+      if (e.key === 'Escape') {
+        this.closePreview();
+      } else if (e.key === 'ArrowRight') {
+        this.showNext();
+      } else if (e.key === 'ArrowLeft') {
+        this.showPrev();
+      }
     });
   }
 }

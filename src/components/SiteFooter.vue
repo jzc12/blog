@@ -1,15 +1,15 @@
 <template>
   <footer class="site-footer" :class="{ 'visible': showFooter }">
     <div class="footer-content">
-      <p v-tooltip="'浏览统计'">
+      <p title="浏览统计">
         <component :is="iconMap.about" />{{ uniqueVisitors }}
         <component :is="iconMap.eye" />{{ totalVisits }}
       </p>
-      <p class="beian-info" v-tooltip="'备案号'">
+      <p class="beian-info" title="备案号">
         <img src="https://qcloudimg.tencent-cloud.cn/raw/eed02831a0e201b8d794c8282c40cf2e.png" alt="备案图标">
         <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">黔ICP备2025055086号</a>
       </p>
-      <p v-tooltip="'技术栈'">Vue 3 + Vite + Supabase + GitHub Pages + Cloudflare</p>
+      <p title="技术栈">Vue 3 + Vite + Supabase + GitHub Pages + Cloudflare</p>
     </div>
   </footer>
 </template>
