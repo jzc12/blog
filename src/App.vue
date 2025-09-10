@@ -38,12 +38,12 @@
 
   </div>
 
-  <div v-if="previewSrc" class="image-overlay" @click="closePreview">
-    <img :src="previewSrc" class="preview-img" />
-  </div>
+  <!-- 提示 -->
+  <Toast ref="toastRef" />
 
-  <!-- 全局 toast 提示 -->
-  <div v-if="toastVisible" class="toast">{{ toastMessage }}</div>
+  <!-- 图片大图查看 -->
+  <ImagePreview ref="previewRef" @edge="handleImageEdge" />
+
 </template>
 
 <!-- ========================== 脚本逻辑 ============================== -->
@@ -53,6 +53,11 @@ import Navigte from './views/Navigte.vue'
 import { renderMarkdown } from './utils/markdown'
 import { useSettingsStore } from './stores/settings'
 import { watch, nextTick, ref, onMounted, reactive } from 'vue'
+
+import Toast from "./components/Toast.vue";
+import ImagePreview from "./components/ImagePreview.vue";
+
+
 import BackToTopButton from './components/BackToTopButton.vue'
 import OutlineItem from './views/OutlineItem.vue';
 import Sidebar from './views/Sidebar.vue'
@@ -61,7 +66,7 @@ import mermaid from 'mermaid'
 
 export default {
   // ========================== 组件注册 ==============================
-  components: { Navigte, BackToTopButton, OutlineItem, Sidebar, SiteFooter },
+  components: { Navigte, BackToTopButton, OutlineItem, Sidebar, SiteFooter, Toast, ImagePreview },
 
   // ========================== 组件数据 ==============================
   data() {
@@ -83,14 +88,6 @@ export default {
       scrollTimeout: null,      // 滚动防抖定时器
       isNavHidden: false,       // 导航栏是否隐藏
 
-
-      previewSrc: null,
-      images: [],        // 当前页面所有图片 src
-      currentIndex: -1,   // 当前预览的图片索引
-
-      toastMessage: '',
-      toastVisible: false,
-      toastTimer: null
     }
   },
 
@@ -357,44 +354,31 @@ export default {
       }
     },
 
+    // 使用 Toast
     showToast(msg) {
-      this.toastMessage = msg;
-      this.toastVisible = true;
-
-      clearTimeout(this.toastTimer);
-      this.toastTimer = setTimeout(() => {
-        this.toastVisible = false;
-      }, 3000);
+      this.$refs.toastRef.show(msg);
     },
 
-    closePreview() {
-      this.previewSrc = null;
-      this.images = [];
-      this.currentIndex = -1;
-    },
-
-    showNext() {
-      if (this.currentIndex < this.images.length - 1) {
-        this.currentIndex++;
-        this.previewSrc = this.images[this.currentIndex];
-      } else {
-        this.showToast("已经是最后一张了");
-      }
-    },
-
-    showPrev() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--;
-        this.previewSrc = this.images[this.currentIndex];
-      } else {
-        this.showToast("已经是第一张了");
-      }
-    },
-
+    // 打开图片预览
     openPreview(index) {
-      this.currentIndex = index;
-      this.previewSrc = this.images[index];
-      this.showToast("可用键盘 ← → 切换图片");
+      const imgs = Array.from(document.querySelectorAll(".markdown-body img")).map(
+        (img) => img.src
+      );
+      if (this.$refs.previewRef) {
+        this.$refs.previewRef.open(imgs, index);
+        this.showToast("可用键盘 ← → 切换图片");
+      } else {
+        console.warn("ImagePreview 未挂载");
+      }
+    },
+
+
+    handleImageEdge(position) {
+      if (position === "first") {
+        this.$refs.toastRef.show("已经是第一张了");
+      } else if (position === "last") {
+        this.$refs.toastRef.show("已经是最后一张了");
+      }
     }
 
   },
@@ -478,24 +462,13 @@ export default {
       this.setupScrollHandler();
     });
 
-    document.addEventListener('dblclick', (e) => {
-      if (e.target.tagName === 'IMG' && e.target.closest('.markdown-body')) {
-        const imgs = Array.from(document.querySelectorAll('.markdown-body img'));
-        this.images = imgs.map(img => img.src);
-        this.currentIndex = this.images.indexOf(e.target.src);
-        this.previewSrc = e.target.src;
-      }
-    });
-
-    // 键盘左右切换 / ESC 关闭
-    document.addEventListener('keydown', (e) => {
-      if (!this.previewSrc) return;
-      if (e.key === 'Escape') {
-        this.closePreview();
-      } else if (e.key === 'ArrowRight') {
-        this.showNext();
-      } else if (e.key === 'ArrowLeft') {
-        this.showPrev();
+    document.addEventListener("dblclick", (e) => {
+      if (e.target.tagName === "IMG" && e.target.closest(".markdown-body")) {
+        const imgs = Array.from(document.querySelectorAll(".markdown-body img")).map(
+          (img) => img.src
+        );
+        const idx = imgs.indexOf(e.target.src);
+        this.openPreview(idx);
       }
     });
   }
