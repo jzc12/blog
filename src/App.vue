@@ -127,7 +127,7 @@ export default {
     },
 
     //  点击特效实现 
-    createClickEffect(event) {
+    /* createClickEffect(event) {
       const colors = ['#FF69B4', '#87CEEB', '#98FB98', '#DDA0DD', '#F0E68C'];
 
       for (let i = 0; i < 8; i++) {
@@ -153,7 +153,7 @@ export default {
           document.body.removeChild(particle);
         }, 600);
       }
-    },
+    }, */
 
     //  大纲处理相关 
     // 处理大纲数据，设置初始展开状态
