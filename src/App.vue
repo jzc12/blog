@@ -53,6 +53,7 @@ import Navigte from './views/Navigte.vue'
 import { renderMarkdown } from './utils/markdown'
 import { useSettingsStore } from './stores/settings'
 import { watch, nextTick, ref, onMounted, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 
 import Toast from "./components/Toast.vue";
 import ImagePreview from "./components/ImagePreview.vue";
@@ -127,53 +128,31 @@ export default {
 
     //  点击特效实现 
     createClickEffect(event) {
-      // 创建特效容器
-      const container = document.createElement('div');
-      container.className = 'click-effect';
-      document.body.appendChild(container);
+      const colors = ['#FF69B4', '#87CEEB', '#98FB98', '#DDA0DD', '#F0E68C'];
 
-      // 定义粒子颜色集
-      const colors = [
-        '#FF69B4', '#87CEEB', '#98FB98', '#DDA0DD', '#F0E68C',
-        '#FF7F50', '#00CED1', '#FF69B4', '#7B68EE', '#32CD32'
-      ];
-
-      // 生成粒子
       for (let i = 0; i < 8; i++) {
         const particle = document.createElement('div');
         particle.className = 'click-effect-particle';
 
-        // 设置粒子位置为鼠标点击位置
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const size = Math.random() * 20 + 10;
+        const angle = (Math.PI * 2 * i) / 8;
+        const velocity = Math.random() * 100 + 50;
+
+        particle.style.setProperty('--tx', `${Math.cos(angle) * velocity}px`);
+        particle.style.setProperty('--ty', `${Math.sin(angle) * velocity}px`);
         particle.style.left = `${event.clientX}px`;
         particle.style.top = `${event.clientY}px`;
-
-        // 随机设置粒子颜色和发光效果
-        const color = colors[Math.floor(Math.random() * colors.length)];
         particle.style.backgroundColor = color;
-        particle.style.boxShadow = `0 0 10px ${color}`;
-
-        // 随机设置粒子大小
-        const size = Math.random() * 20 + 10;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
 
-        // 计算粒子运动轨迹
-        const angle = (Math.PI * 2 * i) / 8;
-        const velocity = Math.random() * 100 + 50;
-        const vx = Math.cos(angle) * velocity;
-        const vy = Math.sin(angle) * velocity;
+        document.body.appendChild(particle);
 
-        // 应用动画效果
-        particle.style.animation = 'particle-animation 0.6s ease-out forwards';
-        particle.style.transform = `translate(${vx}px, ${vy}px) scale(0)`;
-
-        container.appendChild(particle);
+        setTimeout(() => {
+          document.body.removeChild(particle);
+        }, 600);
       }
-
-      // 动画结束后清理DOM
-      setTimeout(() => {
-        document.body.removeChild(container);
-      }, 1000);
     },
 
     //  大纲处理相关 
@@ -392,6 +371,8 @@ export default {
     const currentView = ref(null)
     const markdownContent = ref(null)
 
+    const router = useRouter()
+
     // 应用内容透明度
     const applyContentOpacity = (opacity) => {
       const opacityValue = opacity / 100
@@ -425,6 +406,26 @@ export default {
 
     // 监听背景颜色变化
     watch(() => settings.backgroundColor, () => settings.applyBackground())
+
+    // 监听路由变化
+    watch(() => router.currentRoute.value.path, (newPath, oldPath) => {
+      if (newPath !== oldPath) {
+        // 路由变化时滚动到顶部
+        nextTick(() => {
+          if (mainContentRef.value) {
+            mainContentRef.value.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }
+
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+    })
 
     // 组件挂载时的初始化
     onMounted(() => {

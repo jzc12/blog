@@ -10,34 +10,21 @@
 /* 特效容器 - 覆盖整个页面但不影响交互 */
 .click-effect {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     pointer-events: none;
     z-index: 9999;
 }
 
-/* 粒子样式 - 定义基础外观和定位 */
 .click-effect-particle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
+    position: fixed;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
+    opacity: 0.8;
+    animation: particle-animation 0.6s ease-out forwards;
 }
 
-/* 粒子动画 - 定义缩放和淡出效果 */
 @keyframes particle-animation {
-    0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translate(-50%, -50%) scale(1);
+    to {
         opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0);
     }
 }
 
