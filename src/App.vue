@@ -127,7 +127,7 @@ export default {
     },
 
     //  点击特效实现 
-    /* createClickEffect(event) {
+    createClickEffect(event) {
       const colors = ['#FF69B4', '#87CEEB', '#98FB98', '#DDA0DD', '#F0E68C'];
 
       for (let i = 0; i < 8; i++) {
@@ -153,7 +153,7 @@ export default {
           document.body.removeChild(particle);
         }, 600);
       }
-    }, */
+    },
 
     //  大纲处理相关 
     // 处理大纲数据，设置初始展开状态
@@ -456,7 +456,14 @@ export default {
     this.timeInterval = setInterval(() => this.updateCurrentTime(), 1000);
 
     // 绑定全局点击特效事件
-    window.addEventListener('click', this.createClickEffect);
+    window.addEventListener("click", (e) => {
+      // 如果点的是文章里的图片，就不触发点击特效
+      if (e.target.tagName === "IMG" && e.target.closest(".markdown-body")) {
+        return;
+      }
+      this.createClickEffect(e);
+    });
+
 
     // 确保滚动监听在所有页面都生效
     this.$nextTick(() => {
