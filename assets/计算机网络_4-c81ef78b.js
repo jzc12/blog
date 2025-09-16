@@ -1,0 +1,92 @@
+const n=`---
+date: 2025-06-21
+updated: 2025-09-12
+category: 考研复习
+summary: 计算机网络4网络层
+---
+![网络层](./../../public/assets/ComNet/网络层.png)
+
+## 4.1网络层的功能
+
+![网络层的功能](./../../public/assets/ComNet/网络层的功能.png)
+
+## 4.2IPv4
+
+### 分组
+
+![IPV4分组](./../../public/assets/ComNet/IPV4分组.png)
+
+### 路由
+
+![路由转发过程](./../../public/assets/ComNet/路由转发过程.png)
+
+![路由聚合](./../../public/assets/ComNet/路由聚合.png)
+
+### CDIR
+
+![CIDR](./../../public/assets/ComNet/CIDR.png)
+
+> 变长子网划分
+
+![CIDR-哈夫曼树](./../../public/assets/ComNet/CIDR-哈夫曼树.png)
+
+![CIDR例子](./../../public/assets/ComNet/CIDR例子.png)
+
+### NAT
+
+![NAT总结](./../../public/assets/ComNet/NAT总结.png)
+
+![NAT原理](./../../public/assets/ComNet/NAT原理.png)
+
+### ARP
+
+
+
+![ARP](./../../public/assets/ComNet/ARP.png)
+
+
+
+
+
+### DHCP
+
+![DHCP](./../../public/assets/ComNet/DHCP.png)
+
+
+
+> 例子
+
+![DHCP例子](./../../public/assets/ComNet/DHCP例子.png)
+
+
+
+
+
+## 路由协议与算法
+
+### RIP
+
+> 例子
+
+![RIP例子](./../../public/assets/ComNet/RIP例子.png)
+
+> Bell-man 算法
+
+
+
+### OSPF
+
+> 特点
+
+![OSPF特点](./../../public/assets/ComNet/OSPF特点.png)
+
+> 工作原理
+
+![OSPF工作原理](./../../public/assets/ComNet/OSPF工作原理.png)
+
+
+
+> 分组类型
+
+![OSPF分组类型](./../../public/assets/ComNet/OSPF分组类型.png)
+`;export{n as default};
