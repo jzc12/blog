@@ -1,0 +1,98 @@
+const n=`---
+date: 2025-06-21
+updated: 2025-09-12
+category: 考研复习
+summary: 计算机网络6应用层
+
+---
+
+
+![应用层](./../../public/assets/ComNet/应用层.png)
+
+
+
+## 域名系统
+
+![DNS](./../../public/assets/ComNet/DNS.png)
+
+> DNS 过程
+
+![DNS递归](./../../public/assets/ComNet/DNS递归.png)
+
+
+
+![DNS迭代](./../../public/assets/ComNet/DNS迭代.png)
+
+
+
+
+
+
+
+## 文件传输协议
+
+![FTP原理1](./../../public/assets/ComNet/FTP原理1.png)
+
+![FTP原理](./../../public/assets/ComNet/FTP原理.png)
+
+
+
+![FTP](./../../public/assets/ComNet/FTP.png)
+
+
+
+
+
+## 电子邮件
+
+### STMP
+
+![STMP过程](./../../public/assets/ComNet/STMP过程.png)
+
+### MIME
+
+![MIME](./../../public/assets/ComNet/MIME.png)
+
+
+
+### POP3
+
+![POP3](./../../public/assets/ComNet/POP3.png)
+
+### IMAP
+
+![IMAP](./../../public/assets/ComNet/IMAP.png)
+
+### 基于HTTP
+
+![基于万维网](./../../public/assets/ComNet/基于万维网.png)
+
+
+
+
+
+## 万维网
+
+### WWW
+
+![万维网](./../../public/assets/ComNet/万维网.png)
+
+
+
+### WWW过程
+
+![WWW过程](./../../public/assets/ComNet/WWW过程.png)
+
+### HTTP
+
+![HTTP](./../../public/assets/ComNet/HTTP.png)
+
+![HTTP报文](./../../public/assets/ComNet/HTTP报文.png)
+
+
+
+### Cookie
+
+![Cookie](./../../public/assets/ComNet/Cookie.png)
+
+`;export{n as default};

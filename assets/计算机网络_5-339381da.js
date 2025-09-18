@@ -1,0 +1,84 @@
+const n=`---
+date: 2025-06-21
+updated: 2025-09-12
+category: 考研复习
+summary: 计算机网络5传输层
+---
+![传输层](./../../public/assets/ComNet/传输层.png)
+
+
+
+## 传输层概述
+
+![传输层概述](./../../public/assets/ComNet/传输层概述.png)
+
+![常见端口](./../../public/assets/ComNet/常见端口.png)
+
+
+
+## UDP
+
+
+
+### UDP协议
+
+![UDP协议](./../../public/assets/ComNet/UDP协议.png)
+
+### UDP检验
+
+![UDP检验0](./../../public/assets/ComNet/UDP检验0.png)
+
+![UDP检验](./../../public/assets/ComNet/UDP检验.png)
+
+
+
+---
+
+## TCP
+
+
+
+### 连接管理
+
+![TCP连接](./../../public/assets/ComNet/TCP连接.png)
+
+![TCP连接1](./../../public/assets/ComNet/TCP连接1.png)
+
+![TCP连接2](./../../public/assets/ComNet/TCP连接2.png)
+
+
+
+
+
+### 可靠传输
+
+![TCP可靠传输](./../../public/assets/ComNet/TCP可靠传输.png)
+
+
+
+![TCP重传](./../../public/assets/ComNet/TCP重传.png)
+
+
+
+![TCP连接3](./../../public/assets/ComNet/TCP连接3.png)
+
+
+
+### 流量控制
+
+> 发送窗口与接受窗口
+
+![拥塞控制和流量控制](./../../public/assets/ComNet/拥塞控制和流量控制.png)
+
+
+
+### 拥塞控制
+
+> 慢开始、拥塞避免
+
+![慢开始拥塞避免](./../../public/assets/ComNet/慢开始拥塞避免.png)
+
+> 快重传（考频低）
+
+![快重传慢恢复](./../../public/assets/ComNet/快重传慢恢复.png)
+`;export{n as default};
