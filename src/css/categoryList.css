@@ -152,6 +152,66 @@
     animation: spin 1s linear infinite;
 }
 
+/* ================== 分页导航 ================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0rem;
+    flex-wrap: wrap;
+}
+
+/* 普通页码按钮 */
+.page-btn,
+.pagination button {
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--code-border);
+    background: var(--bg-overlay);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+/* hover 效果 */
+.page-btn:hover:not(.active):not(.ellipsis),
+.pagination button:hover:not(:disabled) {
+    background: var(--bg-hover);
+    color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* 当前页高亮 */
+.page-btn.active {
+    background: var(--primary-green);
+    color: #fff;
+    border-color: var(--primary-green);
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+}
+
+/* 省略号 */
+.page-btn.ellipsis {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    cursor: default;
+    color: var(--text-secondary);
+}
+
+/* 禁用按钮 */
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -236,17 +296,32 @@
     }
 }
 
-/* 列表动画 */
+/* ========== 列表切换动画 ========== */
 .list-enter-active,
 .list-leave-active {
-    transition: all 0.3s ease;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.list-enter-from,
+.list-enter-from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+}
+
+.list-enter-to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.list-leave-from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
 .list-leave-to {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(-15px) scale(0.98);
 }
+
 
 /* 无文章提示 */
 .no-articles {

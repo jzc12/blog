@@ -1,4 +1,4 @@
-// ========================== 文章分类列表组件 ==============================
+<!-- ========================== 文章分类列表组件 ============================== -->
 <template>
   <div class="category-container">
 
@@ -8,7 +8,6 @@
         <i class="fas fa-circle-notch"></i>
         正在加载文章：{{ progress }}%
       </div>
-      <!-- 加载进度条 -->
       <div class="progress-bar">
         <div class="progress" :style="{ width: progress + '%' }"></div>
       </div>
@@ -17,88 +16,116 @@
     <!-- 文章列表展示 -->
     <div v-else-if="articles.length" class="category-content">
       <TransitionGroup name="list" tag="div" class="article-list">
-        <!-- 单篇文章项 -->
-        <router-link v-for="article in sortedArticles" :key="article.id"
+        <router-link v-for="article in paginatedArticles" :key="article.id"
           :to="{ name: 'article', params: { articleId: article.id } }" class="article-item">
-          <!-- 文章头部信息 -->
           <div class="article-header">
             <h3 class="article-title">{{ article.title || article.id }}</h3>
-            <!-- 分类标签 -->
-            <div class="category-tag">
-              <i class="fas fa-tag"></i>
-              {{ article.category }}
-            </div>
-            <!-- 发布日期 -->
-            <div class="date-info">
-              <i class="far fa-calendar-alt"></i>
-              <span>{{ article.date }}</span>
-            </div>
+            <div class="category-tag"><i class="fas fa-tag"></i> {{ article.category }}</div>
+            <div class="date-info"><i class="far fa-calendar-alt"></i><span>{{ article.date }}</span></div>
           </div>
-          <!-- 文章摘要 -->
           <p class="summary">{{ article.summary }}</p>
         </router-link>
       </TransitionGroup>
     </div>
-
     <!-- 无文章提示 -->
     <div v-else class="no-articles">
-      <i class="far fa-folder-open"></i>
-      暂无文章
+      <i class="far fa-folder-open"></i> 暂无文章
     </div>
+  </div>
+  <!-- 分页导航 -->
+  <div class="pagination">
+    <button @click="prevPage" :disabled="currentPage === 1">上一页</button>
+
+    <span v-for="(page, index) in pageNumbers" :key="index"
+      :class="['page-btn', { active: page === currentPage, ellipsis: page === '...' }]"
+      @click="page !== '...' && goPage(page)">
+      {{ page }}
+    </span>
+
+    <button @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
   </div>
 </template>
 
 <script>
-// ========================== 依赖导入 ==============================
 import { ref, computed } from 'vue'
 import fm from 'front-matter'
 import dayjs from 'dayjs'
 
 export default {
   name: 'CategoryList',
-
-  // ========================== 组件逻辑 ==============================
   setup() {
-    // ========================== 响应式状态 ==============================
-    const articles = ref([])        // 文章列表数据
-    const loading = ref(true)       // 加载状态
-    const progress = ref(0)         // 加载进度
+    const articles = ref([])
+    const loading = ref(true)
+    const progress = ref(0)
 
-    // ========================== 计算属性 ==============================
-    // 按日期和标题排序的文章列表
+    // ========== 分页状态 ==========
+    const currentPage = ref(1)
+    const pageSize = ref(6)
+
+    // 排序后的文章
     const sortedArticles = computed(() => {
       return [...articles.value].sort((a, b) => {
-        // 首先按日期排序
         const dateCompare = new Date(b.date) - new Date(a.date)
-        if (dateCompare !== 0) return dateCompare
-        // 如果日期相同，按标题排序
-        return a.title.localeCompare(b.title)
+        return dateCompare !== 0 ? dateCompare : a.title.localeCompare(b.title)
       })
     })
 
-    // ========================== 方法定义 ==============================
-    // 获取并处理文章列表
+    const totalPages = computed(() => Math.ceil(sortedArticles.value.length / pageSize.value))
+
+    const paginatedArticles = computed(() => {
+      const start = (currentPage.value - 1) * pageSize.value
+      return sortedArticles.value.slice(start, start + pageSize.value)
+    })
+
+    // 页码生成（省略风格）
+    const pageNumbers = computed(() => {
+      const pages = []
+      const total = totalPages.value
+      const cur = currentPage.value
+
+      if (total <= 7) {
+        // 总页数少于等于7，全部显示
+        for (let i = 1; i <= total; i++) pages.push(i)
+      } else {
+        pages.push(1)
+
+        if (cur > 4) pages.push('...')
+
+        const start = Math.max(2, cur - 1)
+        const end = Math.min(total - 1, cur + 1)
+
+        for (let i = start; i <= end; i++) pages.push(i)
+
+        if (cur < total - 3) pages.push('...')
+
+        pages.push(total)
+      }
+      return pages
+    })
+
+    const goPage = (page) => {
+      if (page >= 1 && page <= totalPages.value) currentPage.value = page
+    }
+    const prevPage = () => goPage(currentPage.value - 1)
+    const nextPage = () => goPage(currentPage.value + 1)
+
+    // ========== 加载文章 ==========
     const getArticles = async () => {
       loading.value = true
       progress.value = 0
-
       try {
-        // 获取所有 Markdown 文件
         const articleFiles = import.meta.glob('@/articles/*.md', { as: 'raw' })
         const paths = Object.keys(articleFiles)
         const total = paths.length
         let loaded = 0
 
-        // 并行加载所有文章
         const articleData = await Promise.all(
           paths.map(async (path) => {
             try {
-              // 读取并解析文章内容
               const raw = await articleFiles[path]()
               const { attributes: frontmatter, body } = fm(raw)
               const fileName = path.split('/').pop().replace('.md', '')
 
-              // 处理无 frontmatter 的文章
               if (!raw.trim().startsWith('---')) {
                 return {
                   id: fileName,
@@ -109,49 +136,52 @@ export default {
                 }
               }
 
-              // 返回处理后的文章数据
               return {
                 id: fileName,
                 title: frontmatter.title || fileName,
-                date: dayjs(frontmatter.updated).format('YYYY-MM-DD') || '未知日期',
+                date: frontmatter.updated
+                  ? dayjs(frontmatter.updated).format('YYYY-MM-DD')
+                  : '未知日期',
                 category: frontmatter.category || '未分类',
                 summary: frontmatter.summary || body.slice(0, 100) + '...'
               }
-            } catch (error) {
-              console.error(`加载文章失败: ${path}`, error)
+            } catch (e) {
+              console.error(`加载文章失败: ${path}`, e)
               return null
             } finally {
-              // 更新加载进度
               loaded++
               progress.value = Math.round((loaded / total) * 100)
             }
           })
         )
 
-        // 过滤掉加载失败的文章
         articles.value = articleData.filter(Boolean)
-      } catch (error) {
-        console.error('加载文章列表失败:', error)
+      } catch (e) {
+        console.error('加载文章列表失败:', e)
       } finally {
         loading.value = false
       }
     }
 
-    // ========================== 初始化 ==============================
     getArticles()
 
-    // ========================== 返回数据 ==============================
     return {
-      articles,         // 文章列表
-      loading,          // 加载状态
-      progress,         // 加载进度
-      sortedArticles    // 排序后的文章列表
+      articles,
+      loading,
+      progress,
+      sortedArticles,
+      paginatedArticles,
+      currentPage,
+      totalPages,
+      pageNumbers,
+      goPage,
+      prevPage,
+      nextPage
     }
   }
 }
 </script>
 
 <style scoped>
-/* ========================== 样式导入 ============================== */
 @import '../css/categoryList.css';
 </style>
