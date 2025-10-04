@@ -54,6 +54,9 @@ export default {
     // 处理点击事件，触发滚动到对应位置
     const handleClick = () => {
       emitScrollTo(props.heading.id);
+      if (hasChildren.value && !props.heading.expanded) {
+        props.heading.expanded = !props.heading.expanded;
+      }
     };
 
     // 切换大纲项的展开/折叠状态

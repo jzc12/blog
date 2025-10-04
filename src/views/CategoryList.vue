@@ -31,23 +31,24 @@
     <div v-else class="no-articles">
       <i class="far fa-folder-open"></i> 暂无文章
     </div>
-  </div>
-  <!-- 分页导航 -->
-  <div class="pagination">
-    <button @click="prevPage" :disabled="currentPage === 1">上一页</button>
 
-    <span v-for="(page, index) in pageNumbers" :key="index"
-      :class="['page-btn', { active: page === currentPage, ellipsis: page === '...' }]"
-      @click="page !== '...' && goPage(page)">
-      {{ page }}
-    </span>
+    <!-- 分页导航 -->
+    <div class="pagination">
+      <button @click="prevPage" :disabled="currentPage === 1">上一页</button>
 
-    <button @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
+      <span v-for="(page, index) in pageNumbers" :key="index"
+        :class="['page-btn', { active: page === currentPage, ellipsis: page === '...' }]"
+        @click="page !== '...' && goPage(page)">
+        {{ page }}
+      </span>
+
+      <button @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import fm from 'front-matter'
 import dayjs from 'dayjs'
 
@@ -61,6 +62,17 @@ export default {
     // ========== 分页状态 ==========
     const currentPage = ref(1)
     const pageSize = ref(6)
+
+    // 页面加载时恢复上次页码
+    onMounted(() => {
+      const savedPage = sessionStorage.getItem('categoryPage')
+      if (savedPage) currentPage.value = Number(savedPage)
+    })
+
+    // 页码变化时保存
+    watch(currentPage, (newPage) => {
+      sessionStorage.setItem('categoryPage', newPage)
+    })
 
     // 排序后的文章
     const sortedArticles = computed(() => {
