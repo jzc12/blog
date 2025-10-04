@@ -32,18 +32,18 @@
       <i class="far fa-folder-open"></i> 暂无文章
     </div>
 
-    <!-- 分页导航 -->
-    <div class="pagination">
-      <button @click="prevPage" :disabled="currentPage === 1">上一页</button>
+  </div>
+  <!-- 分页导航 -->
+  <div class="pagination">
+    <button @click="prevPage" :disabled="currentPage === 1">上一页</button>
 
-      <span v-for="(page, index) in pageNumbers" :key="index"
-        :class="['page-btn', { active: page === currentPage, ellipsis: page === '...' }]"
-        @click="page !== '...' && goPage(page)">
-        {{ page }}
-      </span>
+    <span v-for="(page, index) in pageNumbers" :key="index"
+      :class="['page-btn', { active: page === currentPage, ellipsis: page === '...' }]"
+      @click="page !== '...' && goPage(page)">
+      {{ page }}
+    </span>
 
-      <button @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
-    </div>
+    <button @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
   </div>
 </template>
 

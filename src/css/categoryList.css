@@ -158,8 +158,12 @@
     justify-content: center;
     align-items: center;
     gap: 0.6rem;
-    margin-top: 1rem;
+    margin-top: 0rem;
     flex-wrap: wrap;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.3rem;
 }
 
 /* 普通页码按钮 */
