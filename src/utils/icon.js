@@ -18,6 +18,8 @@ import {
     Settings,
     ChevronDown,
     ChevronUp,
+    ChevronLeft,
+    ChevronRight,
     Minus,
     Eye,
     Shuffle,
@@ -29,7 +31,8 @@ import {
     Clock3,
     Earth,
     Building2,
-    LibraryBig
+    LibraryBig,
+    X,
 } from 'lucide-vue-next';
 
 import GitHub from './../assets/github.svg';
@@ -54,6 +57,9 @@ export const icons = {
     settings: Settings,
     chevronDown: ChevronDown,
     chevronUp: ChevronUp,
+    chevronLeft: ChevronLeft,
+    chevronRight: ChevronRight,
+    x: X,
     minus: Minus,
     eye: Eye,
     shuffle: Shuffle,

@@ -155,7 +155,7 @@ export default {
       }
     },
 
-    //  大纲处理相关 
+    // 大纲处理相关 
     // 处理大纲数据，设置初始展开状态
     processOutline(outline) {
       const processNode = (node) => {
@@ -174,7 +174,6 @@ export default {
       if (content) {
         content.addEventListener('scroll', this.handleScroll);
       }
-      window.addEventListener('scroll', this.handleWindowScroll);
     },
 
     // 处理内容区域滚动事件
