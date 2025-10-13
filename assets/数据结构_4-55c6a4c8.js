@@ -1,0 +1,109 @@
+const n=`---
+date: 2025-10-07
+updated: 2025-10-07
+category: 考研复习
+summary: 数据结构8排序
+---
+
+## 基本概念
+
+![排序基本概念](./../../public/assets/数据结构/排序基本概念.png)
+
+
+
+## 插入排序
+
+![插入排序](./../../public/assets/数据结构/插入排序.png)
+
+### 直接插入排序
+
+\`\`\`c++
+// 不带哨兵形式
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+\`\`\`
+
+
+
+
+
+![直接插入排序](./../../public/assets/数据结构/直接插入排序.png)
+
+
+
+
+
+### 折半插入排序
+
+![折半插入排序](./../../public/assets/数据结构/折半插入排序.png)
+
+### 希尔排序
+
+![希尔排序图示](./../../public/assets/数据结构/希尔排序图示.png)
+
+
+
+\`\`\`c++
+void shellSort(int arr[], int n) {
+    for (int d = n / 2; d > 0; d = d / 2) {  // 增量序列
+        for (int i = d; i < n; i++) {        // 从第d个元素开始
+            int temp = arr[i];               // 待插入元素
+            int j;
+            // 对子序列进行插入排序
+            for (j = i; j >= d && arr[j - d] > temp; j -= d) {
+                arr[j] = arr[j - d];         // 元素后移
+            }
+            arr[j] = temp;                   // 插入正确位置
+        }
+    }
+}
+\`\`\`
+
+
+
+
+
+
+
+## 交换排序
+
+### 冒泡排序
+
+
+
+### 快速排序
+
+
+
+## 选择排序
+
+### 简单选择排序
+
+
+
+### 堆排序
+
+
+
+## 归并排序
+
+
+
+
+
+## 基数排序
+
+
+
+## 外部排序
+
+`;export{n as default};
