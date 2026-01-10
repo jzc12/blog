@@ -9,7 +9,7 @@ const routes = [
         component: () => import('../md/about.md')
     },
     {
-        path: '/category',
+        path: '/category/:category?',
         name: 'category',
         component: () => import('../views/CategoryList.vue')
     },

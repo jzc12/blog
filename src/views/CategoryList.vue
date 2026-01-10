@@ -2,7 +2,21 @@
 <template>
   <div class="category-container">
 
-    <!-- 加载状态显示 -->
+    <!-- 分类选择 -->
+    <select v-model="selectedCategory" class="category-select" @change="handleCategoryChange"
+      :disabled="loading || !categoryList.length">
+      <!-- 无分类 -->
+      <option v-if="!categoryList.length" disabled value="">
+        暂无分类数据
+      </option>
+
+      <!-- 有分类 -->
+      <option v-for="cat in categoryList" :key="cat" :value="cat">
+        {{ cat }}
+      </option>
+    </select>
+
+    <!-- 加载状态 -->
     <div v-if="loading" class="loading-box">
       <div class="loading-text">
         <i class="fas fa-circle-notch"></i>
@@ -13,185 +27,179 @@
       </div>
     </div>
 
-    <!-- 文章列表展示 -->
-    <div v-else-if="articles.length" class="category-content">
+    <!-- 文章列表 -->
+    <div v-else-if="paginatedArticles.length" class="category-content">
       <TransitionGroup name="list" tag="div" class="article-list">
         <router-link v-for="article in paginatedArticles" :key="article.id"
           :to="{ name: 'article', params: { articleId: article.id } }" class="article-item">
           <div class="article-header">
-            <h3 class="article-title">{{ article.title || article.id }}</h3>
-            <div class="category-tag"><i class="fas fa-tag"></i> {{ article.category }}</div>
-            <div class="date-info"><i class="far fa-calendar-alt"></i><span>{{ article.date }}</span></div>
+            <h3 class="article-title">
+              {{ article.title || article.id }}
+            </h3>
+
+            <div class="category-tag">
+              <i class="fas fa-tag"></i> {{ article.category }}
+            </div>
+
+            <div class="date-info">
+              <i class="far fa-calendar-alt"></i>
+              <span>{{ article.date }}</span>
+            </div>
           </div>
+
           <p class="summary">{{ article.summary }}</p>
         </router-link>
       </TransitionGroup>
     </div>
-    <!-- 无文章提示 -->
+
+    <!-- 无文章 -->
     <div v-else class="no-articles">
-      <i class="far fa-folder-open"></i> 暂无文章
+      <i class="far fa-folder-open"></i>
+      {{ selectedCategory === 'all'
+        ? '暂无文章'
+        : `【${selectedCategory}】分类下暂无文章`
+      }}
+    </div>
+
+    <!-- 分页 -->
+    <div class="pagination" v-if="totalPages > 1">
+      <button @click="prevPage" :disabled="currentPage === 1">
+        上一页
+      </button>
+
+      <span v-for="page in pageNumbers" :key="page" :class="['page-btn', { active: page === currentPage }]"
+        @click="goPage(page)">
+        {{ page }}
+      </span>
+
+      <button @click="nextPage" :disabled="currentPage === totalPages">
+        下一页
+      </button>
     </div>
 
   </div>
-  <!-- 分页导航 -->
-  <div class="pagination">
-    <button @click="prevPage" :disabled="currentPage === 1">上一页</button>
-
-    <span v-for="(page, index) in pageNumbers" :key="index"
-      :class="['page-btn', { active: page === currentPage, ellipsis: page === '...' }]"
-      @click="page !== '...' && goPage(page)">
-      {{ page }}
-    </span>
-
-    <button @click="nextPage" :disabled="currentPage === totalPages">下一页</button>
-  </div>
 </template>
 
-<script>
-import { ref, computed, onMounted, watch } from 'vue'
-import fm from 'front-matter'
-import dayjs from 'dayjs'
+<script setup>
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useArticles } from '../utils/useArticles'
 
-export default {
-  name: 'CategoryList',
-  setup() {
-    const articles = ref([])
-    const loading = ref(true)
-    const progress = ref(0)
+/* ---------------- 路由 ---------------- */
+const route = useRoute()
+const router = useRouter()
 
-    // ========== 分页状态 ==========
-    const currentPage = ref(1)
-    const pageSize = ref(6)
+/* ---------------- 数据 ---------------- */
+const {
+  articles,
+  loading,
+  progress,
+  loadArticles,
+  categoryList
+} = useArticles()
 
-    // 页面加载时恢复上次页码
-    onMounted(() => {
-      const savedPage = sessionStorage.getItem('categoryPage')
-      if (savedPage) currentPage.value = Number(savedPage)
-    })
+/* ---------------- 状态 ---------------- */
+const selectedCategory = ref('')
+const currentPage = ref(1)
+const pageSize = 5
 
-    // 页码变化时保存
-    watch(currentPage, (newPage) => {
-      sessionStorage.setItem('categoryPage', newPage)
-    })
-
-    // 排序后的文章
-    const sortedArticles = computed(() => {
-      return [...articles.value].sort((a, b) => {
-        const dateCompare = new Date(b.date) - new Date(a.date)
-        return dateCompare !== 0 ? dateCompare : a.title.localeCompare(b.title)
-      })
-    })
-
-    const totalPages = computed(() => Math.ceil(sortedArticles.value.length / pageSize.value))
-
-    const paginatedArticles = computed(() => {
-      const start = (currentPage.value - 1) * pageSize.value
-      return sortedArticles.value.slice(start, start + pageSize.value)
-    })
-
-    // 页码生成（省略风格）
-    const pageNumbers = computed(() => {
-      const pages = []
-      const total = totalPages.value
-      const cur = currentPage.value
-
-      if (total <= 7) {
-        // 总页数少于等于7，全部显示
-        for (let i = 1; i <= total; i++) pages.push(i)
-      } else {
-        pages.push(1)
-
-        if (cur > 4) pages.push('...')
-
-        const start = Math.max(2, cur - 1)
-        const end = Math.min(total - 1, cur + 1)
-
-        for (let i = start; i <= end; i++) pages.push(i)
-
-        if (cur < total - 3) pages.push('...')
-
-        pages.push(total)
-      }
-      return pages
-    })
-
-    const goPage = (page) => {
-      if (page >= 1 && page <= totalPages.value) currentPage.value = page
-    }
-    const prevPage = () => goPage(currentPage.value - 1)
-    const nextPage = () => goPage(currentPage.value + 1)
-
-    // ========== 加载文章 ==========
-    const getArticles = async () => {
-      loading.value = true
-      progress.value = 0
-      try {
-        const articleFiles = import.meta.glob('@/articles/*.md', { as: 'raw' })
-        const paths = Object.keys(articleFiles)
-        const total = paths.length
-        let loaded = 0
-
-        const articleData = await Promise.all(
-          paths.map(async (path) => {
-            try {
-              const raw = await articleFiles[path]()
-              const { attributes: frontmatter, body } = fm(raw)
-              const fileName = path.split('/').pop().replace('.md', '')
-
-              if (!raw.trim().startsWith('---')) {
-                return {
-                  id: fileName,
-                  title: fileName,
-                  date: '未知日期',
-                  category: '未分类',
-                  summary: body.slice(0, 100) + '...'
-                }
-              }
-
-              return {
-                id: fileName,
-                title: frontmatter.title || fileName,
-                date: frontmatter.updated
-                  ? dayjs(frontmatter.updated).format('YYYY-MM-DD')
-                  : '未知日期',
-                category: frontmatter.category || '未分类',
-                summary: frontmatter.summary || body.slice(0, 100) + '...'
-              }
-            } catch (e) {
-              console.error(`加载文章失败: ${path}`, e)
-              return null
-            } finally {
-              loaded++
-              progress.value = Math.round((loaded / total) * 100)
-            }
-          })
-        )
-
-        articles.value = articleData.filter(Boolean)
-      } catch (e) {
-        console.error('加载文章列表失败:', e)
-      } finally {
-        loading.value = false
-      }
-    }
-
-    getArticles()
-
-    return {
-      articles,
-      loading,
-      progress,
-      sortedArticles,
-      paginatedArticles,
-      currentPage,
-      totalPages,
-      pageNumbers,
-      goPage,
-      prevPage,
-      nextPage
+/* ---------------- 初始化 ---------------- */
+onMounted(async () => {
+  await loadArticles()
+  const savedPage = sessionStorage.getItem('categoryPage')
+  if (savedPage) currentPage.value = Number(savedPage)
+  // 若 URL 无分类，但 session 有 → 用 session
+  if (!route.params.category) {
+    const savedCategory = sessionStorage.getItem('currentCategory')
+    if (savedCategory && categoryList.value.includes(savedCategory)) {
+      selectedCategory.value = savedCategory
+      handleCategoryChange()
+      return
     }
   }
+  syncInitialCategory()
+})
+
+/* ---------------- 初始化分类选择 ---------------- */
+const syncInitialCategory = () => {
+  if (!categoryList.value.length) {
+    selectedCategory.value = ''
+    return
+  }
+
+  const routeCat = route.params.category
+
+  if (routeCat && categoryList.value.includes(routeCat)) {
+    selectedCategory.value = routeCat
+  } else {
+    selectedCategory.value = categoryList.value[0]
+    router.replace({
+      name: 'category',
+      params: { category: selectedCategory.value }
+    })
+  }
 }
+
+/* ---------------- 路由变化 → 同步 select ---------------- */
+watch(
+  () => route.params.category,
+  () => nextTick(syncInitialCategory)
+)
+
+/* ---------------- select → 路由 ---------------- */
+const handleCategoryChange = () => {
+  if (!selectedCategory.value) return
+
+  router.push({
+    name: 'category',
+    params: { category: selectedCategory.value }
+  })
+
+  currentPage.value = 1
+  sessionStorage.setItem('currentCategory', selectedCategory.value)
+}
+
+/* ---------------- 分类变化校验 ---------------- */
+watch(categoryList, () => {
+  if (
+    selectedCategory.value &&
+    !categoryList.value.includes(selectedCategory.value)
+  ) {
+    syncInitialCategory()
+  }
+})
+
+/* ---------------- 分页 ---------------- */
+const filteredArticles = computed(() =>
+  selectedCategory.value
+    ? (articles.value || []).filter(a => a.category === selectedCategory.value)
+    : []
+)
+
+const totalPages = computed(() =>
+  filteredArticles.value.length
+    ? Math.ceil(filteredArticles.value.length / pageSize)
+    : 0
+)
+
+const paginatedArticles = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return filteredArticles.value.slice(start, start + pageSize)
+})
+
+const pageNumbers = computed(() =>
+  Array.from({ length: totalPages.value }, (_, i) => i + 1)
+)
+
+/* ---------------- 分页操作 ---------------- */
+const goPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+const prevPage = () => goPage(currentPage.value - 1)
+const nextPage = () => goPage(currentPage.value + 1)
 </script>
 
 <style scoped>
