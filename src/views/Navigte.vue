@@ -47,9 +47,9 @@ export default {
       showTitle: true,          // 是否显示标题
       // 导航菜单配置项
       navItems: [
-        { name: 'home', icon: icons.home, count: '', text: "首页" },           // 首页
         { name: 'about', icon: icons.about, count: '', text: "关于" },         // 关于
         { name: 'category', icon: icons.category, count: '0', text: "分类" },  // 分类
+        { name: 'tools', icon: icons.wrench, count: '0', text: "工具" },       // 工具
         { name: 'message', icon: icons.message, count: '0', text: "留言" },    // 留言
         { name: 'settings', icon: icons.settings, count: '', text: "设置" }    // 设置
       ]

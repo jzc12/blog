@@ -115,7 +115,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     opacity: 0.9;

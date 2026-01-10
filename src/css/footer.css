@@ -34,7 +34,7 @@
 /* 访问统计样式 */
 .footer-content p:first-child {
     color: var(--text-secondary);
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -63,7 +63,7 @@
 /* 技术栈信息样式 */
 .footer-content p:not(:first-child) {
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: var(--font-size-sm);
     margin: 0;
     opacity: 0.8;
     transition: opacity 0.3s ease;
@@ -76,7 +76,7 @@
 
 /* 备案号样式 */
 .beian-info {
-    font-size: 0.72rem;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
     margin-top: 0.25rem;
     text-align: center;
@@ -143,29 +143,5 @@
     .site-footer,
     .footer-content p {
         transition: none;
-    }
-}
-
-/* 打印样式 */
-@media print {
-    .site-footer {
-        position: static;
-        transform: none;
-        opacity: 1;
-        background: white;
-        color: black;
-        page-break-inside: avoid;
-        padding: 1rem 0;
-        border-top: 1px solid #ccc;
-    }
-
-    .footer-content p:first-child {
-        background: transparent;
-        border: 1px solid #ccc;
-        color: black;
-    }
-
-    .footer-content p:first-child svg {
-        color: black;
     }
 }

@@ -1,5 +1,3 @@
-<img src="./../assets/cat.gif" alt="cat" style="zoom:50%;" />
-
 **软件工程的本质——将现实需求转化为数字世界的精密系统**
 
 ---
@@ -8,15 +6,16 @@
 
 ---
 
-喜欢无职、喜欢哆啦酱
 
-请相信，一切都是命中注定，一切都是最好的安排。
+
+何谓一息秋光衔客路，橙云垂处是归程。
+
 
 ---
 
 在 gitee 、vercel、github 平台都有部署
 
-大部分代码都是 借助 Cursor 、chatGpt 、agument 、deepseek， 然后再此基础上更改的，特别是 UI (◕‿◕✿)
+大部分代码都是 借助 Cursor 、chatGpt 、agument 、deepseek， 然后再此基础上更改的，特别是 UI 
 
 ---
 

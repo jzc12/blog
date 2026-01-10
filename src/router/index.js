@@ -5,11 +5,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
     {
         path: '/',
-        name: 'home',
-        component: () => import('../md/home.md')
-    },
-    {
-        path: '/about',
         name: 'about',
         component: () => import('../md/about.md')
     },
@@ -17,6 +12,11 @@ const routes = [
         path: '/category',
         name: 'category',
         component: () => import('../views/CategoryList.vue')
+    },
+    {
+        path: '/tools',
+        name: 'tools',
+        component: () => import('../views/ToolsList.vue')
     },
     {
         path: '/articles/:articleId',

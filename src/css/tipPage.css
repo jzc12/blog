@@ -8,7 +8,7 @@
 
 .tip-page-container p {
     margin: 4rem 0;
-    font-size: 1rem;
+    font-size: var(--front);
 }
 
 .tip-page-footer {

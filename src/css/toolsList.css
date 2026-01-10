@@ -1,0 +1,66 @@
+.tools {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+/* 单个工具卡片 */
+.tool {
+    background-color: var(--content-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: var(--blur-sm);
+}
+
+/* 标题 */
+.tool h2 {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+}
+
+/* 输入框统一 */
+.tool textarea {
+    width: 100%;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--code-border);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.tool textarea:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* 结果展示 */
+.tool pre {
+    margin-top: var(--space-md);
+    font-size: var(--font-size-sm);
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    overflow-x: auto;
+    line-height: 1.6;
+}
+
+/* Markdown 预览 */
+.preview {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--code-border);
+    background-color: var(--bg-tertiary);
+    line-height: 1.75;
+}

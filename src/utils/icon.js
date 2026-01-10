@@ -1,11 +1,14 @@
 // src/utils/icon.js
 
 import {
-    Home,
+    // ========= 导航栏 ========= //
     User,
     Folder,
+    Wrench,
     MessageSquare,
     Mail,
+
+    // ========= 工具 ========= //
     Loader,
     RefreshCcw,
     CalendarDays,
@@ -39,11 +42,12 @@ import GitHub from './../assets/github.svg';
 import Up from '../assets/up.svg';
 
 export const icons = {
-    home: Home,
     about: User,
     category: Folder,
+    wrench: Wrench,
     message: MessageSquare,
     mail: Mail,
+
     github: GitHub,
     loading: Loader,
     refresh: RefreshCcw,

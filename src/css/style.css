@@ -121,12 +121,13 @@
 
     /* 字体系统 Typography */
     --font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
-    --font-size-base: var(--global-font-size, 15px);
+    --font-size-base: var(--global-font-size, 14px);
     --font-size-sm: 0.875rem;
-    --font-size-ssm: 0.675rem;
+    --font-size-ssm: 0.7rem;
     --font-size-md: 1rem;
     --font-size-lg: 1.125rem;
     --font-size-xl: 1.25rem;
+    --font-size-xxl: 1.5rem;
 
     /* 布局系统 Layout */
     --sidebar-width: 250px;
@@ -417,7 +418,7 @@ body {
 
 html,
 body {
-    font-size: var(--global-font-size, 15px);
+    font-size: var(--global-font-size, 14px);
 }
 
 .content,
@@ -426,7 +427,7 @@ body {
 .article-container,
 .sidebar-container,
 .outline-container {
-    font-size: var(--global-font-size, 15px);
+    font-size: var(--global-font-size, 14px);
     line-height: 1.75;
 }
 
