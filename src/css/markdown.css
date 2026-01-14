@@ -331,7 +331,7 @@
     border: none;
     height: 2px;
     background: linear-gradient(to right, var(--primary-green), transparent);
-    margin: 2em 0;
+    margin: 2rem 0;
     opacity: 0.4;
 }
 
