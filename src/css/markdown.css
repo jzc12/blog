@@ -6,9 +6,8 @@
     line-height: 1.8;
     font-size: 1rem;
     color: var(--text-primary);
-    padding: 2em 0.5rem;
+    padding: 2em 2rem;
     margin: 0 auto;
-    padding: 0 2%;
     max-width: 1100px;
     transition: color var(--transition-normal);
 }

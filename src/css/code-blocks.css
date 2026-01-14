@@ -105,7 +105,7 @@
 
 /* Webkit 浏览器的滚动条样式 */
 .hljs.with-line-numbers::-webkit-scrollbar {
-    height: 8px;
+    height: 2px;
 }
 
 .hljs.with-line-numbers::-webkit-scrollbar-track {

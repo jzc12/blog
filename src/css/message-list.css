@@ -23,40 +23,54 @@
 .messages-container {
     flex: 1;
     overflow-y: auto;
-    padding: 1.5rem;
+    padding: 0.5rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
+/* ========== 主评论样式 ========== */
 .message-item {
     display: flex;
-    justify-content: flex-start;
-    padding: 1rem;
-    background: var(--bg-overlay);
-    border-radius: 12px;
-    border: 1px solid var(--code-border);
+    gap: 0.75rem;
+    padding: 0.5rem 0;
     transition: all 0.2s ease;
-}
-
-.message-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    background: var(--bg-hover);
-}
-
-.message-content {
-    width: 100%;
-    padding: 0;
 }
 
 .message-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.75rem;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--code-border);
+}
+
+.message-item-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.message-item-right {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(var(--text-color-rgb), 0.1);
+    flex: 1;
+}
+
+.message-item:last-child .message-item-right {
+    border-bottom: none;
+}
+
+.user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.user-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .user-name {
@@ -65,17 +79,22 @@
     font-size: 0.95rem;
 }
 
-.message-date {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
+.message-footer {
     display: flex;
     align-items: center;
+    justify-content: start;
+    margin-bottom: 0.25rem;
+    gap: 1rem;
 }
 
-.message-date::before {
-    content: "•";
-    margin-right: 0.75rem;
-    color: var(--text-tertiary);
+.message-date {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.message-content {
+    padding-left: calc(40px + 0.75rem);
+    margin-top: -0.25rem;
 }
 
 .message-text {
@@ -84,38 +103,39 @@
     white-space: pre-wrap;
     word-break: break-word;
     font-size: 0.95rem;
+    margin-bottom: 0.5rem;
 }
 
-.avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 8px;
+.message-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-/* 滚动条美化 */
-.message-list::-webkit-scrollbar,
-.messages-container::-webkit-scrollbar {
-    width: 3px;
+.reply-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
 
-.message-list::-webkit-scrollbar-track,
-.messages-container::-webkit-scrollbar-track {
-    background: transparent;
+.reply-btn:hover {
+    color: var(--primary-green);
+    background: rgba(var(--primary-green-rgb), 0.1);
 }
 
-.message-list::-webkit-scrollbar-thumb,
-.messages-container::-webkit-scrollbar-thumb {
-    background-color: var(--primary-green);
-    border-radius: 3px;
+.like-btn:hover {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
 }
 
-.message-list::-webkit-scrollbar-thumb:hover,
-.messages-container::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent-green);
-}
-
-/* 响应式布局 */
+/* ========== 响应式布局 ========== */
 @media (max-width: 768px) {
     .messages-container {
         padding: 1rem;
@@ -127,19 +147,42 @@
     }
 
     .message-header {
-        margin-bottom: 0.5rem;
-        padding-bottom: 0.5rem;
+        gap: 0.5rem;
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
     }
 
     .user-name {
         font-size: 0.9rem;
     }
 
+    .user-level {
+        font-size: 0.7rem;
+    }
+
     .message-date {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+    }
+
+    .message-content {
+        padding-left: calc(32px + 0.5rem);
     }
 
     .message-text {
         font-size: 0.9rem;
     }
+
+    .replies-container {
+        margin-left: calc(32px + 0.5rem);
+        padding-left: 0.75rem;
+    }
+
+    .reply-avatar {
+        width: 24px;
+        height: 24px;
+    }
+
 }

@@ -38,9 +38,6 @@
 
   </div>
 
-  <!-- 提示 -->
-  <Toast ref="toastRef" />
-
   <!-- 图片大图查看 -->
   <ImagePreview ref="previewRef" @edge="handleImageEdge" />
 
@@ -55,7 +52,7 @@ import { useSettingsStore } from './stores/settings'
 import { watch, nextTick, ref, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
-import Toast from "./components/Toast.vue";
+import toast from '@/utils/toast';
 import ImagePreview from "./components/ImagePreview.vue";
 
 
@@ -67,7 +64,7 @@ import mermaid from 'mermaid'
 
 export default {
   // ========================== 组件注册 ==============================
-  components: { Navigte, BackToTopButton, OutlineItem, Sidebar, SiteFooter, Toast, ImagePreview },
+  components: { Navigte, BackToTopButton, OutlineItem, Sidebar, SiteFooter, ImagePreview },
 
   // ========================== 组件数据 ==============================
   data() {
@@ -332,11 +329,6 @@ export default {
       }
     },
 
-    // 使用 Toast
-    showToast(msg) {
-      this.$refs.toastRef.show(msg);
-    },
-
     // 打开图片预览
     openPreview(index) {
       const imgs = Array.from(document.querySelectorAll(".markdown-body img")).map(
@@ -344,7 +336,7 @@ export default {
       );
       if (this.$refs.previewRef) {
         this.$refs.previewRef.open(imgs, index);
-        this.showToast("可用键盘 ← → 切换图片");
+        toast.show("可用键盘 ← → 切换图片");
       } else {
         console.warn("ImagePreview 未挂载");
       }
@@ -353,9 +345,9 @@ export default {
 
     handleImageEdge(position) {
       if (position === "first") {
-        this.$refs.toastRef.show("已经是第一张了");
+        toast.warning("已经是第一张了");
       } else if (position === "last") {
-        this.$refs.toastRef.show("已经是最后一张了");
+        toast.warning("已经是最后一张了");
       }
     }
 
@@ -487,7 +479,7 @@ export default {
 /* 导入基础样式文件 */
 @import "./css/style.css";
 /* 主要样式 */
-@import "./css/lapis.css";
+@import "./css/markdown.css";
 /* Lapis主题样式 */
 @import "./css/code-blocks.css";
 /* 代码块样式 */

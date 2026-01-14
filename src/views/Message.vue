@@ -22,8 +22,8 @@
     <!-- 留言列表 -->
     <MessageList :messages="sortedMessages" />
     <!-- 留言输入区域 -->
-    <div class="input-area" :class="{ 'hidden': isInputHidden }">
-      <MessageForm v-if="!isInputHidden" ref="messageForm" @message-submitted="addMessage" />
+    <div class="input-area">
+      <MessageForm ref="messageForm" @message-submitted="addMessage" />
     </div>
   </div>
 </template>
@@ -48,7 +48,6 @@ export default {
   data() {
     return {
       messages: [],         // 留言数据数组
-      isInputHidden: false, // 输入区域显示状态
       isLoading: false,     // 加载状态
       isAscending: true     // 排序方式（升序/降序）
     }
@@ -110,11 +109,6 @@ export default {
         this.isLoading = false
       }
     },
-
-    // 切换输入区域显示状态
-    toggleInput() {
-      this.isInputHidden = !this.isInputHidden
-    }
   },
 
   // ========================== 生命周期钩子 ==============================

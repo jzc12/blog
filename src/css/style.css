@@ -304,7 +304,6 @@ body {
     box-shadow: var(--shadow-lg);
     backdrop-filter: var(--blur-md);
     border: 1px solid var(--code-border);
-    padding: 2rem;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-green) transparent;
     transition: background-color var(--transition-normal);
@@ -328,7 +327,7 @@ body {
 /* 滚动条样式统一 */
 .outline-container::-webkit-scrollbar,
 .content::-webkit-scrollbar {
-    width: 6px;
+    width: 2px;
 }
 
 .outline-container::-webkit-scrollbar-track,

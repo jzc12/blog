@@ -205,7 +205,7 @@
 
 /* 滚动条美化 */
 .content-input::-webkit-scrollbar {
-    width: 4px;
+    width: 2px;
 }
 
 .content-input::-webkit-scrollbar-track {

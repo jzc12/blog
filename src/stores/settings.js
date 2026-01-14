@@ -55,7 +55,7 @@ export const useSettingsStore = defineStore('settings', {
          */
         applyTheme() {
             const isDark = this.effectiveTheme === 'dark';
-
+            document.documentElement.style.setProperty('--text-color-rgb', isDark ? '255, 255, 255' : '44, 62, 80');
             document.documentElement.style.setProperty('--bg-opacity', isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)');
             document.documentElement.style.setProperty('--bg-overlay', isDark ? 'rgba(203, 192, 192, 0.15)' : 'rgba(180, 211, 225, 0.05)');
             document.documentElement.style.setProperty('--text-color', isDark ? '#ffffff' : '#2c3e50');

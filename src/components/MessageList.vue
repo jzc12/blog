@@ -10,72 +10,102 @@
     <div v-else class="messages-container" ref="messagesContainer">
       <!-- 单条留言项 -->
       <div v-for="(message, index) in messages" :key="index" class="message-item">
-        <div class="message-content">
-          <!-- 留言头部：用户名和时间 -->
+        <!-- 头像 -->
+        <img :src="getAvatar(message.email, message.username)" class="message-item-avatar"
+          @error="onAvatarError($event)" />
+
+        <!-- 右边内容区域 -->
+        <div class="message-item-right">
           <div class="message-header">
-            <img :src="getAvatar(message.email, message.username)" class="avatar" @error="onAvatarError($event)" />
-            <span class="user-name">{{ message.username }}</span>
-            <span class="message-date">{{ formatDate(message.created_at) }}</span>
+            <!-- 用户信息 -->
+            <div class="user-info">
+              <span class="user-name">{{ message.username }}</span>
+            </div>
           </div>
+
           <!-- 留言内容 -->
           <div class="message-text">{{ message.content }}</div>
+
+          <!-- 底部信息 -->
+          <div class="message-footer">
+            <span class="message-date">{{ formatDate(message.created_at) }}</span>
+            <button class="reply-btn" @click="handleReply(message.id)">
+              <i class="far fa-comment-dots"></i>
+              回复
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+
 </template>
 
 <script>
 import md5 from 'blueimp-md5';
+import toast from '@/utils/toast';
 export default {
   name: 'MessageList',
 
-  // ========================== 组件属性定义 ==============================
   props: {
-    // 留言数据数组
     messages: {
       type: Array,
       default: () => []
     }
   },
 
-  // ========================== 方法定义 ==============================
+  data() {
+    return {
+      // 这里可以添加一些本地数据
+    };
+  },
+
   methods: {
-    // 格式化日期显示
+    // 格式化日期显示（优化为更紧凑的格式）
     formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
       const now = new Date();
       const diff = now - date;
-      
-      // 如果是今天的消息，只显示时间
-      if (diff < 24 * 60 * 60 * 1000 && 
-          date.getDate() === now.getDate()) {
+
+      // 1分钟内：刚刚
+      if (diff < 60 * 1000) {
+        return '刚刚';
+      }
+
+      // 1小时内：X分钟前
+      if (diff < 60 * 60 * 1000) {
+        return Math.floor(diff / (60 * 1000)) + '分钟前';
+      }
+
+      // 今天内：小时:分钟
+      if (date.getDate() === now.getDate() &&
+        date.getMonth() === now.getMonth() &&
+        date.getFullYear() === now.getFullYear()) {
         return date.toLocaleTimeString('zh-CN', {
           hour: '2-digit',
           minute: '2-digit'
         });
       }
-      
-      // 如果是最近7天的消息，显示星期几
-      if (diff < 7 * 24 * 60 * 60 * 1000) {
-        const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-        return weekdays[date.getDay()] + ' ' + 
-               date.toLocaleTimeString('zh-CN', {
-                 hour: '2-digit',
-                 minute: '2-digit'
-               });
+
+      // 今年内：月-日 小时:分钟
+      if (date.getFullYear() === now.getFullYear()) {
+        return `${date.getMonth() + 1}-${date.getDate()} ` +
+          date.toLocaleTimeString('zh-CN', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
       }
-      
-      // 其他情况显示完整日期
+
+      // 其他：完整日期
       return date.toLocaleDateString('zh-CN', {
+        year: 'numeric',
         month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
+        day: '2-digit'
       });
     },
-    
+
     // 滚动到列表底部
     scrollToBottom() {
       this.$nextTick(() => {
@@ -86,7 +116,7 @@ export default {
       });
     },
 
-    // 获取用户头像，支持 QQ 邮箱、网易邮箱、Gravatar，其他用默认头像
+    // 获取用户头像
     getAvatar(email, username) {
       if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         const lowerEmail = email.trim().toLowerCase();
@@ -95,13 +125,6 @@ export default {
         if (qqMatch) {
           const qqNumber = qqMatch[1];
           return `https://q1.qlogo.cn/g?b=qq&nk=${qqNumber}&s=100`;
-        }
-        // 网易邮箱（163/126/yeah）
-        const neteaseMatch = lowerEmail.match(/^([a-zA-Z0-9_.-]+)@(163|126|yeah)\.com$/);
-        if (neteaseMatch) {
-          // 网易邮箱没有公开头像API，通常用 Gravatar
-          const hash = md5(lowerEmail);
-          return `https://www.gravatar.com/avatar/${hash}?d=identicon`;
         }
         // 其他邮箱，使用 Gravatar
         const hash = md5(lowerEmail);
@@ -115,11 +138,76 @@ export default {
     onAvatarError(event) {
       event.target.src = require(`../assets/avatar_0.png`);
     },
+
+    // 回复主评论
+    handleReply() {
+      toast.warning("功能开发中");
+    },
+
+    // 回复子评论
+    handleReplyToReply(message, reply) {
+      this.$set(message, 'showReplyInput', true);
+      this.$set(message, 'replyText', `@${reply.username} `);
+      this.$nextTick(() => {
+        const textarea = this.$el.querySelector('.reply-input-container textarea');
+        if (textarea) {
+          textarea.focus();
+          textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+        }
+      });
+    },
+
+    // 提交回复
+    submitReply(message) {
+      if (!message.replyText?.trim()) return;
+
+      // 这里应该发送API请求，这里只是模拟
+      const newReply = {
+        id: Date.now(),
+        username: '当前用户',
+        level: 1,
+        content: message.replyText,
+        created_at: new Date().toISOString(),
+        likes: 0
+      };
+
+      if (!message.replies) {
+        this.$set(message, 'replies', []);
+      }
+      message.replies.push(newReply);
+
+      // 重置回复状态
+      message.showReplyInput = false;
+      message.replyText = '';
+
+      this.$emit('reply-submitted', {
+        parentId: message.id,
+        content: newReply.content
+      });
+    },
+
+    // 取消回复
+    cancelReply(message) {
+      message.showReplyInput = false;
+      message.replyText = '';
+    },
+
+    // 点赞
+    handleLike(message) {
+      if (!message.likes) {
+        this.$set(message, 'likes', 0);
+      }
+      message.likes += 1;
+      this.$emit('message-liked', { id: message.id, likes: message.likes });
+    },
+
+    // 加载更多回复
+    loadMoreReplies(message) {
+      this.$emit('load-more-replies', message.id);
+    }
   },
-  
-  // ========================== 侦听器 ==============================
+
   watch: {
-    // 监听留言列表变化，自动滚动到底部
     messages: {
       handler() {
         this.scrollToBottom();
@@ -127,10 +215,8 @@ export default {
       deep: true
     }
   },
-  
-  // ========================== 生命周期钩子 ==============================
+
   mounted() {
-    // 组件挂载后滚动到底部
     this.scrollToBottom();
   }
 }
